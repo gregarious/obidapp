@@ -1,38 +1,38 @@
 $(function(){
 
-    /* The following instantiated views will become members
-       of higher-level singletons set below them.
-
-       Many of their render methods are no-ops because their immediate DOM
-       contents are fixed in index.html.
-    */
-    
     /*
      *  Main Header Subview
      *
      *  The constant header on top of the main app view.
      *
-     *  Currently does nothing, but this will change. Content is preset.
+     *  Currently does nothing, but this will change.
     */
-    var mainHeader = new (Backbone.View.extend({}))(
-        {el: $('#header-view')});
-
+    var mainHeader = new (Backbone.View.extend({
+        template: Handlebars.compile($('#template-main-header').html()),
+        render: function() {
+            // currently no template vbls. this will change.
+            this.$el.html(this.template());
+        }
+    }))({el: $('#header-view')});   // craziness: both ending the class def and instantiating it here
+        
     /*
      *  Main Content Subview
      *
      *  Main app content. Mostly a global frame for inserting context-
      *  specific content.
     */
-    var mainContent = new (Backbone.View.extend({}))(
-        {el: $('#content-view')});
+    var mainContent = new Backbone.View({
+        el: $('#content-view')
+    });
 
     /*
      *  Main Settings Popup Subview
      *
      *  A static drawer usually hidden at the bottom of the app.
     */
-    var mainSettingsDrawer = new (Backbone.View.extend({}))(
-        {el: $('#settings-drawer')});
+    var mainSettingsDrawer = new Backbone.View({
+        el: $('#settings-drawer')
+    });
 
     /*
      * Main View
@@ -48,13 +48,18 @@ $(function(){
         initialize: function() {
             _.bindAll(this, 'showDrawer', 'hideDrawer');
         },
+        render: function() {
+            this.headerView.render();
+            this.contentView.render();
+            this.settingsDrawer.render();
+        },
         showDrawer: function() {
             this.settingsDrawer.$el.show();
         },
         hideDrawer: function() {
             this.settingsDrawer.$el.hide();
         }
-    }))({el: $('#main-view')}).render();
+    }))({el: $('#main-view')});
 
     /*
      * Login View
@@ -74,7 +79,7 @@ $(function(){
         login: function() {
             Scenable.appRouter.navigate("/", {trigger: true});
         }
-    }))({el: $('#login-view')});
+    }))({el: $('#login-view')}).render();
 
     /* Master App View
      *
@@ -109,8 +114,12 @@ $(function(){
                 this.mainView.$el.show();
                 this.activeView = this.mainView;
             }
+        },
+        render: function() {
+            this.mainView.render();
+            this.loginView.render();
         }
-    }))({el: $('#app-view')}).render();
+    }))({el: $('#app-view')});
 
     // Main router. Likely to be split into subrouters later.
     Scenable.appRouter = new (Backbone.Router.extend({
