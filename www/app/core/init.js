@@ -1,4 +1,6 @@
 $(function(){
+    // main global namespace
+    Scenable = {};
 
     /*
      *  Main Header Subview
@@ -137,4 +139,8 @@ $(function(){
             Scenable.appView.showMain();
         }
     }))();
+
+    // All done with setup -- time to launch the app
+    Backbone.history.start();
+    Scenable.appView.render();
 });

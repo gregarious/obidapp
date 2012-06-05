@@ -1,4 +1,0 @@
-/* Requires: jQuery,  */
-$(function(){
-    Scenable = {};
-});
