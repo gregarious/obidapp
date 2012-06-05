@@ -1,0 +1,4 @@
+/* Requires: jQuery,  */
+$(function(){
+    Scenable = {};
+});
