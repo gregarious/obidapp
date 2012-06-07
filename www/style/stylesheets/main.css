@@ -1,0 +1,177 @@
+/* line 41, /Users/laras126/Dropbox/Sites/obidapp/www/style/sass/_grid.scss */
+body {
+  width: 100%;
+  *zoom: 1;
+}
+/* line 27, /Users/laras126/Dropbox/Sites/obidapp/www/style/sass/_grid.scss */
+body:before, body:after {
+  content: "";
+  display: table;
+}
+/* line 31, /Users/laras126/Dropbox/Sites/obidapp/www/style/sass/_grid.scss */
+body:after {
+  clear: both;
+}
+
+/* line 17, /Library/Ruby/Gems/1.8/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* line 20, /Library/Ruby/Gems/1.8/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+body {
+  line-height: 1;
+}
+
+/* line 22, /Library/Ruby/Gems/1.8/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 24, /Library/Ruby/Gems/1.8/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 26, /Library/Ruby/Gems/1.8/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 28, /Library/Ruby/Gems/1.8/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 101, /Library/Ruby/Gems/1.8/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 30, /Library/Ruby/Gems/1.8/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 114, /Library/Ruby/Gems/1.8/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* GRID */
+/* COLORS */
+/* CSS3 */
+/* line 3, ../sass/main.scss */
+body {
+  width: 100%;
+}
+
+/* line 7, ../sass/main.scss */
+#login-view {
+  background: #444444;
+}
+
+/* line 11, ../sass/main.scss */
+#welcome-logo {
+  display: block;
+  margin: auto;
+}
+
+/* line 16, ../sass/main.scss */
+#top-bar {
+  background: #444444;
+  position: fixed;
+  width: 100%;
+  *zoom: 1;
+  height: 40px;
+}
+/* line 27, /Users/laras126/Dropbox/Sites/obidapp/www/style/sass/_grid.scss */
+#top-bar:before, #top-bar:after {
+  content: "";
+  display: table;
+}
+/* line 31, /Users/laras126/Dropbox/Sites/obidapp/www/style/sass/_grid.scss */
+#top-bar:after {
+  clear: both;
+}
+/* line 23, ../sass/main.scss */
+#top-bar #top-logo {
+  height: 50px;
+  float: left;
+  position: absolute;
+}
+/* line 30, ../sass/main.scss */
+#top-bar #view-options {
+  width: 50px;
+  float: right;
+  padding: 0.5em;
+}
+/* line 34, ../sass/main.scss */
+#top-bar #view-options img {
+  height: 20px;
+}
+/* line 37, ../sass/main.scss */
+#top-bar #view-options img:first-child {
+  margin-right: 5px;
+}
+
+/* line 44, ../sass/main.scss */
+.feed-nav, .single-nav {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  display: inline;
+  float: left;
+  width: 100%;
+  margin: 0 0;
+  margin-top: 40px;
+}
+
+/* line 49, ../sass/main.scss */
+.single-nav {
+  background: #6baa55;
+  padding: 0.3em;
+}
+/* line 53, ../sass/main.scss */
+.single-nav button {
+  position: absolute;
+}
+/* line 58, ../sass/main.scss */
+.single-nav h1 {
+  color: #fff;
+  text-align: center;
+}
+
+/* SPECIALS -------------- */
+/* line 68, ../sass/main.scss */
+.specials .item-thumb {
+  background: green;
+  -webkit-border-radius: 10px 10px;
+  -moz-border-radius: 10px / 10px;
+  -ms-border-radius: 10px / 10px;
+  -o-border-radius: 10px / 10px;
+  border-radius: 10px / 10px;
+  -webkit-box-shadow: red;
+  -moz-box-shadow: red;
+  box-shadow: red;
+}

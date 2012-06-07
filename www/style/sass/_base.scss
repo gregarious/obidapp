@@ -1,0 +1,34 @@
+
+@import "grid";
+@import "compass/css3";
+@import "compass/reset";
+
+
+//////////
+/* GRID */
+//////////
+
+// Specify the number of columns and set column and gutter widths
+$columns: 12;
+$column-width: 8.3333333%;
+$gutter-width: 0;
+
+// Remove the definition below for a pixel-based layout
+$total-width: 100%;
+
+////////////
+/* COLORS */
+////////////
+
+$dark-grey: #444;
+$green: #6BAA55;
+$red: #B83939;
+$yellow: #DED57F; 
+$orange: #FF9F00;
+
+
+//////////
+/* CSS3 */
+//////////
+
+// box shadow constants
