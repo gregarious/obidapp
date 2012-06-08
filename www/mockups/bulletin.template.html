@@ -14,35 +14,131 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width">
   
-  <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
-  <meta http-equiv="cleartype" content="on">
+  <!-- Mobile IE allows us to activate ClearType technology for smoothing fontscontent="on">
 
   <!-- more tags for your 'head' to consider h5bp.com/d/head-Tips -->
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="style/stylesheets/main.css">
+  <link rel="stylesheet" href="../style/stylesheets/main.css">
 
   <!-- All scripts in head: no need to worry about page load -->
-  <script src="js/libs/modernizr-2.0.6.min.js"></script>
+  <!--<script src="js/libs/modernizr-2.0.6.min.js"></script>
   <script src="js/libs/jquery-1.7.2.js"></script>
   <script src="js/html5bp-helper.js"></script>
   <script src="js/libs/underscore-1.3.3.js"></script>
   <script src="js/libs/backbone-0.9.2.js"></script>
-  <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
+  <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>-->
 </head>
 
 <body id="app-view">
   <div id="main-view">
     <header id="header-view">
 
+      <!-- Top bar appears on all pages -->
+      <div id="top-bar">
+        <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png">
+        <div id="view-options">
+          <img src="../img/icons/search.png">
+
+          <!-- Map icon to be switched to list depending on template -->
+          <img src="../img/icons/map.png">
+        </div> <!-- .view-options -->
+      </div> <!-- #top-bar -->
+
+      <!-- Site nav not shown on single pages -->
+      <nav class="feed-nav">
+        <ul>
+          <li>NOW</li>
+          <li>Places</li>
+          <li>Events</li>
+          <li>Specials</li>
+          <li>Bulletin</li>
+        </ul>
+      </nav> <!-- #site-nav -->
+
     </header>
     <div id="content-view">
-      
+      <ul class="feed">
+
+        <li>
+            <div class="item-thumb">
+              <img src="../img/icons/newspaper.png" />
+            </div>
+            <section class="item-content">
+              <h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/news_single.template.html">An interesting news article</a></h1>
+              <ul class="item-details">
+                  <li>Published Date</li>
+                  <li>Pittsburgh Post Gazette</li>
+                  <li>Submitted by admin</li>
+                    <!-- Loop through tags here
+                    Are we doing tags on news? I don't think so.
+                    <ul class="tags">
+                        <li>food</li>
+                        <li>pizza</li>
+                        <li>beer</li>
+                        <li>tennis</li>
+                    </ul> -->
+                  </li>
+                </ul> <!-- .item-details -->
+            </section>
+          </li>
+
+          <li>
+            <div class="item-thumb">
+              <img src="../img/icons/question.png" />
+            </div>
+            <section class="item-content">
+              <h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/question_single.template.html">What's the best massage place in Oakland?</a></h1>
+              <ul class="item-details">
+                  <li>3hrs ago by bigBoi125</li>
+                  <li>12 responses</li>
+                    <!-- Loop through tags here
+                    Are we doing tags on news? I don't think so.
+                    <ul class="tags">
+                        <li>food</li>
+                        <li>pizza</li>
+                        <li>beer</li>
+                        <li>tennis</li>
+                    </ul> -->
+                </ul> <!-- .item-details -->
+            </section>
+          </li>
+
+          <li>
+            <div class="item-thumb">
+              <img src="../img/icons/speech-bubbles.png" />
+            </div>
+            <section class="item-content">
+              <h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/chatter_single.template.html">Remember to do Thirsty Thursday this week!</a></h1>
+              <ul class="item-details">
+                <!-- if its twitter, indicate that and link to their twitter handle -->
+                <li>3hrs ago by @jackson</li>
+              </ul> <!-- .item-details -->
+            </section>
+          </li>
+
+      </ul> <!-- events feed -->
     </div>
+
+    <nav class="sorting">
+      <ul>
+        <li class="active">Popular</li> <!-- Selected by default -->
+        <li>Newest</li>
+        <li>
+          <select>
+            <option>Category</option>
+            <option>Questions</option>
+            <option>News</option>
+            <option>Chatter</option>
+          </select>
+        </li>
+      </ul>
+    </nav>
 
     <footer id="settings-drawer" style="display:none">
       Settings
     </footer>
+
   </div>
 </body>
 </html>

@@ -1,8 +1,9 @@
-
-@import "grid";
 @import "compass/css3";
 @import "compass/reset";
+@import "grid";
 
+// Font not working now - compiling wrong file path
+//@import "font-awesome";
 
 //////////
 /* GRID */
@@ -21,6 +22,7 @@ $total-width: 100%;
 ////////////
 
 $dark-grey: #444;
+$light-grey: #f1f1f1;
 $green: #6BAA55;
 $red: #B83939;
 $yellow: #DED57F; 
@@ -32,3 +34,29 @@ $orange: #FF9F00;
 //////////
 
 // box shadow constants
+
+/////////////
+/* EXTENDS */
+/////////////
+
+.flex-img {
+	height: auto;
+	width: 100%;
+}
+
+.horiz-ul {
+	@include column(12);
+	//margin-top: 40px;
+
+	li {
+		@include box-sizing(content-box);
+		float: left;
+		padding: 0.5em;
+		margin-right: 0.5em;
+		text-align: center;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+}

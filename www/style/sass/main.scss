@@ -4,6 +4,10 @@ body {
 	width: 100%;
 }
 
+#header-view {
+	@include clearfix();
+}
+
 #login-view { 
 	background: $dark-grey;
 }
@@ -17,12 +21,11 @@ body {
 	background: $dark-grey;
 	position: fixed;
 	width: 100%;
-	@include clearfix();
+	//@include clearfix();
 	height: 40px;
 
 	#top-logo { 
 		height: 50px;
-		//width: auto;
 		float: left;
 		position: absolute;
 	}
@@ -41,28 +44,109 @@ body {
 	}
 }
 
-.feed-nav, .single-nav {
-	@include column(12);
-	margin-top: 40px;
+.feed-nav, .single-nav, .place-nav, .tags, .sorting {
+	@extend .horiz-ul;
+}
+
+.feed-nav {
+
+	li {
+		@include column(2);
+	}
 }
 
 .single-nav {
 	background: $green;
 	padding: 0.3em;
-	
+	margin-top: 40px;
+	height: 20px;
 	button {
-	//	@include column(3);
 		position: absolute;
 	}
 
 	h1 {
 		color: #fff;
-	//	@include column(9);
 		text-align: center;
 	}
 }
 
-/* SPECIALS -------------- */
+/* FEED ITEMS --------- */
+
+.feed>li {
+	@include clearfix();
+	margin: 1% 0;
+	padding: 2% 1%;
+	border-bottom: 3px solid red;
+}
+
+.item-title {
+  margin: 0;
+  line-height: 1.2em;
+  a {
+    text-shadow: 0 0 0.01em #999;
+    color: #000;
+    &:hover {
+      color: $red;
+    }
+  }
+}
+
+.item-thumb {
+	img {
+		@extend .flex-img;	
+	}
+	
+	@include column(2.75);
+}
+
+.item-content {
+	@include column(9.25);
+}
+
+/* SINGLE ---------- */
+
+.single-header {
+	margin-top: 1em;
+}
+
+.single-content {
+	@include column(12);
+	padding: 1em;
+
+	section {
+		background: $light-grey;
+	}
+}
+
+/* BULLETIN ----------- */
+
+.snippet {
+	margin-bottom: 1em;
+}
+
+.comments {
+	@include column(12);
+
+	ol, ul {
+		margin-left: 2em;
+	
+			li, li li {
+			margin-bottom: 1em;
+		}
+	}
+}
+
+/* PLACES ---------- */
+
+.place-nav {
+	li {
+		background: $green;
+		@include border-corner-radius(top, left, 5px);
+  		@include border-corner-radius(top, right, 5px);
+	}
+}
+
+/* SPECIALS ---------- */
 
 .specials {
 	.item-thumb {
