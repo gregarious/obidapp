@@ -22,6 +22,8 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../style/stylesheets/main.css">
 
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDMC7_HO6KYzyErT2BDKrWUdb-2j3VHO4I&sensor=true">
+    </script>
   <!-- All scripts in head: no need to worry about page load -->
   <!--<script src="js/libs/modernizr-2.0.6.min.js"></script>
   <script src="js/libs/jquery-1.7.2.js"></script>
@@ -46,73 +48,72 @@
 
                     <!-- Map icon to be switched to list depending on template -->
                     <img src="../img/icons/map.png" />
-                    </div>
+               	</div>
             </div> <!-- .view-options -->
         </div> <!-- #top-bar -->
 
         <!-- .single-nav takes the place of .feed-nav -->
         <nav class="single-nav">
-            <button>Back</button>
-            <h1>Place name</h1>
+            <button>&larr; Places</button>
+            <h1>Coolest place in the world always in the world always...</h1>
         </nav> <!-- .single-nav -->
 
     </header> <!-- #header-view -->
 
     <div id="content-view" class="places"> <!-- Is it okay to have a class here? -->
-      <header class="single-header">
-        <div class="item-thumb">
-          <img src="http://compass-style.org/images/sites/caring.jpg" />
-        </div>
-        <div class="item-action">
-            <p>Favorite this</p>
-        </div>
-        <section class="item-content">
-            <h1 class="single-title">Place name</h1>
-            <ul class="item-details">
-                <li>Address</li>
-                <li>at Place Name</li>
-                <li>         
-                    <!-- Loop through tags here -->
-                    <ul class="tags">
-                        <li>food</li>
-                        <li>pizza</li>
-                        <li>beer</li>
-                        <li>tennis</li>
-                    </ul>
-                </li>
-                <!-- If Facebook and/or Twitter -->
-                <li class="item-social">
-                    <img src="../img/icons/facebook.png" />
-                    <img src="../img/icons/twitter.png" />
-                </li>
-            </ul> <!-- .item-details -->
-        </section> <!-- .item-content -->
-
-    </header> <!-- .single-header -->
-	
-	<nav class="place-nav">
-		<ul>
-			<li>Info</li>
-			<li>Events</li>
-			<li>Specials</li>
-		</ul>
-	</nav>
     
-    <article class="single-content">
-    	<!-- Each of the following 3 sections is hidden/shown based on the active .place-nav link -->
-        <section class="place-info">
-			<div id="mapCanvas">
-			  <!-- Map generated here, clicking it opens Google Maps directions -->
-			</div>
-			<ul class="item-details">
-				<li></li>
+    <section class="single-content">
+    	<nav class="place-nav">
+			<ul>
+				<li>Info</li>
+				<li>Events</li>
+				<li>Specials</li>
+				<li id="favorite-place">&#9827;</li>
 			</ul>
+		</nav>
+    	<!-- Each of the following 3 sections is hidden/shown based on the active .place-nav link -->
+    	<div id="map_canvas">
+			  <!-- Map generated here, clicking it opens Google Maps directions -->
+			  <img src="http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false"
+ />
+		</div>
+        <article class="place-info">
+			<header class="single-header">
+        		<div class="item-thumb">
+          			<img src="http://compass-style.org/images/sites/caring.jpg" />
+		        </div> <!-- .item-thumb -->
+
+		        <article class="item-content">
+		            <h1 class="single-title">Place name</h1>
+		            <ul class="item-details">
+		                <li>Address</li>
+		                <li>at Place Name</li>
+		                <li>         
+		                    <!-- Loop through tags here -->
+		                    <ul class="tags">
+		                        <li>food</li>
+		                        <li>pizza</li>
+		                        <li>beer</li>
+		                        <li>tennis</li>
+		                    </ul>
+		                </li>
+		            </ul> <!-- .item-details -->
+		        </article> <!-- .item-content -->
+
+	    	</header> <!-- .single-header -->	
+	    	
+	    	<!-- If Facebook and/or Twitter -->
+        	<div class="item-social">
+            	<img src="../img/icons/facebook.png" />
+            	<img src="../img/icons/twitter.png" />
+        	</div>
 			<p>Description<br />
 			Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably haven't heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.
 			</p>
-        </section>
 
-        <section class="place-events">
+        </article>
+
+        <article class="place-events">
 
         	<ul class="feed">
 
@@ -121,7 +122,7 @@
 	                	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
 	                </div>
 	                <section class="item-content">
-	                 	<h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/place_single.template.html">Place name</a></h1>
+	                 	<h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/place_single.template.html">Event name</a></h1>
 	                 	<ul class="item-details">
 	                    	<li>Starts - ends</li>
 	                    	<li>organizer if there is one</li>
@@ -140,9 +141,9 @@
 
 			</ul> <!-- events feed -->
 
-        </section>
+        </article>
 
-        <section class="place-specials">
+        <article class="place-specials">
 
 			<ul class="feed">
         		
@@ -170,9 +171,9 @@
 
 			</ul> <!-- specials feed -->
 
-        </section>
+        </article>
         
-    </article>
+    </section> <!-- .single-content -->
 
     </div> <!-- #content-view -->
 
@@ -181,5 +182,8 @@
     </footer> <!-- #settings-drawer -->
 
 </div> <!-- #main-view -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script src="../js/map.js" type="text/javascript"></script>
 </body>
 </html>

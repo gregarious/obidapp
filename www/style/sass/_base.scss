@@ -11,7 +11,7 @@
 
 // Specify the number of columns and set column and gutter widths
 $columns: 12;
-$column-width: 8.3333333%;
+$column-width: 100/12;
 $gutter-width: 0;
 
 // Remove the definition below for a pixel-based layout
@@ -35,6 +35,15 @@ $orange: #FF9F00;
 
 // box shadow constants
 
+
+////////////
+/* MIXINS */
+////////////
+
+@mixin icon($path) {
+  background: url('../../img/icons/'+$path+'.png') center no-repeat;
+}
+
 /////////////
 /* EXTENDS */
 /////////////
@@ -46,7 +55,6 @@ $orange: #FF9F00;
 
 .horiz-ul {
 	@include column(12);
-	//margin-top: 40px;
 
 	li {
 		@include box-sizing(content-box);
