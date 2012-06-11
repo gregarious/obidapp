@@ -378,7 +378,6 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0.5em;
-  background: #ded57f;
 }
 
 /* BULLETIN ----------- */
@@ -442,16 +441,32 @@ body {
   box-sizing: border-box;
   border-right: none;
 }
+/* line 232, ../sass/main.scss */
+.place-nav li.active {
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+}
 
-/* line 235, ../sass/main.scss */
+/* line 241, ../sass/main.scss */
 #map_canvas {
-  height: 150px;
+  height: 100px;
   width: 100%;
   overflow: hidden;
+  position: relative;
+}
+/* line 247, ../sass/main.scss */
+#map_canvas .single-title {
+  padding: 0.5em;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: #ded57f;
 }
 
 /* SPECIALS ---------- */
-/* line 244, ../sass/main.scss */
+/* line 261, ../sass/main.scss */
 .specials .item-thumb {
   background: green;
   -webkit-border-radius: 10px;

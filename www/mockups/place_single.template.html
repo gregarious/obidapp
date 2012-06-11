@@ -55,7 +55,7 @@
         <!-- .single-nav takes the place of .feed-nav -->
         <nav class="single-nav">
             <button>&larr; Places</button>
-            <h1>Coolest place in the world always in the world always...</h1>
+            <h1>View Place</h1>
         </nav> <!-- .single-nav -->
 
     </header> <!-- #header-view -->
@@ -63,20 +63,22 @@
     <div id="content-view" class="places"> <!-- Is it okay to have a class here? -->
     
     <section class="single-content">
+    	<!-- Each of the following 3 sections is hidden/shown based on the active .place-nav link -->
+    	<div id="map_canvas">
+			<!-- Map generated here, clicking it opens Google Maps directions -->
+			<img src="http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false" />
+			<h1 class="single-title">the name of this place</h1>
+		</div>
+
     	<nav class="place-nav">
 			<ul>
-				<li>Info</li>
+				<li class="active">Info</li>
 				<li>Events</li>
 				<li>Specials</li>
 				<li id="favorite-place">&#9827;</li>
 			</ul>
 		</nav>
-    	<!-- Each of the following 3 sections is hidden/shown based on the active .place-nav link -->
-    	<div id="map_canvas">
-			  <!-- Map generated here, clicking it opens Google Maps directions -->
-			  <img src="http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false"
- />
-		</div>
+
         <article class="place-info">
 			<header class="single-header">
         		<div class="item-thumb">
@@ -87,7 +89,7 @@
 		            <h1 class="single-title">Place name</h1>
 		            <ul class="item-details">
 		                <li>Address</li>
-		                <li>at Place Name</li>
+		                <li>(724) 887-4246</li>
 		                <li>         
 		                    <!-- Loop through tags here -->
 		                    <ul class="tags">
@@ -101,13 +103,28 @@
 		        </article> <!-- .item-content -->
 
 	    	</header> <!-- .single-header -->	
-	    	
-	    	<!-- If Facebook and/or Twitter -->
-        	<div class="item-social">
-            	<img src="../img/icons/facebook.png" />
-            	<img src="../img/icons/twitter.png" />
-        	</div>
-			<p>Description<br />
+
+			<ul class="item-details">
+				<li>Hours
+					<ul>
+						<li>Mon-Fri: 10am - 5pm</li>
+						<li>Sat: 10am - 2pm</li>
+						<li>Sun: Closed </li>
+					</ul>
+				</li>
+				<li>Parking
+					<ul>
+						<li>Lot</li>
+						<li>Street</li>
+						<li>Garage</li>
+					</ul>
+				</li>
+				<li>Website</li>
+	        	<li class="item-social">
+	            	<img src="../img/icons/facebook.png" />
+	            	<img src="../img/icons/twitter.png" />
+	        	</li>
+			</ul>
 			Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably haven't heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.
 			</p>
 
@@ -184,6 +201,6 @@
 </div> <!-- #main-view -->
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-<script src="../js/map.js" type="text/javascript"></script>
+<script src="../js/script.js" type="text/javascript"></script>
 </body>
 </html>

@@ -183,7 +183,7 @@ body {
 	&>article {
 		@include column(12);
 		padding: 0.5em;
-		background: $yellow;
+		
 	}
 }
 
@@ -228,14 +228,31 @@ body {
   			@include column(1);
   			border-right: none;
   		}
+
+  		&.active {
+  			background: #fff;
+  			border-color: #fff;
+  			color: #000;
+  		}
 	}
 	
 }
 
 #map_canvas {
-	height: 150px;
+	height: 100px;
 	width: 100%;
 	overflow: hidden;
+	position: relative;
+
+	.single-title {
+		//text-align: center;
+		padding: 0.5em;
+		width: 100%;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		background: $yellow;
+	}
 }
 
 /* SPECIALS ---------- */
