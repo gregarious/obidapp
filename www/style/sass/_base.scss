@@ -41,12 +41,16 @@ $orange: #FF9F00;
 ////////////
 
 @mixin icon($path) {
-  background: url('../../img/icons/'+$path+'.png') center no-repeat;
+  background: url('../../img/icons/'+$path+'.png') center 10px no-repeat;
 }
 
 /////////////
 /* EXTENDS */
 /////////////
+
+.feed-menu-item {
+	background-color: $light-grey !important;
+}
 
 .flex-img {
 	height: auto;

@@ -4,73 +4,55 @@
 <!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 
 <head>
-  <meta charset="utf-8">
-
-  <title></title>
-  <meta name="description" content="">
-
-  <!-- Mobile viewport optimization h5bp.com/ad -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
+	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  
-  <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
-  <meta http-equiv="cleartype" content="on">
-
-  <!-- more tags for your 'head' to consider h5bp.com/d/head-Tips -->
-
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../style/stylesheets/main.css">
-
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDMC7_HO6KYzyErT2BDKrWUdb-2j3VHO4I&sensor=true">
-    </script>
-  <!-- All scripts in head: no need to worry about page load -->
-  <!--<script src="js/libs/modernizr-2.0.6.min.js"></script>
-  <script src="js/libs/jquery-1.7.2.js"></script>
-  <script src="js/html5bp-helper.js"></script>
-  <script src="js/libs/underscore-1.3.3.js"></script>
-  <script src="js/libs/backbone-0.9.2.js"></script>
-  <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>-->
 </head>
 
 <body id="app-view">
 <div id="main-view">
-    <header id="header-view">
 
-      <!-- Top bar appears on all pages -->
-        <div id="top-bar">
-            <div id="top-logo">
-              <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png">
-            </div>
-            <div id="view-options">
-                <div class="options-container">
-                    <img src="../img/icons/search.png" />
+	<!-- Header view for single pages -->
+    <header id="header-view" class="single-page">
 
-                    <!-- Map icon to be switched to list depending on template -->
-                    <img src="../img/icons/map.png" />
-               	</div>
-            </div> <!-- .view-options -->
-        </div> <!-- #top-bar -->
-
-        <!-- .single-nav takes the place of .feed-nav -->
-        <nav class="single-nav">
-            <button>&larr; Places</button>
-            <h1>View Place</h1>
+	    <nav id="top-bar-single">
+        	<!-- This is a back button - indicates what page you are going back to -->
+            <button><a href="http://localhost/obidapp/www/mockups/places_feed.template.html">&larr; Places</a></button>
+            <h1>Truncated place name...</h1>
         </nav> <!-- .single-nav -->
 
     </header> <!-- #header-view -->
 
-    <div id="content-view" class="places"> <!-- Is it okay to have a class here? -->
-    
-    <section class="single-content">
-    	<!-- Each of the following 3 sections is hidden/shown based on the active .place-nav link -->
-    	<div id="map_canvas">
-			<!-- Map generated here, clicking it opens Google Maps directions -->
-			<img src="http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false" />
-			<h1 class="single-title">the name of this place</h1>
-		</div>
+    <div id="content-view" class="places">
 
-    	<nav class="place-nav">
+    <section class="single-content">
+    	<!-- Each of the following 3 sections is hidden/shown based on the active .single-place-nav link -->
+		<header class="single-header">
+
+    		<div class="item-thumb">
+      			<img src="http://compass-style.org/images/sites/caring.jpg" />
+	        </div> <!-- .item-thumb -->
+
+	        <article class="item-content">
+	            <h1 class="single-title">Place name</h1>
+	            <ul class="item-details">
+	                <li>Address</li>
+	                <li>         
+	                    <!-- Loop through tags here -->
+	                    <ul class="tags">
+	                        <li>food</li>
+	                        <li>pizza</li>
+	                        <li>beer</li>
+	                        <li>tennis</li>
+	                    </ul>
+	                </li>
+	            </ul> <!-- .item-details -->
+	        </article> <!-- .item-content -->
+
+    	</header> <!-- .single-header -->	
+
+    	<nav class="single-place-nav">
 			<ul>
 				<li class="active">Info</li>
 				<li>Events</li>
@@ -80,51 +62,23 @@
 		</nav>
 
         <article class="place-info">
-			<header class="single-header">
-        		<div class="item-thumb">
-          			<img src="http://compass-style.org/images/sites/caring.jpg" />
-		        </div> <!-- .item-thumb -->
-
-		        <article class="item-content">
-		            <h1 class="single-title">Place name</h1>
-		            <ul class="item-details">
-		                <li>Address</li>
-		                <li>(724) 887-4246</li>
-		                <li>         
-		                    <!-- Loop through tags here -->
-		                    <ul class="tags">
-		                        <li>food</li>
-		                        <li>pizza</li>
-		                        <li>beer</li>
-		                        <li>tennis</li>
-		                    </ul>
-		                </li>
-		            </ul> <!-- .item-details -->
-		        </article> <!-- .item-content -->
-
-	    	</header> <!-- .single-header -->	
 
 			<ul class="item-details">
-				<li>Hours
-					<ul>
-						<li>Mon-Fri: 10am - 5pm</li>
-						<li>Sat: 10am - 2pm</li>
-						<li>Sun: Closed </li>
-					</ul>
-				</li>
-				<li>Parking
-					<ul>
-						<li>Lot</li>
-						<li>Street</li>
-						<li>Garage</li>
-					</ul>
-				</li>
-				<li>Website</li>
+				<li><span class="detail-title">Phone:</span> (724) 887-4246</li>
+				<li><span class="detail-title">Hours:</span> Mon-Fri 10am - 5pm &#149; Sat 10am - 2pm &#149; Sun Closed</li>
+				<li><span class="detail-title">Parking:</span> Lot, Street, Garage</li>
+				<li><a href="http://coolwebsite.com">Website</a></li>
 	        	<li class="item-social">
 	            	<img src="../img/icons/facebook.png" />
 	            	<img src="../img/icons/twitter.png" />
 	        	</li>
 			</ul>
+	    	<div id="map_canvas">
+				<!-- Map png here:  -->
+				<img src="http://2d-code.co.uk/images/qr-map.jpg" />
+				<h1 class="single-title">Direction</h1>
+			</div>
+			<p>
 			Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably haven't heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.
 			</p>
 

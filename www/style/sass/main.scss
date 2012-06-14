@@ -25,45 +25,69 @@ body {
 	width: 100%;
 	z-index: 999;
 	//@include clearfix();
-	
+
+	&>* {
+		@include column(4);
+	}
+
 	#top-logo { 
-		height: 50px;
-		float: left;
-		position: absolute;
+		
+		img {
+			width: auto;
+			height: 50px;
+		}
 	}
 
 	#view-options {
-		width: 50px;
-		float: right;
 		padding: 0.5em;
+
 		img {
 			height: 20px;
+			float: right;
 
 			&:first-child {
-				margin-right: 5px;
+				margin-left: 10px;
 			}
 		}
+	}
+
+	#current-user {
+		text-align: center;
+		display: inline;
+		color: #fff;
+		margin-top: 10px;
 	}
 }
 
 #content-view {
 	//padding: 0 0.5em;
 	//margin-top: 40px;
+	position: relative;
 }
 
 /* NAVIGATION ---------- */
 
-.feed-nav, .single-nav, .place-nav, .tags, .sorting {
+#feed-nav, #top-bar-single, .single-place-nav, .tags, .sorting {
 	@extend .horiz-ul;
 }
 
-.feed-nav {
-
+#feed-nav {
+	margin-top: 40px;
+	
 	li {
 		@include column(2.3);
-		background: $light-grey;
-		height: 3em;
+		height: 60px;
 		margin-left: 0.2em;
+		@extend .feed-menu-item;
+
+		div {
+			font-size: 0.7em;
+			text-align: center;
+			margin-top: 35px;
+			// position: absolute;
+			// top: 0;
+			// left: 0;
+		}
 
 		&.active {
 			color: $green;
@@ -92,6 +116,7 @@ body {
 		&#specials {
 			@include icon('feed-nav/specials');
 		}
+
 	}
 }
 
@@ -100,11 +125,12 @@ body {
 .tags {
 	margin: 0.5em 0;
 	li {
-		background-color: #e1e1e1;
-		border: 1px solid #f9f9f9;
+		background-color: #f9f9f9;
+		border: 1px solid #e1e1e1;
 		@include border-radius(10px);
-		padding: 0.3em;
-		font-size: 0.9em;
+		padding: 0.3em 0.4em;
+		font-size: 0.8em;
+		color: #666;
 	}
 }
 
@@ -112,9 +138,16 @@ body {
 
 .feed>li {
 	@include clearfix();
+	font-size: 0.9em;
+	line-height: 1.3em;
 	margin: 1% 0;
 	padding: 2% 1%;
 	border-bottom: 3px solid red;
+
+	a {
+		text-decoration: none;
+		color: #222;
+	}
 }
 
 .item-title {
@@ -146,12 +179,11 @@ body {
 
 /* SINGLE ---------- */
 
-.single-nav {
+#top-bar-single {
 	background: $green;
 	padding: 0.3em;
-	margin-top: 40px;
 	height: 30px;
-	position: relative;
+	position: fixed;
 
 	button, h1, span {
 		@include column(3);
@@ -174,17 +206,32 @@ body {
 }
 
 .single-header {
-	margin: 1em 0;
+	margin: 50px 0 10px;
 	@include clearfix;
 }
 
 .single-content {
 	@include column(12);
+	position: relative;
 	&>article {
 		@include column(12);
 		padding: 0.5em;
 		
 	}
+}
+
+/* FOOTER ------------ */
+
+#settings-drawer {
+	background: #222;
+	color: #fff;
+	height: 80px;
+	width: 100%;
+	padding-top: 30px;
+	text-align: center;
+	position: fixed;
+	bottom: 0;
+	display: none;
 }
 
 /* BULLETIN ----------- */
@@ -213,10 +260,11 @@ body {
 
 /* PLACES ---------- */
 
-.place-nav {
+.single-place-nav {
 	background: $dark-grey;
 	color: #fff;
 	border-top: 1px solid $red;
+	margin-bottom: 0.5em;
 	li {
 		background: $dark-grey;
 		border-bottom: 2px solid $red;
@@ -238,9 +286,29 @@ body {
 	
 }
 
+.place-info {
+	p {
+		display: inline;
+	}
+	&>.item-details {
+		@include column(12);
+		float: right;
+		font-size: 0.9em;
+
+	li {
+			margin-bottom: 0.5em;
+
+			.detail-title {
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+
 #map_canvas {
 	height: 100px;
-	width: 100%;
+	@include column(5);
 	overflow: hidden;
 	position: relative;
 
@@ -262,5 +330,20 @@ body {
 		background: green;
 		@include border-radius(10px);
 		@include box-shadow(red);
+	}
+}
+
+#special-status {
+	background: #999;
+	width: 100%;
+	padding: 10px 0;
+	position: fixed;
+	bottom: 0;
+	button {
+		//height: 30px;
+		font-size: 1.5em;
+		width: 90%;
+		display: block;
+		margin: auto;
 	}
 }

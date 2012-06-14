@@ -4,6 +4,7 @@
 <!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 
 <head>
+	<meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width">
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../style/stylesheets/main.css">
@@ -32,9 +33,9 @@
 	  	<nav id="feed-nav">
 			<ul>
 			  	<li id="now"><a href="now.template.html"><div>NOW</div></a></li>
-			  	<li id="places" class="active"><div>Places</div></li>
+			  	<li id="places"><a href="places_feed.template.html"><div>Places</div></a></li>
 			  	<li id="events"><a href="events_feed.template.html"><div>Events</div></a></li>
-			  	<li id="specials"><a href="specials_feed.template.html"><div>Specials</div></a></li>
+			  	<li id="specials" class="active"><div>Specials</div></li>
 			  	<li id="bulletin"><a href="bulletin_feed.template.html"><div>Bulletin</div></a></li>
 			</ul>
 	  	</nav> <!-- #site-nav -->
@@ -45,15 +46,17 @@
 		
 	  <ul class="feed">
 
-	  	<!-- List item links to single place page -->
-		<li><a href="http://localhost/obidapp/www/mockups/place_single.template.html">
+	  	<!-- List item links to single special page -->
+		<li><a href="http://localhost/obidapp/www/mockups/special_single.template.html">
 		  <div class="item-thumb">
-		  	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
+		  	<img src="../img/defaults/default-special.png" />
 		  </div>
 		  <section class="item-content">
-		  	<h1 class="item-title">Place name</h1>
+		  	<h1 class="item-title">Special title</h1>
 		  	<ul class="item-details">
-		  		<li>123 Address St</li>
+		  		<li>at Place name</li>
+		  		<li>12 available &bull; Expires 6/30</li>
+		  		<li></li>
 		  		<li>
 		  			<!-- Loop through tags here -->
 					<ul class="tags">
@@ -67,35 +70,17 @@
 		  </section>
 		</a></li>
 
-		<li><a href="http://localhost/obidapp/www/mockups/place_single.template.html">
+	  	<!-- List item links to single special page -->
+		<li><a href="http://localhost/obidapp/www/mockups/special_single.template.html">
 		  <div class="item-thumb">
-		  	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
+		  	<img src="../img/defaults/default-special.png" />
 		  </div>
 		  <section class="item-content">
-		  	<h1 class="item-title">Place name</h1>
+		  	<h1 class="item-title">Special title</h1>
 		  	<ul class="item-details">
-		  		<li>123 Address St</li>
-		  		<li>
-		  			<!-- Loop through tags here -->
-					<ul class="tags">
-						<li>food</li>
-						<li>pizza</li>
-						<li>beer</li>
-						<li>tennis</li>
-					</ul>
-	             </li>
-		  	</ul>
-		  </section></a>
-		</li>
-
-		<li><a href="http://localhost/obidapp/www/mockups/place_single.template.html">
-		  <div class="item-thumb">
-		  	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
-		  </div>
-		  <section class="item-content">
-		  	<h1 class="item-title">Place name</h1>
-		  	<ul class="item-details">
-		  		<li>123 Address St</li>
+		  		<li>at Place name</li>
+		  		<li>12 available &bull; Expires 6/30</li>
+		  		<li></li>
 		  		<li>
 		  			<!-- Loop through tags here -->
 					<ul class="tags">
@@ -109,14 +94,17 @@
 		  </section>
 		</a></li>
 
-		<li><a href="http://localhost/obidapp/www/mockups/place_single.template.html">
+	  	<!-- List item links to single special page -->
+		<li><a href="http://localhost/obidapp/www/mockups/special_single.template.html">
 		  <div class="item-thumb">
-		  	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
+		  	<img src="../img/defaults/default-special.png" />
 		  </div>
 		  <section class="item-content">
-		  	<h1 class="item-title">Place name</h1>
+		  	<h1 class="item-title">Special title</h1>
 		  	<ul class="item-details">
-		  		<li>123 Address St</li>
+		  		<li>at Place name</li>
+		  		<li>12 available &bull; Expires 6/30</li>
+		  		<li></li>
 		  		<li>
 		  			<!-- Loop through tags here -->
 					<ul class="tags">
@@ -127,17 +115,20 @@
 					</ul>
 	             </li>
 		  	</ul>
-		  </section></a>
-		</li>
+		  </section>
+		</a></li>
 
-		<li><a href="http://localhost/obidapp/www/mockups/place_single.template.html">
+	  	<!-- List item links to single special page -->
+		<li><a href="http://localhost/obidapp/www/mockups/special_single.template.html">
 		  <div class="item-thumb">
-		  	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
+		  	<img src="../img/defaults/default-special.png" />
 		  </div>
 		  <section class="item-content">
-		  	<h1 class="item-title">Place name</h1>
+		  	<h1 class="item-title">Special title</h1>
 		  	<ul class="item-details">
-		  		<li>123 Address St</li>
+		  		<li>at Place name</li>
+		  		<li>12 available &bull; Expires 6/30</li>
+		  		<li></li>
 		  		<li>
 		  			<!-- Loop through tags here -->
 					<ul class="tags">
@@ -148,17 +139,20 @@
 					</ul>
 	             </li>
 		  	</ul>
-		  </section></a>
-		</li>
+		  </section>
+		</a></li>
 
-		<li><a href="http://localhost/obidapp/www/mockups/place_single.template.html">
+	  	<!-- List item links to single special page -->
+		<li><a href="http://localhost/obidapp/www/mockups/special_single.template.html">
 		  <div class="item-thumb">
-		  	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
+		  	<img src="../img/defaults/default-special.png" />
 		  </div>
 		  <section class="item-content">
-		  	<h1 class="item-title">Place name</h1>
+		  	<h1 class="item-title">Special title</h1>
 		  	<ul class="item-details">
-		  		<li>123 Address St</li>
+		  		<li>at Place name</li>
+		  		<li>12 available &bull; Expires 6/30</li>
+		  		<li></li>
 		  		<li>
 		  			<!-- Loop through tags here -->
 					<ul class="tags">
@@ -169,8 +163,32 @@
 					</ul>
 	             </li>
 		  	</ul>
-		  </section></a>
-		</li>
+		  </section>
+		</a></li>
+
+	  	<!-- List item links to single special page -->
+		<li><a href="http://localhost/obidapp/www/mockups/special_single.template.html">
+		  <div class="item-thumb">
+		  	<img src="../img/defaults/default-special.png" />
+		  </div>
+		  <section class="item-content">
+		  	<h1 class="item-title">Special title</h1>
+		  	<ul class="item-details">
+		  		<li>at Place name</li>
+		  		<li>12 available &bull; Expires 6/30</li>
+		  		<li></li>
+		  		<li>
+		  			<!-- Loop through tags here -->
+					<ul class="tags">
+						<li>food</li>
+						<li>pizza</li>
+						<li>beer</li>
+						<li>tennis</li>
+					</ul>
+	             </li>
+		  	</ul>
+		  </section>
+		</a></li>
 
 	  </ul>
 	  
