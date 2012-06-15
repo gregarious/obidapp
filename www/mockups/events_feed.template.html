@@ -9,10 +9,10 @@
 
 <body id="app-view">
 
-<div id="main-view">
+<div id="main-view" class="feed-page">
 
   <!-- Header view for feed pages -->
-  <header id="header-view" class="feed-page">
+  <header id="header-view">
 
     <section id="top-bar">
       <div id="top-logo">
@@ -29,31 +29,30 @@
 
     <nav id="feed-nav">
       <ul>
-          <li id="now"><a href="now.template.html"><div>NOW</div></a></li>
-          <li id="places"><a href="places_feed.template.html"><div>Places</div></a></li>
-          <li id="events" class="active"><div>Events</div></li>
-          <li id="specials"><a href="specials_feed.template.html"><div>Specials</div></a></li>
-          <li id="bulletin"><a href="bulletin_feed.template.html"><div>Bulletin</div></a></li>
+          <a href="now.8template.html" class="menu-item-wrap"><li id="now"><div>NOW</div></li></a>
+          <a href="places_feed.template.html" class="menu-item-wrap"><li id="places"><div>Places</div></li></a>
+          <span class="menu-item-wrap"><li id="events" class="active"><div>Events</div></li></span>
+          <a href="specials_feed.template.html" class="menu-item-wrap"><li id="specials"><div>Specials</div></li></a>
+          <a href="bulletin_feed.template.html" class="menu-item-wrap"><li id="bulletin"><div>Bulletin</div></li></a>
       </ul>
     </nav> <!-- #site-nav -->
 
   </header> <!-- #header-view -->
 
-  <div id="content-view" class="places">
+  <div id="content-view" class="events">
     
-    <ul class="feed">
+    <ul class="item-list">
 
         <!-- List item links to single place page -->
         <li><a href="http://localhost/obidapp/www/mockups/event_single.template.html">
           <div class="item-thumb">
-            <img src="http://compass-style.org/images/sites/dailymile.jpg" />
+            <img src="https://lh6.googleusercontent.com/-DklyX2RWgLI/T5UvP4hB5dI/AAAAAAAiYQ8/G8eCMfkhQ6A/w132-h132-n/Emiliano%2527s%2BMexican%2BRestaurant%2B%2526%2BBar%2B%2528South%2BSide%2529" />
           </div>
           <section class="item-content">
             <h1 class="item-title">Event name</h1>
             <ul class="item-details">
                 <li>May 31, 10pm - June 1, 12pm</li>
                 <li>At Event Place name</li> <!-- or address if there is no name -->
-                <li>Organize by Organizer</li> <!-- If organizer is different than place -->
                 <li>
                     <!-- Loop through tags here -->
                     <ul class="tags">
@@ -70,14 +69,13 @@
         <!-- List item links to single place page -->
         <li><a href="http://localhost/obidapp/www/mockups/event_single.template.html">
           <div class="item-thumb">
-            <img src="http://compass-style.org/images/sites/dailymile.jpg" />
+            <img src="https://lh6.googleusercontent.com/-lyccgEbCDf4/TymnvcO73fI/AAAAAAAAAXo/OVJYm97nzD0/w132-h132-n/slides-SS-beehive.jpg" />
           </div>
           <section class="item-content">
             <h1 class="item-title">Event name</h1>
             <ul class="item-details">
                 <li>May 31, 10pm - June 1, 12pm</li>
                 <li>At Event Place name</li> <!-- or address if there is no name -->
-                <li>Organize by Organizer</li> <!-- If organizer is different than place -->
                 <li>
                     <!-- Loop through tags here -->
                     <ul class="tags">
@@ -94,14 +92,14 @@
         <!-- List item links to single place page -->
         <li><a href="http://localhost/obidapp/www/mockups/event_single.template.html">
           <div class="item-thumb">
-            <img src="http://compass-style.org/images/sites/dailymile.jpg" />
+            <img src="https://lh3.googleusercontent.com/-Gn1_okJJE5g/T77gsao_E-I/AAAAAAA5KhU/Xkwl1VIpw5A/w132-h132-n/photo.jpg" />
           </div>
           <section class="item-content">
             <h1 class="item-title">Event name</h1>
             <ul class="item-details">
                 <li>May 31, 10pm - June 1, 12pm</li>
                 <li>At Event Place name</li> <!-- or address if there is no name -->
-                <li>Organize by Organizer</li> <!-- If organizer is different than place -->
+                <li>Organized by Organizer</li> <!-- If organizer is different than place -->
                 <li>
                     <!-- Loop through tags here -->
                     <ul class="tags">
@@ -118,14 +116,13 @@
         <!-- List item links to single place page -->
         <li><a href="http://localhost/obidapp/www/mockups/event_single.template.html">
           <div class="item-thumb">
-            <img src="http://compass-style.org/images/sites/dailymile.jpg" />
+            <img src="https://lh3.googleusercontent.com/-aGAo4xNuKiU/T6EQtIixuGI/AAAAAAAfJk0/7k-FbeWJPSA/w132-h132-n/Tamarind%2BFlavor%2Bof%2BIndia" />
           </div>
           <section class="item-content">
             <h1 class="item-title">Event name</h1>
             <ul class="item-details">
                 <li>May 31, 10pm - June 1, 12pm</li>
                 <li>At Event Place name</li> <!-- or address if there is no name -->
-                <li>Organize by Organizer</li> <!-- If organizer is different than place -->
                 <li>
                     <!-- Loop through tags here -->
                     <ul class="tags">

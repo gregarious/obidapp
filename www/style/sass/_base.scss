@@ -1,5 +1,6 @@
 @import "compass/css3";
 @import "compass/reset";
+@import "compass/typography";
 @import "grid";
 
 // Font not working now - compiling wrong file path
@@ -22,6 +23,7 @@ $total-width: 100%;
 ////////////
 
 $dark-grey: #444;
+$med-grey: #aaa;
 $light-grey: #f1f1f1;
 $green: #6BAA55;
 $red: #B83939;
@@ -33,7 +35,11 @@ $orange: #FF9F00;
 /* CSS3 */
 //////////
 
-// box shadow constants
+// text shadow constants
+$default-text-shadow-color: #111;
+$default-text-shadow-h-offset: 0.05em;
+$default-text-shadow-v-offset: 0.05em;
+$default-text-shadow-blur: 0.08em;
 
 
 ////////////
@@ -44,13 +50,16 @@ $orange: #FF9F00;
   background: url('../../img/icons/'+$path+'.png') center 10px no-repeat;
 }
 
+@mixin unstyled-link {
+  color: inherit;
+  text-decoration: inherit;
+  &:active, &:focus {
+    outline: none; } 
+}
+
 /////////////
 /* EXTENDS */
 /////////////
-
-.feed-menu-item {
-	background-color: $light-grey !important;
-}
 
 .flex-img {
 	height: auto;
@@ -63,8 +72,6 @@ $orange: #FF9F00;
 	li {
 		@include box-sizing(content-box);
 		float: left;
-		padding: 0.5em;
-		margin-right: 0.5em;
 		text-align: center;
 
 		&:last-child {
