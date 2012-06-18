@@ -59,15 +59,21 @@ body {
 }
 
 #content-view {
-	//padding: 0 0.5em;
-	//margin-top: 40px;
 	position: relative;
-	background: $green;
+	@include clearfix;
+	.single-page & {
+		margin: 0 5px;
+		//@include background-image(linear-gradient(#fff, #e1e1e1));
+		background: #fff;
+		@include box-shadow(#666 0 0 1px);
+		padding: 10px;
+	}
 }
 
 // A hack to compensate for weird overflow with #feed-nav
 #main-view {
 	overflow-x: hidden;
+	background: $light-green;
 }
 
 /* NAVIGATION ---------- */
@@ -146,10 +152,6 @@ body {
 
 /* FEED ITEMS --------- */
 
-.feed-page {
-	background: $green;
-}
-
 .item-list>li {
 	@include clearfix();
 	font-size: 0.9em;
@@ -158,7 +160,7 @@ body {
 	padding: 2%;
 	margin: 1%;
 	border-bottom: 1px solid #aaa;
-	//@include background-image(linear-gradient(#fff, #e1e1e1));
+	@include single-box-shadow;
 	background: #fff;
 
 	a {
@@ -203,7 +205,7 @@ body {
 	padding: 0.3em;
 	height: 30px;
 	position: fixed;
-
+	z-index: 999;
 	button, h1, span {
 		@include column(3);
 	}
@@ -225,17 +227,55 @@ body {
 }
 
 .single-header {
-	margin: 50px 0 10px;
+	margin: 20px 0 0;
+	padding: 10px;
 	@include clearfix;
+	.item-title {
+		font-size: 1.1em;
+	}
+	.item-details {
+		line-height: 1.1em;
+	}
+		
 }
 
 .single-content {
 	@include column(12);
 	position: relative;
-	&>article {
+
+	p {
+		font-size: 0.9em;
+		line-height: 1.1em;
+		//display: inline;
+	}
+
+	#mapCanvas {
 		@include column(12);
-		padding: 0.5em;
-		
+
+		//@include background-image(linear-gradient(#fff, #e1e1e1));
+		@include box-shadow(#333 1px 1px 2px);
+		margin-bottom: 10px;
+		height: 100px;
+		overflow: hidden;
+		//margin: 0 0 10px 10px;
+	}
+}
+
+.social {
+	@include column(12);
+	margin: 1em 0;
+	div {
+		@include column(6);
+		padding: 5px;
+		text-align: center;
+		font-size: 0.9em;
+		@include box-shadow(#444 1px 1px 3px);
+		&:first-child {
+			border-right: 1px solid $green;
+
+		}
+
+		@include background-image(linear-gradient(#e5e5e5, #e1e1e1));
 	}
 }
 

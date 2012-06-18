@@ -13,9 +13,9 @@
 </head>
 
 <body id="app-view">
-  <div id="main-view">
+  <div id="main-view" class="single-page">
       <!-- Header view for single pages -->
-    <header id="header-view" class="single-page">
+    <header id="header-view">
 
       <nav id="top-bar-single">
           <!-- This is a back button - indicates what page you are going back to -->
@@ -28,47 +28,54 @@
     <div id="content-view">
       <header class="single-header">
         <div class="item-thumb">
-          <img src="http://t1.gstatic.com/images?q=tbn:ANd9GcRypMrJ5MP3rBI3YfFHAeaGQcSrVQHi7aUa2PX7zs202hs2vER_xVajvMniOQ" />
+          <img src="https://lh6.googleusercontent.com/-lyccgEbCDf4/TymnvcO73fI/AAAAAAAAAXo/OVJYm97nzD0/w132-h132-n/slides-SS-beehive.jpg" />
             <div class="item-action">
 	          Add to calendar
 	        </div>
         </div>
         <section class="item-content">
-          <h1 class="single-title">Single event title</h1>
-          <ul class="item-details">
-            <li>Date start-end</li>
-            <!-- If the place hosting isn't the organizer: -->
-            <li>Organized by Organized</li>
-            <li>at Place Name</li>
-            <li>123 Address St</li>
-            <li>         
-              <!-- Loop through tags here -->
-              <ul class="tags">
-                <li>food</li>
-                <li>pizza</li>
-                <li>beer</li>
-                <li>tennis</li>
-              </ul>
-            </li>
-          </ul> <!-- .item-details -->
-  
-        <!-- If Facebook and/or Twitter -->
-        <div class="item-social">
-            <img src="../img/icons/facebook.png" />
-            <img src="../img/icons/twitter.png" />
-        </div>
+          <h1 class="item-title">Single event title</h1>
+            <ul class="item-details">
+                <li>May 31, 10pm - June 1, 12pm</li>
+                <li>At Event Place name</li> <!-- omit if there is no name -->
+                <li>777 Coolest Ave.</li>
+                <li>
+                    <!-- Loop through tags here -->
+                    <ul class="tags">
+                        <li>food</li>
+                        <li>pizza</li>
+                        <li>beer</li>
+                        <li>tennis</li>
+                    </ul>
+                </li>
+            </ul>
         </section> <!-- .item-content -->
 
       </header> <!-- .single-header -->
 
       <article class="single-content">
         <div id="mapCanvas">
-          <!-- Map generated here, clicking it opens Google Maps directions -->
+          <!-- Static map image here, clicking it opens Google Maps directions -->
+          <img src="http://telecom-it.net/images/uploads/images/GMap.gif" />
         </div>
-        <p>Description<br />
-          Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably haven't heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.
+        <p class="description">Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably haven't heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.
         </p>
+
+        
       </article>
+      
+      <!-- If Facebook and/or Twitter -->
+      <div class="social">
+        <div class="facebook">
+            <!-- <img src="../img/icons/facebook.png" /> -->
+            Facebook
+        </div>
+        <div class="twitter">
+          <!-- <img src="../img/icons/twitter.png" /> -->
+          @sammsiyo
+        </div>
+      </div>
+
 
     </div> <!-- #content-view -->
 
