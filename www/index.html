@@ -31,40 +31,44 @@
   <script src="js/libs/backbone-0.9.2.js"></script>
   <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
 
-  <script src="app/core/init.js"></script>
+  <script src="app/init.js"></script>
+  <script src="app/account/router.js"></script>
+  <script src="app/explore/router.js"></script>
+  <script src="app/detail/router.js"></script>
+  <script>
+    // Backbone.history.start();
+  </script>
 </head>
 
-<body id="app-view" style="display:none">
-  <!-- app-view gets display:none to ensure nothing is displayed until after initial DOM manipulation is complete -->
-  <div id="login-view">
-    <h1>Welcome!</h1>
-    <button>Log in!</button>
-  </div>
-  <div id="main-view">
-    <header id="header-view">
-      <!-- Content defined in template-main-header -->
-    </header>
-    <div id="content-view">
-    </div>
-
-    <footer id="settings-drawer" style="display:none">
-      Settings
-    </footer>
-  </div>
+<body id="app-view">
+  <h1>Scenable</h1>
 
 
   <!-- Currently inlined templates. This will most certainly change. Maybe use 
        require.js. Maybe roll own preprocessor that puts template html files
        into a global TPL variable like pipeline does. -->
-  <script type="text/html" id="template-main-header">
-    <h2>Template header!</h2>
+  <script type="text/html" id="tpl-account-frame">
+    <div id="account-frame">
+      <div class="content">
+        <p>Account frame</p>
+      </div>
+    </div>
   </script>
 
-  <script type="text/html" id="template-feed">
-    <lu>
+  <script type="text/html" id="tpl-explore-frame">
+    <div id="explore-frame">
+      <nav><ul style="display: inline"><li>Opt1</li><li>Opt2</li><li>Opt3</li></ul></nav>
+      <div class="content">
+        <p>Explore content</p>
+      </div>
+    </div>
   </script>
 
-  <script type="text/html" id="template-feed-map">
+  <script type="text/html" id="tpl-detail-frame">
+    <div id="detail-frame">
+      <nav><ul style="display: inline"><li>Back</li></ul></nav>
+      <p>Detail frame</p>
+    </div>
   </script>
 
   <script type="text/html" id="template-feed-list">
