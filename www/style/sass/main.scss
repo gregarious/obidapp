@@ -63,7 +63,6 @@ body {
 	@include clearfix;
 	.single-page & {
 		margin: 0 5px;
-		//@include background-image(linear-gradient(#fff, #e1e1e1));
 		background: #fff;
 		@include box-shadow(#666 0 0 1px);
 		padding: 10px;
@@ -201,12 +200,14 @@ body {
 /* SINGLE ---------- */
 
 #top-bar-single {
-	background: $green;
+	@include background(linear-gradient(#222, $dark-grey));
+	@include column(12);
 	padding: 0.3em;
-	height: 30px;
+	//height: 35px;
 	position: fixed;
 	z-index: 999;
-	button, h1, span {
+	border: 2px solid $dark-grey;
+	a, h1, span {
 		@include column(3);
 	}
 
@@ -214,7 +215,7 @@ body {
 		@include column(6);
 		color: #fff;
 		float: left;
-		margin: 0 1em;
+		margin: 0.3em 1em 0;
 		text-align: center;
 		white-space: nowrap;
 		overflow: hidden;
@@ -224,10 +225,14 @@ body {
 	div {
 		@include column(1);
 	}
+
+	a {
+		
+	}
 }
 
 .single-header {
-	margin: 20px 0 0;
+	margin: 35px 0 0;
 	padding: 10px;
 	@include clearfix;
 	.item-title {
@@ -246,12 +251,12 @@ body {
 	p {
 		font-size: 0.9em;
 		line-height: 1.1em;
-		//display: inline;
 	}
+
+
 
 	#mapCanvas {
 		@include column(12);
-
 		//@include background-image(linear-gradient(#fff, #e1e1e1));
 		@include box-shadow(#333 1px 1px 2px);
 		margin-bottom: 10px;
@@ -280,6 +285,27 @@ body {
 }
 
 /* FOOTER ------------ */
+
+.sorting {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	@include box-shadow($dark-grey 4px 0 4px);
+
+	ul li {
+		@include column(4);
+		padding: 0.3em;
+		border: 1px solid #999;
+		background: $dark-grey;
+		color: #fff;
+
+		&.selected {
+			background: $yellow;
+			font-weight: bold;
+			color: #000;
+		}
+	}
+}
 
 #settings-drawer {
 	background: #222;
@@ -319,26 +345,48 @@ body {
 
 /* PLACES ---------- */
 
-.single-place-nav {
-	background: $dark-grey;
-	color: #fff;
-	border-top: 1px solid $red;
+.action-list {
+	@include column(12);
 	margin-bottom: 0.5em;
+	ul {
+		@include clearfix;
+
+		li {
+			width: 32.5%;
+			float: left;
+			text-align: center;
+			@include background-image(linear-gradient(#e5e5e5, #ccc));
+			padding: 0.7em;
+			@include box-sizing(border-box);
+			margin-right: 0.2em;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+.single-place-nav {
+	//background: $dark-grey;
+	color: #fff;
+	//border-top: 1px solid $red;
+	margin-bottom: 0.5em;
+
 	li {
 		background: $dark-grey;
 		border-bottom: 2px solid $red;
 		border-right: 2px solid $red;
-
-  		@include column(11/3);
-
-  		&#favorite-place {
-  			@include column(1);
-  			border-right: none;
+		@include border-top-radius(5px);
+  		@include column(4);
+  		padding: 0.3em;
+  		font-size: 0.9em;
+  		&:hover {
+  			background: $light-green;
   		}
 
-  		&.active {
+  		&.selected {
   			background: #fff;
-  			border-color: #fff;
+  			//border-color: #fff;
   			color: #000;
   		}
 	}
@@ -365,21 +413,12 @@ body {
 }
 
 
-#map_canvas {
+#placeMapCanvas {
 	height: 100px;
 	@include column(5);
 	overflow: hidden;
 	position: relative;
-
-	.single-title {
-		//text-align: center;
-		padding: 0.5em;
-		width: 100%;
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		background: $yellow;
-	}
+	margin: 0 0.5em 0 0.5em;
 }
 
 /* SPECIALS ---------- */

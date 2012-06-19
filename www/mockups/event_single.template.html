@@ -5,23 +5,22 @@
 
 <head>
     <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width">
 
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="../style/stylesheets/main.css">
-
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="../style/stylesheets/main.css">
 </head>
 
 <body id="app-view">
-  <div id="main-view" class="single-page">
+    <div id="main-view" class="single-page">
       <!-- Header view for single pages -->
     <header id="header-view">
 
       <nav id="top-bar-single">
           <!-- This is a back button - indicates what page you are going back to -->
-            <button><a href="http://localhost/obidapp/www/mockups/events_feed.template.html">&larr; Events</a></button>
-            <h1>Truncated event name...</h1>
-        </nav> <!-- .single-nav -->
+            <a href="events_feed.template.html"><img src="../img/assets/back-btn.png"></a>
+            <h1>Super duper duper duper long event name that should ne tuncated!! Yay!</h1>
+        </nav> <!-- #top-bar-single -->
 
     </header> <!-- #header-view -->
 
@@ -33,11 +32,11 @@
 	          Add to calendar
 	        </div>
         </div>
-        <section class="item-content">
+        <article class="item-content">
           <h1 class="item-title">Single event title</h1>
             <ul class="item-details">
                 <li>May 31, 10pm - June 1, 12pm</li>
-                <li>At Event Place name</li> <!-- omit if there is no name -->
+                <li>at <a href="place_single.template.html"> Event Place name</a></li> <!-- omit if there is no name -->
                 <li>777 Coolest Ave.</li>
                 <li>
                     <!-- Loop through tags here -->
@@ -49,11 +48,10 @@
                     </ul>
                 </li>
             </ul>
-        </section> <!-- .item-content -->
-
+        </article> <!-- .item-content -->
       </header> <!-- .single-header -->
 
-      <article class="single-content">
+      <section class="single-content">
         <div id="mapCanvas">
           <!-- Static map image here, clicking it opens Google Maps directions -->
           <img src="http://telecom-it.net/images/uploads/images/GMap.gif" />
@@ -62,7 +60,7 @@
         </p>
 
         
-      </article>
+      </section>
       
       <!-- If Facebook and/or Twitter -->
       <div class="social">

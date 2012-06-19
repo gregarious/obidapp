@@ -25,8 +25,9 @@ $total-width: 100%;
 $dark-grey: #444;
 $med-grey: #aaa;
 $light-grey: #f1f1f1;
-$green: #6BAA55;
 $light-green: #AAD49A;
+$dark-green: #049444;
+$green: #54B948;
 $red: #B83939;
 $yellow: #DED57F; 
 $orange: #FF9F00;
@@ -42,6 +43,16 @@ $default-text-shadow-h-offset: 0.05em;
 $default-text-shadow-v-offset: 0.05em;
 $default-text-shadow-blur: 0.08em;
 
+@mixin button-gradient {
+	@include background(linear-gradient($green, $light-green));
+	border: 1px solid $light-green;
+	color: #fff;
+	font-weight: 600;
+	font-size: 0.9em;
+	a {
+		@include unstyled-link;	
+	}
+}
 
 ////////////
 /* MIXINS */

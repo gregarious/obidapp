@@ -5,34 +5,35 @@
 
 <head>
 	<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="../style/stylesheets/main.css">
+  	<meta name="viewport" content="width=device-width">
+  	<!-- Main Stylesheet -->
+  	<link rel="stylesheet" href="../style/stylesheets/main.css">
 </head>
 
 <body id="app-view">
-<div id="main-view">
+<div id="main-view" class="single-page">
 
 	<!-- Header view for single pages -->
-    <header id="header-view" class="single-page">
+    <header id="header-view">
 
 	    <nav id="top-bar-single">
-        	<!-- This is a back button - indicates what page you are going back to -->
-            <button><a href="http://localhost/obidapp/www/mockups/places_feed.template.html">&larr; Places</a></button>
-            <h1>Truncated place name...</h1>
-        </nav> <!-- .single-nav -->
+          <!-- This is a back button - indicates what page you are going back to -->
+            <a href="events_feed.template.html"><img src="../img/assets/back-btn.png"></a>
+            <h1>This place has a very long name that should be truncated! Yay!</h1>
+        </nav> <!-- #top-bar-single -->
 
     </header> <!-- #header-view -->
 
-    <div id="content-view" class="places">
-
-    <section class="single-content">
+    <div id="content-view">
     	<!-- Each of the following 3 sections is hidden/shown based on the active .single-place-nav link -->
 		<header class="single-header">
 
     		<div class="item-thumb">
-      			<img src="http://compass-style.org/images/sites/caring.jpg" />
-	        </div> <!-- .item-thumb -->
+	      		<img src="https://lh6.googleusercontent.com/-lyccgEbCDf4/TymnvcO73fI/AAAAAAAAAXo/OVJYm97nzD0/w132-h132-n/slides-SS-beehive.jpg" />
+	        	<div class="item-action">
+	          	Add to Favorites
+	        	</div>
+        	</div>
 
 	        <article class="item-content">
 	            <h1 class="single-title">Place name</h1>
@@ -54,98 +55,108 @@
 
     	<nav class="single-place-nav">
 			<ul>
-				<li class="active">Info</li>
+				<li class="selected">Info</li>
 				<li>Events</li>
 				<li>Specials</li>
-				<li id="favorite-place">&#9827;</li>
+				<!-- <li id="favorite-place">&#9827;</li> -->
 			</ul>
-		</nav>
+		</nav> 
 
-        <article class="place-info">
+		<section class="single-content">
 
-			<ul class="item-details">
-				<li><span class="detail-title">Phone:</span> (724) 887-4246</li>
-				<li><span class="detail-title">Hours:</span> Mon-Fri 10am - 5pm &#149; Sat 10am - 2pm &#149; Sun Closed</li>
-				<li><span class="detail-title">Parking:</span> Lot, Street, Garage</li>
-				<li><a href="http://coolwebsite.com">Website</a></li>
-	        	<li class="item-social">
-	            	<img src="../img/icons/facebook.png" />
-	            	<img src="../img/icons/twitter.png" />
-	        	</li>
-			</ul>
-	    	<div id="map_canvas">
-				<!-- Map png here:  -->
-				<img src="http://2d-code.co.uk/images/qr-map.jpg" />
-				<h1 class="single-title">Direction</h1>
-			</div>
-			<p>
-			Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably haven't heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.
-			</p>
+	        <article class="place-info">
 
-        </article>
+				<ul class="item-details">
+					<li><span class="detail-title">Hours:</span> Mon-Fri 10am - 5pm &#149; Sat 10am - 2pm &#149; Sun Closed</li>
+					<li><span class="detail-title">Parking:</span> Lot, Street, Garage</li>
+					<li><a href="http://coolwebsite.com">Website</a></li>
+				</ul>
 
-        <article class="place-events">
+	        	<nav class="action-list">
+	        		<ul>
+	        			<li>Call</li>
+	        			<li>Favorite</li>
+	        			<li>Map</li>
+	        		</ul>
+	        	</nav>
 
-        	<ul class="feed">
+		    	<div id="placeMapCanvas">
+					<!-- Map png here: -->
+					<img src="http://2d-code.co.uk/images/qr-map.jpg" />
+					<h1 class="single-title">Direction</h1>
+				</div>
+				<p>
+				Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably haven't heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.
+				</p>
 
-	            <li>
-	                <div class="item-thumb">
-	                	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
-	                </div>
-	                <section class="item-content">
-	                 	<h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/place_single.template.html">Event name</a></h1>
-	                 	<ul class="item-details">
-	                    	<li>Starts - ends</li>
-	                    	<li>organizer if there is one</li>
-	                    	<li>
-		                      	<!-- Loop through tags here -->
-		                    	<ul class="tags">
-		                      		<li>food</li>
-		                      		<li>pizza</li>
-		                      		<li>beer</li>
-		                      		<li>tennis</li>
-		                    	</ul>
-	                        </li>
-                  		</ul> <!-- .item-details -->
-                	</section>
-              	</li>
+				<div class="social">
+		            <img src="../img/icons/facebook.png" />
+		            <img src="../img/icons/twitter.png" />
+		        </div>
 
-			</ul> <!-- events feed -->
+	        </article> <!-- .place-info -->
 
-        </article>
+	        <article class="place-events">
 
-        <article class="place-specials">
+	        	<ul class="feed">
 
-			<ul class="feed">
-        		
-	            <li>
-	                <div class="item-thumb">
-	                	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
-	                </div>
-	                <section class="item-content">
-	                 	<h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/place_single.template.html">Special title</a></h1>
-	                 	<ul class="item-details">
-	                    	<li>expires date</li>
-	                    	<li># available</li>
-	                    	<li>
-		                      	<!-- Loop through tags here -->
-		                    	<ul class="tags">
-		                      		<li>food</li>
-		                      		<li>pizza</li>
-		                      		<li>beer</li>
-		                      		<li>tennis</li>
-		                    	</ul>
-	                        </li>
-                  		</ul> <!-- .item-details -->
-                	</section>
-              	</li>
+		            <li>
+		                <div class="item-thumb">
+		                	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
+		                </div>
+		                <article class="item-content">
+		                 	<h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/place_single.template.html">Event name</a></h1>
+		                 	<ul class="item-details">
+		                    	<li>Starts - ends</li>
+		                    	<li>organizer if there is one</li>
+		                    	<li>
+			                      	<!-- Loop through tags here -->
+			                    	<ul class="tags">
+			                      		<li>food</li>
+			                      		<li>pizza</li>
+			                      		<li>beer</li>
+			                      		<li>tennis</li>
+			                    	</ul>
+		                        </li>
+	                  		</ul> <!-- .item-details -->
+	                	</article>
+	              	</li>
 
-			</ul> <!-- specials feed -->
+				</ul>
 
-        </article>
+	        </article> <!-- .place-events -->
+
+	        <article class="place-specials">
+
+				<ul class="feed">
+	        		
+		            <li>
+		                <div class="item-thumb">
+		                	<img src="http://compass-style.org/images/sites/dailymile.jpg" />
+		                </div>
+		                <section class="item-content">
+		                 	<h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/place_single.template.html">Special title</a></h1>
+		                 	<ul class="item-details">
+		                    	<li>expires date</li>
+		                    	<li># available</li>
+		                    	<li>
+			                      	<!-- Loop through tags here -->
+			                    	<ul class="tags">
+			                      		<li>food</li>
+			                      		<li>pizza</li>
+			                      		<li>beer</li>
+			                      		<li>tennis</li>
+			                    	</ul>
+		                        </li>
+	                  		</ul> <!-- .item-details -->
+	                	</section>
+	              	</li>
+
+				</ul>
+
+	        </article> <!-- .place-specials -->
+	       </section> <!-- .single-content -->
         
-    </section> <!-- .single-content -->
-
     </div> <!-- #content-view -->
 
     <footer id="settings-drawer" style="display:none">
