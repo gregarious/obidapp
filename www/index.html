@@ -32,50 +32,69 @@
   <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
 
   <script src="app/init.js"></script>
-  <script src="app/account/router.js"></script>
+  <script src="app/explore/models.js"></script>
+  <script src="app/explore/views.js"></script>
   <script src="app/explore/router.js"></script>
-  <script src="app/detail/router.js"></script>
   <script>
-    // Backbone.history.start();
+  $(function(){
+    Backbone.history.start();
+  });
   </script>
+  
+  <!-- temporary styles for testing -->
+  <style type="text/css">
+    .active {color:#f00;}
+  </style>
 </head>
 
 <body>
   <div id="app-view">
-    <h1>Scenable</h1>
+    <!-- Main frame for explore-related actions (feeds) -->
+    <div id="explore-frame" style="display:none">
+      <nav>
+        <ul style="display: inline">
+          <li class="places">Places</li>
+          <li class="events">Events</li>
+          <li class="specials">Specials</li>
+        </ul>
+      </nav>
+      <div class="content">
+        <div class="feed-container">
+        Feed Container
+        </div>
+        <div class="fs-container">
+        FS Container
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Currently inlined templates. This will most certainly change. Maybe use 
        require.js. Maybe roll own preprocessor that puts template html files
        into a global TPL variable like pipeline does. -->
-  <script type="text/html" id="tpl-account-frame">
-    <div id="account-frame">
-      <div class="content">
-        <p>Account frame</p>
-      </div>
-    </div>
-  </script>
-
-  <script type="text/html" id="tpl-explore-frame">
-    <div id="explore-frame">
-      <nav><ul style="display: inline"><li>Opt1</li><li>Opt2</li><li>Opt3</li></ul></nav>
-      <div class="content">
-        <p>Explore content</p>
-      </div>
-    </div>
-  </script>
-
-  <script type="text/html" id="tpl-detail-frame">
-    <div id="detail-frame">
-      <nav><ul style="display: inline"><li>Back</li></ul></nav>
-      <p>Detail frame</p>
-    </div>
-  </script>
-
-  <script type="text/html" id="template-feed-list">
+  
+  <!--  Template variables:
+        filters: array of simple objects with "label" value
+        sorters: array of simple objects with "label" value
+  -->
+  <script type="text/html" id="tpl-fs-basic">
+  Sorters:
+  <ul>
+    {{#each sorters}}
+      <li>{{this.label}}</li>
+    {{/each}}
+  </ul>
+  Filters:
+  <ul>
+    <select>
+    {{#each filters}}
+      <option value="{{this.label}}">{{this.label}}</option>
+    {{/each}}
+  </ul>
   </script>  
 
-  <script type="text/html" id="template-detail">
+  <script type="text/html" id="tpl-place-list-item">
+  {{name}}
   </script>
 
 </body>
