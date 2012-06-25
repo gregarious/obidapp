@@ -20,7 +20,7 @@
   <!-- more tags for your 'head' to consider h5bp.com/d/head-Tips -->
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/style/stylesheets/main.css">
 
 
   <!-- All scripts in head: no need to worry about page load -->
@@ -37,6 +37,7 @@
   <script src="app/explore/router.js"></script>
   <script>
   $(function(){
+    Scenable.ExploreMasterView.$el.show();
     Backbone.history.start();
   });
   </script>
@@ -51,21 +52,42 @@
   <div id="app-view">
     <!-- Main frame for explore-related actions (feeds) -->
     <div id="explore-frame" style="display:none">
-      <nav>
-        <ul style="display: inline">
-          <li class="places">Places</li>
-          <li class="events">Events</li>
-          <li class="specials">Specials</li>
-        </ul>
-      </nav>
-      <div class="content">
-        <div class="feed-container">
-        Feed Container
+        <!-- Header view for feed pages -->
+        <header>
+          <section class="top-bar">
+            <div class="top-logo">
+              <img src="../img/logos/oakland-white-betatag-100w.png">
+            </div>
+            <div class="current-user">laras126</div>
+            <nav class="view-options">
+              <!-- Map icon to be switched to list depending on template -->
+              <!-- Also the icons are in reverse order for the layout -->
+                <div class="mode-button">
+                  <img src="../img/icons/map.png">
+                  m
+                </div>
+                <div class="search-button">
+                  <img src="../img/icons/search.png">
+                  s
+                </div>
+            </nav> <!-- .view-options -->
+          </section> <!-- #top-bar -->
+
+          <nav class="feed-nav">
+            <ul>
+                <a href="#" class="menu-item-wrap"><li id="now"><div>NOW</div></li></a>
+                <a href="#" class="menu-item-wrap"><li id="places"><div>Places</div></li></a>
+                <a href="#" class="menu-item-wrap"><li id="events"><div>Events</div></li></a>
+                <a href="#" class="menu-item-wrap"><li id="specials"><div>Specials</div></li></a>
+                <a href="#" class="menu-item-wrap"><li id="bulletin"><div>Bulletin</div></li></a>
+            </ul>
+          </nav>
+
+        </header>
+
+        <div class="content">
+          Content
         </div>
-        <div class="fs-container">
-        FS Container
-        </div>
-      </div>
     </div>
   </div>
 
@@ -73,29 +95,5 @@
        require.js. Maybe roll own preprocessor that puts template html files
        into a global TPL variable like pipeline does. -->
   
-  <!--  Template variables:
-        filters: array of simple objects with "label" value
-        sorters: array of simple objects with "label" value
-  -->
-  <script type="text/html" id="tpl-fs-basic">
-  Sorters:
-  <ul>
-    {{#each sorters}}
-      <li>{{this.label}}</li>
-    {{/each}}
-  </ul>
-  Filters:
-  <ul>
-    <select>
-    {{#each filters}}
-      <option value="{{this.label}}">{{this.label}}</option>
-    {{/each}}
-  </ul>
-  </script>  
-
-  <script type="text/html" id="tpl-place-list-item">
-  {{name}}
-  </script>
-
 </body>
 </html>
