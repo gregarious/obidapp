@@ -1,0 +1,126 @@
+<!doctype html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../style/stylesheets/main.css">
+</head>
+
+
+<body id="app-view">
+  <div id="main-view">
+
+    <!-- Header view for feed pages -->
+    <header id="header-view" class="feed-page">
+
+      <section id="top-bar">
+        <div id="top-logo">
+          <img src="../img/logos/oakland-white-betatag-100w.png">
+        </div>
+        <div id="current-user">laras126</div>
+        <nav id="view-options">
+          <!-- Map icon to be switched to list depending on template -->
+          <!-- Also the icons are in reverse order for the layout -->
+            <img src="../img/icons/map.png">
+            <img src="../img/icons/search.png">
+        </nav> <!-- .view-options -->
+      </section> <!-- #top-bar -->
+
+      <nav id="feed-nav">
+        <ul>
+            <li id="now"><a href="now.template.html"><div>NOW</div></a></li>
+            <li id="places"><a href="places_feed.template.html"><div>Places</div></a></li>
+            <li id="events"><a href="specials_feed.template.html"><div>Events</div></a></li>
+            <li id="specials"><a href="specials_feed.template.html"><div>Specials</div></a></li>
+            <li id="bulletin" class="active"><div>Bulletin</div></li>
+        </ul>
+      </nav> <!-- #site-nav -->
+
+    </header> <!-- #header-view -->
+
+    <div id="content-view">
+      <ul class="feed">
+
+        <li>
+            <div class="item-thumb">
+              <img src="../img/icons/newspaper.png" />
+            </div>
+            <section class="item-content">
+              <h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/news_single.template.html">An interesting news article</a></h1>
+              <ul class="item-details">
+                  <li>Published Date</li>
+                  <li>Pittsburgh Post Gazette</li>
+                  <li>Submitted by admin</li>
+                    <!-- Loop through tags here
+                    Are we doing tags on news? I don't think so.
+                    <ul class="tags">
+                        <li>food</li>
+                        <li>pizza</li>
+                        <li>beer</li>
+                        <li>tennis</li>
+                    </ul> -->
+                  </li>
+                </ul> <!-- .item-details -->
+            </section>
+          </li>
+
+          <li>
+            <div class="item-thumb">
+              <img src="../img/icons/question.png" />
+            </div>
+            <section class="item-content">
+              <h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/question_single.template.html">What's the best massage place in Oakland?</a></h1>
+              <ul class="item-details">
+                  <li>3hrs ago by bigBoi125</li>
+                  <li>12 responses</li>
+                    <!-- Loop through tags here
+                    Are we doing tags on news? I don't think so.
+                    <ul class="tags">
+                        <li>food</li>
+                        <li>pizza</li>
+                        <li>beer</li>
+                        <li>tennis</li>
+                    </ul> -->
+                </ul> <!-- .item-details -->
+            </section>
+          </li>
+
+          <li>
+            <div class="item-thumb">
+              <img src="../img/icons/speech-bubbles.png" />
+            </div>
+            <section class="item-content">
+              <h1 class="item-title"><a href="http://localhost/obidapp/www/mockups/chatter_single.template.html">Remember to do Thirsty Thursday this week!</a></h1>
+              <ul class="item-details">
+                <!-- if its twitter, indicate that and link to their twitter handle -->
+                <li>3hrs ago by @jackson</li>
+              </ul> <!-- .item-details -->
+            </section>
+          </li>
+
+      </ul> <!-- events feed -->
+    </div>
+
+    <nav class="sorting">
+      <ul>
+        <li class="active">Popular</li> <!-- Selected by default -->
+        <li>Newest</li>
+        <li>
+          <select>
+            <option>Category</option>
+            <option>Questions</option>
+            <option>News</option>
+            <option>Chatter</option>
+          </select>
+        </li>
+      </ul>
+    </nav>
+
+    <footer id="settings-drawer" style="display:none">
+      Settings
+    </footer>
+
+  </div>
+</body>
+</html>

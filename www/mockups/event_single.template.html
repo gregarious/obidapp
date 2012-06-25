@@ -1,0 +1,85 @@
+<!doctype html>
+<!-- Conditional comment for mobile ie7 blogs.msdn.com/b/iemobile/ -->
+<!--[if IEMobile 7 ]>    <html class="no-js iem7" lang="en"> <![endif]-->
+<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="../style/stylesheets/main.css">
+</head>
+
+<body id="app-view">
+    <div id="main-view" class="single-page">
+      <!-- Header view for single pages -->
+    <header id="header-view">
+
+      <nav id="top-bar-single">
+          <!-- This is a back button - indicates what page you are going back to -->
+            <a href="events_feed.template.html"><img src="../img/assets/back-btn.png"></a>
+            <h1>Super duper duper duper long event name that should ne tuncated!! Yay!</h1>
+        </nav> <!-- #top-bar-single -->
+
+    </header> <!-- #header-view -->
+
+    <div id="content-view">
+      <header class="single-header">
+        <div class="item-thumb">
+          <img src="https://lh6.googleusercontent.com/-lyccgEbCDf4/TymnvcO73fI/AAAAAAAAAXo/OVJYm97nzD0/w132-h132-n/slides-SS-beehive.jpg" />
+            <div class="item-action">
+	          Add to calendar
+	        </div>
+        </div>
+        <article class="item-content">
+          <h1 class="item-title">Single event title</h1>
+            <ul class="item-details">
+                <li>May 31, 10pm - June 1, 12pm</li>
+                <li>at <a href="place_single.template.html"> Event Place name</a></li> <!-- omit if there is no name -->
+                <li>777 Coolest Ave.</li>
+                <li>
+                    <!-- Loop through tags here -->
+                    <ul class="tags">
+                        <li>food</li>
+                        <li>pizza</li>
+                        <li>beer</li>
+                        <li>tennis</li>
+                    </ul>
+                </li>
+            </ul>
+        </article> <!-- .item-content -->
+      </header> <!-- .single-header -->
+
+      <section class="single-content">
+        <div id="mapCanvas">
+          <!-- Static map image here, clicking it opens Google Maps directions -->
+          <img src="http://telecom-it.net/images/uploads/images/GMap.gif" />
+        </div>
+        <p class="description">Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably haven't heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.
+        </p>
+
+        
+      </section>
+      
+      <!-- If Facebook and/or Twitter -->
+      <div class="social">
+        <div class="facebook">
+            <!-- <img src="../img/icons/facebook.png" /> -->
+            Facebook
+        </div>
+        <div class="twitter">
+          <!-- <img src="../img/icons/twitter.png" /> -->
+          @sammsiyo
+        </div>
+      </div>
+
+
+    </div> <!-- #content-view -->
+
+    <footer id="settings-drawer" style="display:none">
+      Settings
+    </footer> <!-- #settings-drawer -->
+  </div>
+</body>
+</html>
