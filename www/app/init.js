@@ -3,12 +3,14 @@ $(function(){
     Scenable = {};
 
     Scenable.views = Scenable.views || {};
-    Scenable.views.coreView = new (Backbone.View.extend({
+    Scenable.views.inst = Scenable.views.inst || {};
+
+    Scenable.views.inst.coreView = new (Backbone.View.extend({
         currentFocusView: null,
         // Closes currently focused view and sets the argument as the focus.
         // New view is expected to have a close() method.
         setNewFocus: function(view) {
-            if(this.currentFocusView) {
+            if(this.currentFocusView && this.currentFocusView !== view) {
                 this.currentFocusView.close();
             }
             this.currentFocusView = view;
@@ -22,6 +24,11 @@ $(function(){
             return this;
         }
     }))({el: $('#app-view')});
+
+    Scenable.utils = Scenable.utils || {};
+    Scenable.utils.selectorToTemplate = function(selector) {
+        return Handlebars.compile($(selector).html());
+    };
 });
 
 var testView = Backbone.View.extend({
