@@ -2,61 +2,109 @@ $(function(){
     Scenable = Scenable || {};
 
     /*** VIEW CLASS DEFINITIONS ***/
-    /* 
+    /*
      * TopBar View: Static (mostly) top bar in charge of handing off explore
      * mode changing and searching events.
      * - One bit of dynamic content is present for the view: the username in
      *   the center. Instead of complicating things by forcing a template, a simple
      *   function call will update the text directly in the DOM.
+     *
+     * Events to subscribe to:
+     * - feed-mode-change (args: new mode name)
     */
     var TopBar = Backbone.View.extend({
-        events: {
-            'click .mode-button': 'modeChosen',
-            'click .search-button': 'searchChosen'
-        },
+        feedModes: ['list', 'map'],
+        currModeIndex: 0,  // default to first array element
+        centerText: '',
 
         // supported opts:
         // - centerText
+        // - modeIndex (0 for list, 1 for map)
         initialize: function(opts) {
-            _.bindAll(this, 'modeChosen', 'searchChosen', 'setCenterText');
+            _.bindAll(this, 'searchChosen', 'setCenterText', 'cycleFeedMode', 'render');
             if(opts) {
-                this.setCenterText(opts.centerText || '');
+                if(opts.centerText) {
+                    this.centerText = opts.centerText;
+                }
+                if(opts.centerText) {
+                    this.modeIndex = opts.modeIndex;
+                }
             }
         },
 
-        modeChosen: function() {
-            console.log('TopBar.modeChosen:');
-			console.log(arguments);
-        },
-
-        searchChosen: function() {
-            console.log('TopBar.searchChosen:');
-			console.log(arguments);
-        },
-
         setCenterText: function(text) {
-            this.$('.current-user').text(text);
+            this.centerText = text;
+            this.render();
+        },
+
+        render: function() {
+            var nextMode = this.feedModes[(this.currModeIndex + 1) % this.feedModes.length];
+            // switch this to an icon setting (maybe conditional in a template?
+            this.$('.mode-button').html(nextMode);
+            this.$('.current-user').text(this.centerText);
+            return this;
+        },
+
+        events: {
+            'click .mode-button': 'cycleFeedMode',
+            'click .search-button': 'searchChosen'
+        },
+
+        searchChosen: function(event) {
+            // TODO: need to grab the query
+            var query = 'query';
+            this.trigger('search', query);
+        },
+
+        cycleFeedMode: function() {
+            this.currModeIndex = (this.currModeIndex + 1) % this.feedModes.length;
+            this.trigger('feed-mode-change', this.feedModes[this.currModeIndex]);
+            this.render();
         }
     });
 
-    /* 
+    /*
      * NavBar View: Static nav bar in charge of handing off feed type change
      * events
     */
     var NavBar = Backbone.View.extend({
+        activeType: 'now',
+
+        initialize: function(opts) {
+            _.bindAll(this, 'typeChosen', 'render');
+            if(opts) {
+                if(opts.activeType) {
+                    this.activeType = activeType;
+                }
+            }
+        },
+
         events: {
             'click li': 'typeChosen'
         },
 
-        initialize: function(opts) {
-            _.bindAll(this, 'typeChosen');
+        typeChosen: function(event) {
+            // event.currentTarget is the DOM element the handler was
+            // bound to (the li in this case)
+            this.activeType = event.currentTarget.id;
+            this.trigger('content-type-change', this.activeType);
+            this.render();
         },
 
-        typeChosen: function(event) {
-            // event.currentTarget is the DOM element the handler was 
-            // bound to (the li in this case)
-            console.log('NavBar.typeChosen: ' + event.currentTarget.id);
-            // TODO: change li with active class
+        render: function() {
+            var activeId = this.activeType;
+            console.log(this.activeType);
+            // cycle through nav elements, ensuring active class is in sync with this.activeType
+            this.$('li').each(function() {
+                var el = $(this);   // this is in the context of the jQuery .each
+                if(el.attr('id') === activeId) {
+                    el.addClass('active');
+                }
+                else {
+                    el.removeClass('active');
+                }
+            });
+            return this;
         }
     });
 
@@ -125,11 +173,26 @@ $(function(){
 
      });
 
+    // Container view that creates subviews and handles event propagation between subviews
     Scenable.ExploreMasterView = new (Backbone.View.extend({
         initialize: function() {
             this.topBar = new TopBar({el: this.$('.top-bar')});
             this.navBar = new NavBar({el: this.$('.feed-nav')});
             this.contentFrame = new ContentFrame({el: this.$('.content')});
+
+            // subscribe and pass off various subview events
+            this.topBar.on('feed-mode-change', function(mode) {
+                this.contentFrame.setDisplayMode(mode);
+            }, this);
+            this.topBar.on('search', function(query) {
+                this.contentFrame.runSearch(query);
+            }, this);
+            this.navBar.on('content-type-change', function(type) {
+                this.contentFrame.setContentType(type);
+            }, this);
+
+            // need better place for this
+            this.render();
         },
 
         render: function() {
