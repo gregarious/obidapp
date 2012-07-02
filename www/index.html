@@ -37,7 +37,8 @@
   <script src="app/explore/router.js"></script>
   <script>
   $(function(){
-    Scenable.ExploreMasterView.$el.show();
+    Scenable.ExploreMasterView.contentFrame.collection = new Scenable.FeedItemCollection();
+    Scenable.ExploreMasterView.render().$el.show();
     Backbone.history.start();
   });
   </script>

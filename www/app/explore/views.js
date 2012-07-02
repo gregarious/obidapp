@@ -32,9 +32,18 @@ $(function(){
             }
         },
 
-        setCenterText: function(text) {
+        setCenterText: function(text, render) {
             this.centerText = text;
-            this.render();
+            if(_.isUndefined(render) || render) {
+                this.render();
+            }
+        },
+
+        setModeIndex: function(idx, render) {
+            this.modeIndex = idx;
+            if(_.isUndefined(render) || render) {
+                this.render();
+            }
         },
 
         render: function() {
@@ -108,6 +117,57 @@ $(function(){
         }
     });
 
+    var FeedView = Backbone.View.extend({
+
+    });
+
+    var MapFeedView = FeedView.extend({
+        render: function() {
+            this.$el.html('map!');
+            return this;
+        }
+    });
+
+    var ListFeedView = FeedView.extend({
+        render: function() {
+            this.$el.html('list!');
+            return this;
+        }
+    });
+
+    var FSBar = Backbone.View.extend({
+        activeSorter: 0,
+        activeFilter: 0,
+
+        events: {
+            'click .sorter1': function() { this.selectSorter(0); },
+            'click .sorter2': function() { this.selectSorter(1); },
+            // TODO: this won't be click. more like a radio button select
+            'click .filter': 'selectFilter'
+        },
+
+        selectSorter: function(sorterIndex) {
+            console.log('FSBar:selectSorter: ' + sorterIndex);
+            this.activeSorter = sorterIndex;
+            this.trigger('sorter', sorterIndex);
+            this.render();
+        },
+        selectFilter: function() {
+            console.log('FSBar:selectFilter');
+            this.trigger('filter');
+            this.render();
+        },
+
+        render: function() {
+            // TODO: make sure active filter/sorter is displayed
+            var html = 'sorter: ' + this.activeSorter;
+            html += '<br/>filter: ' + this.activeFilter;
+            this.$el.html(html);
+            return this;
+        }
+    });
+
+
     /*
      * ContentFrame: container and event handler for actual feed view and
      * filter/sorter bar instances. In charge of responding to header events
@@ -116,38 +176,42 @@ $(function(){
      * Manages a FeedItemCollection for passing off to the current feed view.
      */
      var ContentFrame = Backbone.View.extend({
-        events: {
-            // top bar events
-            'set-display-mode': 'setDisplayMode',
-            'run-search': 'runSearch',
-            
-            // feed bar events
-            'set-content-type': 'setContentType',
 
-            // fs bar events (generated from internally-managed FSBar View)
-            'filter': 'runFilter',
-            'sort': 'runSorter'
-        },
+        feedView: null,
+        fsBar: null,
 
         initialize: function() {
-            _.bindAll(this, 'setDisplayMode', 'runSearch', 'setContentType', 'runFilter', 'runSorter', 'render');
-            this.feedView = null;
-            this.fsView = null;
+            _.bindAll(this, 'render', 'setFeedView', 'setFSBar');
+            _.bindAll(this, 'setDisplayMode', 'runSearch', 'setContentType');
         },
 
         render: function() {
             if(this.feedView) {
                 this.feedView.render();
             }
-            if(this.fsView) {
-                this.fsView.render();
+            if(this.fsBar) {
+                this.fsBar.render();
             }
             return this;
         },
 
-        /*** Event handlers ***/
-        setDisplayMode: function() {
-            console.log('ContentFrame.setDisplayMode:');
+        setFeedView: function(mode) {
+            this.feedView = new FeedView(this.collection);
+        },
+
+        updateFSBar: function() {
+            if(this.fsBar) {
+                this.fsBar.off();
+            }
+            this.fsBar = new FSBar();
+            // TODO: turn off events on old FSBar
+            this.fsBar.on('filter', this.runFilter, this);
+            this.fsBar.on('sort', this.runSorter, this);
+        },
+
+        /*** External interface to change display/contents of feed ***/
+        setDisplayMode: function(mode) {
+            console.log('ContentFrame.setDisplayMode');
 			console.log(arguments);
         },
 
@@ -156,9 +220,18 @@ $(function(){
 			console.log(arguments);
         },
 
-        setContentType: function() {
+        setContentType: function(type) {
+            this.collection = new Scenable.FeedItemCollection();
+            this.setFeedView();
+            this.updateFSBar();
+            this.collection.sync();
             console.log('ContentFrame.setContentType:');
-			console.log(arguments);
+        },
+
+        /* Event infrastructure designed to support events from FSBar */
+        events: {
+            'filter': 'runFilter',
+            'sort': 'runSorter'
         },
 
         runFilter: function() {
@@ -181,18 +254,9 @@ $(function(){
             this.contentFrame = new ContentFrame({el: this.$('.content')});
 
             // subscribe and pass off various subview events
-            this.topBar.on('feed-mode-change', function(mode) {
-                this.contentFrame.setDisplayMode(mode);
-            }, this);
-            this.topBar.on('search', function(query) {
-                this.contentFrame.runSearch(query);
-            }, this);
-            this.navBar.on('content-type-change', function(type) {
-                this.contentFrame.setContentType(type);
-            }, this);
-
-            // need better place for this
-            this.render();
+            this.topBar.on('feed-mode-change', this.contentFrame.setDisplayMode, this);
+            this.topBar.on('search', this.contentFrame.runSearch, this);
+            this.navBar.on('content-type-change', this.contentFrame.setContentType, this);
         },
 
         render: function() {
@@ -201,6 +265,11 @@ $(function(){
             this.navBar.render();
             this.contentFrame.render();
             return this;
+        },
+
+        displayFeed: function(type) {
+            this.contentFrame.setContentType(type);
+
         }
     }))({el: $('#explore-frame')});
 });
@@ -232,7 +301,7 @@ $(function(){
 //             this.feedView = feedView;
 //             this.feedView.className = 'feed-container';
 
-//             this.filterSortView = feedView.getFSView(); // can be null          
+//             this.filterSortView = feedView.getfsBar(); // can be null          
 //             this.filterSortView.className = 'fs-container';
 
 //             this.activeContentType = feedView.contentType;
@@ -301,7 +370,7 @@ $(function(){
 
 //         // Returns a FilterSortView instance corresponding to the FeedViewCollection parameters,
 //         //  or null if not applicable
-//         getFSView: function() {
+//         getfsBar: function() {
 //             if(!this.collection.sorters && !this.collection.filters) {
 //                 return null;
 //             }

@@ -1,8 +1,7 @@
 $(function(){
     Scenable = Scenable || {};
-    Scenable.models = Scenable.models || {};
 
-    Scenable.models.FeedItemCollection = Backbone.Collection.extend({
+    Scenable.FeedItemCollection = Backbone.Collection.extend({
         sorters: [
                     {'label': 's1'},
                     {'label': 's2'}
