@@ -1,2 +1,1 @@
-Thanks for reading me!
-
+Pivot like a rock star.
