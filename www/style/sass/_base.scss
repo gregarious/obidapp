@@ -32,7 +32,8 @@ $red: #B83939;
 $yellow: #DED57F; 
 $orange: #FF9F00;
 
-
+$light-blue: #AFDFE4;
+$med-blue: #58B7DD;
 //////////
 /* CSS3 */
 //////////
@@ -49,6 +50,9 @@ $default-text-shadow-blur: 0.08em;
 	color: #fff;
 	font-weight: 600;
 	font-size: 0.9em;
+	text-align: center;
+	@include single-text-shadow(#333, 1px, 1px, 2px);
+
 	a {
 		@include unstyled-link;	
 	}

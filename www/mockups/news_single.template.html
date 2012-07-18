@@ -1,86 +1,55 @@
  <!doctype html>
-<!-- Conditional comment for mobile ie7 blogs.msdn.com/b/iemobile/ -->
-<!--[if IEMobile 7 ]>    <html class="no-js iem7" lang="en"> <![endif]-->
-<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 
 <head>
   <meta charset="utf-8">
-
-  <title></title>
-  <meta name="description" content="">
-
-  <!-- Mobile viewport optimization h5bp.com/ad -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width">
-  
-  <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
-  <meta http-equiv="cleartype" content="on">
-
-  <!-- more tags for your 'head' to consider h5bp.com/d/head-Tips -->
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../style/stylesheets/main.css">
 
-  <!-- All scripts in head: no need to worry about page load -->
-  <!--<script src="js/libs/modernizr-2.0.6.min.js"></script>
-  <script src="js/libs/jquery-1.7.2.js"></script>
-  <script src="js/html5bp-helper.js"></script>
-  <script src="js/libs/underscore-1.3.3.js"></script>
-  <script src="js/libs/backbone-0.9.2.js"></script>
-  <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>-->
 </head>
 
 <body id="app-view">
-  <div id="main-view">
+  <div id="main-view" class="single-page">
     <header id="header-view">
 
-      <!-- Top bar appears on all pages -->
-      <div id="top-bar">
-        <div id="top-logo">
-          <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png">
-        </div>
-        <div id="view-options">
-          <div class="options-container">
-            <img src="../img/icons/search.png" />
+      <!-- Header view for single pages -->
+    <header id="header-view">
 
-            <!-- Map icon to be switched to list depending on template -->
-            <img src="../img/icons/map.png" />
-          </div>
-        </div> <!-- .view-options -->
-      </div> <!-- #top-bar -->
-
-      <!-- Single nav takes the place of .feed-nav -->
-      <nav class="single-nav">
-        <button>Back</button>
-        <h1>What a great article</h1>
-      </nav> <!-- .single-nav -->
+      <nav id="top-bar-single">
+          <!-- This is a back button - indicates what page you are going back to -->
+            <a href="events_feed.template.html"><img src="../img/assets/back-btn.png"></a>
+            <h1>New article super duper duper duper long title that is tuncated!! Yay!</h1>
+        </nav> <!-- #top-bar-single -->
 
     </header> <!-- #header-view -->
 
-    <div id="content-view">
+    </header> <!-- #header-view -->
+
+    <div id="content-view" class="news">
 
       <header class="single-header">
 
         <div class="item-thumb">
           <img src="http://t1.gstatic.com/images?q=tbn:ANd9GcRypMrJ5MP3rBI3YfFHAeaGQcSrVQHi7aUa2PX7zs202hs2vER_xVajvMniOQ" />
         </div>
-        <section class="item-content">
-          <h1 class="single-title">What a great article</h1>
+
+        <article class="item-content">
+          <h1 class="item-title">What a great article</h1>
           <ul class="item-details">
             <li>Published March 12</li>
             <!-- If the place hosting isn't the organizer: -->
             <li>submitted by hammerHead8910</li>
           </ul> <!-- .item-details -->
-          <button class="full-article">Go to Full article</button>
-        </section> <!-- .item-content -->
+
+        </article> <!-- .item-content -->
 
       </header> <!-- .single-header -->
 
       <article class="single-content">
-        <p class="snippet">Snippet of the article if its an external source, otherwise full article that has a see more if its very long<br />
-          Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably haven't heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.</p>
-        <button>Full Article</button>
+        <p class="description">Snippet of the article if its an external source, otherwise full article that has a see more if its very long<br />
+        Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy...
+        <a href="http://news.com"><div class="btn">Full Article</div></a>
 
         <section class="comments">
           <h1>Comments</h1>
@@ -117,21 +86,20 @@
 
             <li>
               <div class="comment-content">This is a sick article. Sick as in A-W-E-S-O-M-E</div>
-              <div class="comment-meta">
-            </li>
-            <li></li>
+              <div class="comment-meta">10hrs ago by hottie2body</div>
+            </li> <!-- .comment -->
+            
           </ol>
         </section>
 
       </article>
-
-
 
     </div> <!-- #content-view -->
 
     <footer id="settings-drawer" style="display:none">
       Settings
     </footer> <!-- #settings-drawer -->
-  </div>
+
+  </div> <!-- #content-view -->
 </body>
 </html>
