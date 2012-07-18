@@ -77,75 +77,59 @@ body {
 
 /* NAVIGATION ---------- */
 
-#feed-nav, #top-bar-single, .single-place-nav, .tags, .sorting {
-	@extend .horiz-ul;
-}
-
-#feed-nav {
+.feed-nav ul li {
 	margin-top: 40px;
+	.ui-btn-text {
+		font-weight:  normal;	
+	}
 	
-	ul {
-		@include clearfix;
+	.ui-btn-icon-top .ui-btn-inner {
+		padding-top: 40px;
 	}
 
-	.menu-item-wrap {
-		@include column(2.4);
-		@include unstyled-link;
-
-		li {
-			width: 100%;
-			border-left: 1px solid #333;
-			padding: 0;
-			margin: 0;
-			height: 60px;			
-			background-color: $light-grey !important;
-
-			
-			div {
-				font-size: 0.7em;
-				text-align: center;
-				display: block;
-				margin: 45px auto auto;
-			}
-
-			&.selected {
-				background-color: $light-green !important;
-			}
-
-			&#now {
-				@include icon('feed-nav/now');
-			}
-
-			&#places {
-				@include icon('feed-nav/places');
-			}
-
-			&#events {
-				@include icon('feed-nav/events');
-			}
-
-			&#bulletin {
-				@include icon('feed-nav/bulletin');
-			}
-
-			&#specials {
-				@include icon('feed-nav/specials');
-			}			
-		}
+	.ui-btn-icon-top .ui-btn-inner .ui-icon, .ui-btn-icon-bottom .ui-btn-inner .ui-icon {
+		margin-left: -15px;
 	}
+
+	.ui-icon {
+		height: 30px;
+		width: 30px;
+	}
+
 }
+
+.ui-icon-now {
+	background-image: url('../../img/icons/feed-nav/now.png');
+}
+
+.ui-icon-places {
+	background-image: url('../../img/icons/feed-nav/places.png');
+}
+
+.ui-icon-events {
+	background-image: url('../../img/icons/feed-nav/events.png');
+}
+
+.ui-icon-bulletin {
+	background-image: url('../../img/icons/feed-nav/bulletin.png');
+}
+
+.ui-icon-specials {
+	background-image: url('../../img/icons/feed-nav/special-status.png');
+}	
 
 /* COMPONENTS --------- */
 
 .tags {
-	margin: 0.5em 0;
+	margin: 0.1em 0;
+	@extend .horiz-ul;
 	li {
 		background-color: #f9f9f9;
 		border: 1px solid #e1e1e1;
 		@include border-radius(5px);
 		color: #666;
-		font-size: 0.8em;
-		padding: 0.07em 1em;
+		font-size: 11px;
+		padding: 0.3em;
 		margin-right: 0.5em;
 	}
 }
@@ -400,10 +384,7 @@ body {
 }
 
 .single-place-nav {
-	//background: $dark-grey;
 	color: #fff;
-	//border-top: 1px solid $red;
-	//margin-bottom: 0.5em;
 
 	li {
 		background: $dark-grey;
@@ -429,7 +410,6 @@ body {
   			color: #000;
   		}
 	}
-	
 }
 
 .place-info {
@@ -477,7 +457,6 @@ body {
 	position: fixed;
 	bottom: 0;
 	button {
-		//height: 30px;
 		font-size: 1.5em;
 		width: 90%;
 		display: block;
