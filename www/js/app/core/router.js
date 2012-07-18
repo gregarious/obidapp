@@ -10,7 +10,7 @@ function(views) {
 	});
 
 	// Set up explore ViewModel with given el and event handler
-	var exploreVM = new views.ExploreViewmodel(appController, {el: $('#explore-panel')});
+	var exploreVM = new views.ExploreViewmodel(appController);
 
 	// Module returns router object
 	return Backbone.Router.extend({
@@ -23,7 +23,7 @@ function(views) {
 				displayMode: 'list',
 				contentType: 'places'
 			});
-			exploreVM.activate();
+			exploreVM.spawnView({el: $('#explore-panel')}).render().$el.show();
 		}
 	});
 });
