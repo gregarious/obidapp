@@ -36,6 +36,8 @@
   <!-- Main app entry point -->
   <script data-main="js/app/main.js" src="js/libs/require-2.0.2.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="style/stylesheets/main.css">
+
   <!-- temporary styles for testing -->
   <style type="text/css">
     .active {color:#0f0;}
@@ -43,20 +45,178 @@
 </head>
 
 <body>
-  <div data-role="page">
-
+  <div data-role="page" id="feed-now">
     <div data-role="header">
-      <h1>Single page</h1>
+      <!-- Top bar appears on all pages -->
+      <div id="top-bar">
+        <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png">
+        <div id="view-options">
+          <img src="../img/icons/search.png">
+
+          <!-- Map icon to be switched to list depending on template -->
+          <img src="../img/icons/map.png">
+        </div> <!-- .view-options -->
+      </div> <!-- #top-bar -->
+
+      <!-- Site nav not shown on single pages -->
+      <nav class="feed-nav">
+        <ul>
+          <li><a href="#feed-now">Now</a></li>
+          <li><a href="#feed-places">Places</a></li>
+          <li><a href="#feed-events">Events</a></li>
+          <li><a href="#feed-specials">Specials</a></li>
+          <li><a href="#feed-news">News</a></li>
+        </ul>
+      </nav> <!-- #site-nav -->
+
     </div><!-- /header -->
 
     <div data-role="content"> 
-      <p>This is a single page boilerplate template that you can copy to build your first jQuery Mobile page. Each link or form from here will pull a new page in via Ajax to support the animated page transitions.</p>    
-      <p>Just view the source and copy the code to get started. All the CSS and JS is linked to the jQuery CDN versions so this is super easy to set up. Remember to include a meta viewport tag in the head to set the zoom level.</p>
-      <p>This template is standard HTML document with a single "page" container inside, unlike a <a href="multipage-template.html" data-ajax="false">multi-page template</a> that has multiple pages within it. We strongly recommend building your site or app as a series of separate pages like this because it's cleaner, more lightweight and works better without JavaScript.</p>
+      Now
     </div><!-- /content -->
     
-    <div data-role="footer">
-      <h4>Footer content</h4>
+    <div data-role="footer" style="display:none">
+      Settings
+    </div><!-- /footer -->
+  </div>
+
+  <div data-role="page" id="feed-places">
+    <div data-role="header">
+      <!-- Top bar appears on all pages -->
+      <div id="top-bar">
+        <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png">
+        <div id="view-options">
+          <img src="../img/icons/search.png">
+
+          <!-- Map icon to be switched to list depending on template -->
+          <img src="../img/icons/map.png">
+        </div> <!-- .view-options -->
+      </div> <!-- #top-bar -->
+
+      <!-- Site nav not shown on single pages -->
+      <nav class="feed-nav">
+        <ul>
+          <li><a href="#feed-now">NOW</a></li>
+          <li><a href="#feed-places">Places</a></li>
+          <li><a href="#feed-events">Events</a></li>
+          <li><a href="#feed-specials">Specials</a></li>
+          <li><a href="#feed-news">News</a></li>
+        </ul>
+      </nav> <!-- #site-nav -->
+
+    </div><!-- /header -->
+
+    <div data-role="content"> 
+      Places
+    </div><!-- /content -->
+    
+    <div data-role="footer" style="display:none">
+      Settings
+    </div><!-- /footer -->
+  </div>
+
+  <div data-role="page" id="feed-events">
+    <div data-role="header">
+      <!-- Top bar appears on all pages -->
+      <div id="top-bar">
+        <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png">
+        <div id="view-options">
+          <img src="../img/icons/search.png">
+
+          <!-- Map icon to be switched to list depending on template -->
+          <img src="../img/icons/map.png">
+        </div> <!-- .view-options -->
+      </div> <!-- #top-bar -->
+
+      <!-- Site nav not shown on single pages -->
+      <nav class="feed-nav">
+        <ul>
+          <li><a href="#feed-now">NOW</a></li>
+          <li><a href="#feed-places">Places</a></li>
+          <li><a href="#feed-events">Events</a></li>
+          <li><a href="#feed-specials">Specials</a></li>
+          <li><a href="#feed-news">News</a></li>
+        </ul>
+      </nav> <!-- #site-nav -->
+
+    </div><!-- /header -->
+
+    <div data-role="content"> 
+      Events
+    </div><!-- /content -->
+    
+    <div data-role="footer" style="display:none">
+      Settings
+    </div><!-- /footer -->
+  </div>
+
+  <div data-role="page" id="feed-specials">
+    <div data-role="header">
+      <!-- Top bar appears on all pages -->
+      <div id="top-bar">
+        <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png">
+        <div id="view-options">
+          <img src="../img/icons/search.png">
+
+          <!-- Map icon to be switched to list depending on template -->
+          <img src="../img/icons/map.png">
+        </div> <!-- .view-options -->
+      </div> <!-- #top-bar -->
+
+      <!-- Site nav not shown on single pages -->
+      <nav class="feed-nav">
+        <ul>
+          <li><a href="#feed-now">NOW</a></li>
+          <li><a href="#feed-places">Places</a></li>
+          <li><a href="#feed-events">Events</a></li>
+          <li><a href="#feed-specials">Specials</a></li>
+          <li><a href="#feed-news">News</a></li>
+        </ul>
+      </nav> <!-- #site-nav -->
+
+    </div><!-- /header -->
+
+    <div data-role="content"> 
+      Specials
+    </div><!-- /content -->
+    
+    <div data-role="footer" style="display:none">
+      Settings
+    </div><!-- /footer -->
+  </div>
+
+  <div data-role="page" id="feed-news">
+    <div data-role="header">
+      <!-- Top bar appears on all pages -->
+      <div id="top-bar">
+        <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png">
+        <div id="view-options">
+          <img src="../img/icons/search.png">
+
+          <!-- Map icon to be switched to list depending on template -->
+          <img src="../img/icons/map.png">
+        </div> <!-- .view-options -->
+      </div> <!-- #top-bar -->
+
+      <!-- Site nav not shown on single pages -->
+      <nav class="feed-nav">
+        <ul>
+          <li><a href="#feed-now">NOW</a></li>
+          <li><a href="#feed-places">Places</a></li>
+          <li><a href="#feed-events">Events</a></li>
+          <li><a href="#feed-specials">Specials</a></li>
+          <li><a href="#feed-news">News</a></li>
+        </ul>
+      </nav> <!-- #site-nav -->
+
+    </div><!-- /header -->
+
+    <div data-role="content"> 
+      News
+    </div><!-- /content -->
+    
+    <div data-role="footer" style="display:none">
+      Settings
     </div><!-- /footer -->
   </div>
 
