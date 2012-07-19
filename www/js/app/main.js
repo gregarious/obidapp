@@ -15,7 +15,7 @@ $(function(){
 		}))();
 	};
 
-	Scenable.feeds = {
+	Scenable.typeCollectionMap = {
 		places: collectionBuilder('place'),
 		events: collectionBuilder('event'),
 		specials: collectionBuilder('special')
@@ -24,21 +24,29 @@ $(function(){
 	$(document).bind( "pagebeforechange", function(e, data) {
 		if (typeof data.toPage === "string") {
 			var url = $.mobile.path.parseUrl(data.toPage);
-			var match = /^#feed-(.+)/.exec(url.hash);
+			var match = /^\#feed\?type\=(.+)/.exec(url.hash);
 			var section = (match[1]);
-			if (section === 'places') {
-				var contentEl = $('#feed-places .content');
-				var statusEl = contentEl.find('.content-status');
-				var listEl = contentEl.find('.content-list');
+			var collection = Scenable.typeCollectionMap[section];
 
+			var contentEl = $('#feed .content');
+			var statusEl = contentEl.find('.content-status');
+			var listEl = contentEl.find('.content-list');
+
+			if (collection) {
 				listEl.hide();
 				statusEl.html('loading...').show();
 
-				Scenable.feeds.places.fetch({
+				collection.fetch({
 					success: function(collection, response) {
-						listEl.html('<ul>');
+						listEl.html('<h3>'+section+'</h3>');
+						listEl.append('<ul>');
 						collection.each(function(model){
-							listEl.append('<li>' + model.get('name') + '</li>');
+							if(section!=='specials') {
+								listEl.append('<li>' + model.get('name') + '</li>');
+							}
+							else {
+								listEl.append('<li>' + model.get('title') + '</li>');
+							}
 						});
 						listEl.append('</ul>').show();
 						statusEl.hide();
@@ -47,10 +55,13 @@ $(function(){
 						console.log(response);
 						statusEl.html('error');
 					},
-					timeout: 5000
+					timeout: 2000
 				});
 			}
+			else {
+				listEl.hide();
+				statusEl.html('internal error: invalid url').show();
+			}
 		}
-
 	});
 });
