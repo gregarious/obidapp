@@ -7,42 +7,36 @@ Feature: Map mode for Object feeds
 
     Scenario: Click a Place marker to see its basic information in an infowindow
         Given the user is viewing the Places map
-        And there is a geolocated Place
-            | name     |
-            | Best Bar |
-
+        And there is a geolocated Place named 'Best Bar'
         When the user clicks its map marker
-        Then an infowindow appears showing that Place’s basic information:
+        Then an infowindow appears showing this information about the Place named 'Best Bar':
             | name     | address         | category | image       |
             | Best Bar | 123 Perfect Ave | Food     | bestbar.jpg |
 
 
     Scenario: Click a Special marker to see its basic information in an infowindow
         Given the user is viewing the Specials map
-        And there is a Special with a geolocated place
-            | special name  | place name |
-            | 3 Beers for 1 | Best Bar   |
-
+        And there is a Special named '3 Free Beers' offered by the geolocated place 'Best Bar'
         When the user clicks its map marker
-        Then an infowindow appears, showing that Special’s basic information: 
-            | special title | place name  | expires | image       |
-            | 3 Beers for 1 | Best Bar    | Food    | bestbar.jpg |
+        Then an infowindow appears, showing this information:
+            | special name | place name  | expires          | image       |
+            | 3 Free Beers | Best Bar    | 2012-09-12 12:00 | bestbar.jpg |
 
 
     Scenario: Click an Event marker to see its basic information in an infowindow
         Given the user is viewing the Events map
         And the date is 2012-07-18 12:00
-        And there a geolocated Event 
-            | name        | date             |
-            | Great Event | 2012-07-19 20:00 |
+        And there an Event with a geolocated Place
+            | name        | date             | place    |
+            | Great Event | 2012-07-19 20:00 | Best Bar |
         When the user clicks its map marker
-        Then an infowindow appears showing the Event’s basic information:
+        Then an infowindow appears showing this information:
             | name        | location name  | date             | category | image       |
             | Great Event | Best Bar       | 2012-07-19 12:00 | Festival | greatevent.jpg |
 
 
     Scenario: Expired Events are not displayed on map
-        Given it is 2012-07-18 14:00
+        Given today's date is 2012-07-18 14:00
         And there is an Event
             | name        | date             |
             | Great Event | 2012-07-18 12:00 |
@@ -87,11 +81,7 @@ Feature: Map mode for Object feeds
             | Place 11  |
 
         When the user is viewing the Places map
-        Then the map marker for the Place
-            | name     |
-            | Place 11 |
-
-            is not displayed
+        Then the map marker for the Place named 'Place 11' is not displayed
 
 
     Scenario: There are no more than 10 Event markers on the Events map
@@ -110,11 +100,7 @@ Feature: Map mode for Object feeds
             | Event 11  |
 
         When the user is viewing the Events map
-        Then the map marker for the Event
-            | name     |
-            | Event 11 |
-
-            is not displayed
+        Then the map marker for the Event named 'Event 11' is not displayed
 
 
     Scenario: There are no more than 10 Special markers on the Specials map
@@ -133,10 +119,34 @@ Feature: Map mode for Object feeds
             | Special 11  |
 
         When the user is viewing the Specials map
-        Then the map marker for the Special
-            | name       |
-            | Special 11 |
-
-            is not displayed
+        Then the map marker for the Special named 'Special 11' is not displayed
 
             
+
+Feature: Infowindows contain links to Object single pages
+    
+
+    Scenario: Place Infowindows link to a single Place page
+        Given there is a geolocated Place with the name 'Eat Unique'
+        And its infowindow is visible
+        When the user clicks 'Eat Unique' in the infowindow
+        Then the user is taken to a single Place page with the page title 'Eat Unique'
+    
+
+    Scenario: Event Infowindows link to a single Event page
+        Given there is an Event with a geolocated Place
+            | name            | date             | location       |
+            | WYEP Music Fest | 2012-07-23 18:00 | Schenley Park  |
+
+        And its infowindow is visible
+        When the user clicks 'WYEP Music Fest' in the infowindow
+        Then the user is taken to the single Event page with the page title 'WYEP Music Fest'
+
+
+    Scenario: Special Infowindows link to a single Special page
+        Given there is a Special named '3 Beers Free' offered by a geolocated Place
+        And its infowindow is visible
+        When the user clicks '3 Beers Free' in the infowindow
+        Then the user is taken to the single Special page with the page title '3 Beers Free'
+
+
