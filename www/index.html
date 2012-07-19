@@ -63,9 +63,59 @@
       Settings
     </div><!-- /footer -->
   </div>
-  <!-- Currently inlined templates. This will most certainly change. Maybe use 
-       require.js. Maybe roll own preprocessor that puts template html files
-       into a global TPL variable like pipeline does. -->
-  
+
+  <div data-role="page" id="feed">
+    <div data-role="header">
+      <!-- Top bar appears on all pages -->
+      <div id="top-bar">
+        <!-- <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png"> -->
+        <div id="view-options">
+          <img src="../img/icons/search.png">
+
+          <!-- Map icon to be switched to list depending on template -->
+          <img src="../img/icons/map.png">
+        </div> <!-- .view-options -->
+      </div> <!-- #top-bar -->
+
+      <!-- Site nav not shown on single pages -->
+      <nav class="feed-nav" data-role="navbar">
+        <ul>
+          <li><a href="#feed?type=now">NOW</a></li>
+          <li><a href="#feed?type=places">Places</a></li>
+          <li><a href="#feed?type=events">Events</a></li>
+          <li><a href="#feed?type=specials">Specials</a></li>
+          <li><a href="#feed?type=news">News</a></li>
+        </ul>
+      </nav> <!-- #site-nav -->
+
+    </div><!-- /header -->
+
+    <div data-role="content" class="content">
+      <div class="content-list">
+        Content List
+      </div>
+      <div class="content-status"></div>
+    </div><!-- /content -->
+    
+    <div data-role="footer" style="display:none">
+      Settings
+    </div><!-- /footer -->
+  </div>
+
+  <div data-role="page" id="single">
+    
+    <div data-role="header">
+      <h1>Title</h1>
+      <a data-role="button" data-rel="back">Back</a>
+    </div><!-- /header -->
+
+    <div data-role="content" class="content">
+
+    </div><!-- /content -->
+
+    <div data-role="footer" style="display:none">
+      Settings
+    </div><!-- /footer -->
+  </div><!-- /page -->
 </body>
 </html>
