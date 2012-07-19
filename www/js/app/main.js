@@ -11,27 +11,41 @@ $(function(){
 				var opts = options || {};
 				opts.dataType = "jsonp";
 				return Backbone.sync(method, model, opts);
-			}
+			},
+			resourceName: resourceName
 		}))();
 	};
 
 	Scenable.typeCollectionMap = {
-		places: collectionBuilder('place'),
-		events: collectionBuilder('event'),
-		specials: collectionBuilder('special')
+		place: collectionBuilder('place'),
+		event: collectionBuilder('event'),
+		special: collectionBuilder('special')
 	};
 
-	Scenable.typeModelIdMap = {
-		places: function(id) { return '/api/v1/place/'+id+'/'; },
-		events: function(id) { return '/api/v1/event/'+id+'/'; },
-		specials: function(id) { return '/api/v1/special/'+id+'/'; }
+	Scenable.typeTemplateMap = {
+		place: {
+			feeditem: Handlebars.compile($('#tpl-feeditem-place').html()),
+			single: Handlebars.compile($('#tpl-single-place').html())
+		},
+		event: {
+			feeditem: Handlebars.compile($('#tpl-feeditem-event').html()),
+			single: Handlebars.compile($('#tpl-single-event').html())
+		},
+		special: {
+			feeditem: Handlebars.compile($('#tpl-feeditem-special').html()),
+			single: Handlebars.compile($('#tpl-single-special').html())
+		}
 	};
+
+	// helper function to be used in template to encode resource uri's embedded in links
+	Handlebars.registerHelper('uriEncode', function(string) {
+		return encodeURIComponent(string);
+	});
 
 	$(document).bind( "pagebeforechange", function(e, data) {
-		var url, match, resourceType, collection, contentEl, statusEl, listEl, id;
 		if (typeof data.toPage === "string") {
-			url = $.mobile.path.parseUrl(data.toPage);
-			match = /^\#(.+)\?(.*)/.exec(url.hash);
+			var url = $.mobile.path.parseUrl(data.toPage);
+			var match = /^\#(.+)\?(.*)/.exec(url.hash);
 			if (match) {
 				var page = match[1];
 				var args = {};
@@ -44,13 +58,14 @@ $(function(){
 					});
 				}
 
+				var resourceType = args['type'];
+				var collection = Scenable.typeCollectionMap[args['type']];
+				var contentEl = null,
+					tpl = null;
 				if (page === 'feed') {
-					resourceType = args['type'];
-					collection = Scenable.typeCollectionMap[args['type']];
-
 					contentEl = $('#feed .content');
-					statusEl = contentEl.find('.content-status');
-					listEl = contentEl.find('.content-list');
+					var statusEl = contentEl.find('.content-status');
+					var listEl = contentEl.find('.content-list');
 
 					if (collection) {
 						listEl.hide();
@@ -59,14 +74,10 @@ $(function(){
 						collection.fetch({
 							success: function(collection, response) {
 								listEl.html('<h3>'+resourceType+'</h3>');
-								listEl.append('<ul data-role="listview">');
+								listEl.append('<ul data-role="listview" data-theme="g">');
 								collection.each(function(model){
-									if(resourceType!=='specials') {
-										listEl.append('<li><a href="#single?type=' + resourceType + '&id=' + model.get('id') + '">' + model.get('name') + '</a></li>');
-									}
-									else {
-										listEl.append('<li><a href="#single?type=' + resourceType + '&id=' + model.get('id') + '">' + model.get('title') + '</a></li>');
-									}
+									tpl = Scenable.typeTemplateMap[resourceType].feeditem;
+									listEl.append('<li>' + tpl(model.attributes) + '</li>');
 								});
 								listEl.append('</ul>').show();
 								statusEl.hide();
@@ -84,13 +95,10 @@ $(function(){
 					}
 				}
 				else if (page === 'single') {
-					resourceType = args['type'];
-					collection = Scenable.typeCollectionMap[args['type']];
-
-					id = args['id'];
+					id = decodeURIComponent(args['id']);
 					contentEl = $('#single .content');
-					var model = collection.get(Scenable.typeModelIdMap[resourceType](id));
-					contentEl.html(model.get('name'));
+					tpl = Scenable.typeTemplateMap[resourceType].single;
+					contentEl.html(tpl(collection.get(id).attributes));
 				}
 			}
 		}
