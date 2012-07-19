@@ -3,26 +3,75 @@ $(function(){
 
 	window.Scenable = {};
 
-	// resourceName should match a Tastypie resource name (e.g. 'place')
-	var collectionBuilder = function(resourceName) {
-		return new (Backbone.Collection.extend({
-			url: 'http://127.0.0.1:8000/api/v1/' + resourceName + '/?listed=true',
-			sync: function(method, model, options) {
-				var opts = options || {};
-				opts.dataType = "jsonp";
-				return Backbone.sync(method, model, opts);
-			},
-			resourceName: resourceName
-		}))();
+	/*** Backbone model/collection definitions **/
+	var jsonpSync = function(method, model, options) {
+		var opts = options || {};
+		opts.dataType = "jsonp";
+		return Backbone.sync(method, model, opts);
 	};
 
-	Scenable.typeCollectionMap = {
-		place: collectionBuilder('place'),
-		event: collectionBuilder('event'),
-		special: collectionBuilder('special')
+	Backbone.Model.prototype.sync = jsonpSync;
+	Backbone.Collection.prototype.sync = jsonpSync;
+
+	var toTastyPieRootUrl = function(resourceType) {
+		return 'http://127.0.0.1:8000/api/v1/' + resourceType + '/?format=jsonp';
 	};
 
-	Scenable.typeTemplateMap = {
+	var Place = Backbone.Model.extend({
+		headerText: function() {
+			return this.get('name');
+		},
+		urlRoot: toTastyPieRootUrl('place')
+	});
+
+	var Event = Backbone.Model.extend({
+		headerText: function() {
+			return this.get('name');
+		},
+		urlRoot: toTastyPieRootUrl('event')
+	});
+
+	var Special = Backbone.Model.extend({
+		headerText: function() {
+			return this.get('title');
+		},
+		urlRoot: toTastyPieRootUrl('special')
+	});
+
+	var Places = Backbone.Collection.extend({
+		model: Place,
+		urlRoot: toTastyPieRootUrl('place')
+	});
+
+	var Events = Backbone.Collection.extend({
+		model: Event,
+		urlRoot: toTastyPieRootUrl('event')
+	});
+
+	var Specials = Backbone.Collection.extend({
+		model: Special,
+		urlRoot: toTastyPieRootUrl('special')
+	});
+
+	var typeCollectionMap = {
+		place: new Places({
+			filters: {
+				listed: true
+			}
+		}),
+		event: new Events({
+			filters: {
+				listed: true
+			}
+		}),
+		special: new Specials({
+			filters: {
+				listed: true
+			}
+		})
+	};
+
+	var typeTemplateMap = {
 		place: {
 			feeditem: Handlebars.compile($('#tpl-feeditem-place').html()),
 			single: Handlebars.compile($('#tpl-single-place').html())
@@ -59,7 +108,7 @@ $(function(){
 				}
 
 				var resourceType = args['type'];
-				var collection = Scenable.typeCollectionMap[args['type']];
+				var collection = typeCollectionMap[args['type']];
 				var contentEl = null,
 					tpl = null;
 				if (page === 'feed') {
@@ -68,22 +117,20 @@ $(function(){
 					var listEl = contentEl.find('.content-list');
 
 					if (collection) {
-						listEl.hide();
+						listEl.html('').hide();
 						statusEl.html('loading...').show();
 
 						collection.fetch({
 							success: function(collection, response) {
-								listEl.html('<h3>'+resourceType+'</h3>');
 								listEl.append('<ul data-role="listview" data-theme="g">');
-								collection.each(function(model){
-									tpl = Scenable.typeTemplateMap[resourceType].feeditem;
-									listEl.append('<li>' + tpl(model.attributes) + '</li>');
+								collection.each(function(m){
+									tpl = typeTemplateMap[resourceType].feeditem;
+									listEl.append('<li>' + tpl(m.attributes) + '</li>');
 								});
 								listEl.append('</ul>').show();
 								statusEl.hide();
 							},
 							error: function(collection, response) {
-								console.log(response);
 								statusEl.html('error');
 							},
 							timeout: 2000
@@ -96,9 +143,15 @@ $(function(){
 				}
 				else if (page === 'single') {
 					id = decodeURIComponent(args['id']);
+					var model = collection.get(id);
+					
 					contentEl = $('#single .content');
-					tpl = Scenable.typeTemplateMap[resourceType].single;
-					contentEl.html(tpl(collection.get(id).attributes));
+					tpl = typeTemplateMap[resourceType].single;
+					contentEl.html(tpl(model.attributes));
+
+					// also add the title change
+					$('#single h1').text(model.headerText());
+
 				}
 			}
 		}
