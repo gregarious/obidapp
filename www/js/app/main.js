@@ -6,7 +6,7 @@ $(function(){
 	// resourceName should match a Tastypie resource name (e.g. 'place')
 	var collectionBuilder = function(resourceName) {
 		return new (Backbone.Collection.extend({
-			url: 'http://127.0.0.1:8000/api/v1/' + resourceName + '/',
+			url: 'http://127.0.0.1:8000/api/v1/' + resourceName + '/?listed=true',
 			sync: function(method, model, options) {
 				var opts = options || {};
 				opts.dataType = "jsonp";
