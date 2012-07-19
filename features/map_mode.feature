@@ -114,6 +114,8 @@ Feature: Map mode for Object feeds
             | name     |
             | Event 11 |
 
+            is not displayed
+
 
     Scenario: There are no more than 10 Special markers on the Specials map
         Given a set of Specials
@@ -132,7 +134,7 @@ Feature: Map mode for Object feeds
 
         When the user is viewing the Specials map
         Then the map marker for the Special
-            | name     |
+            | name       |
             | Special 11 |
 
             is not displayed
