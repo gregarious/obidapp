@@ -22,7 +22,7 @@ Feature: Single Place pages provide detailed information that Place and associat
     Scenario: Single Place pages show a list of its Events
         Given the user is viewing the single page for a Place
             | name            | address    |
-            | Johnny's Tavern | 242 Atwood |
+            | Johnny's Tavern | 242 Atwood | 
         
         And it hosts the Events
             | name           | date             | category |
