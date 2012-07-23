@@ -17,6 +17,7 @@ $(function(){
 		return 'http://127.0.0.1:8000/api/v1/' + resourceType + '/?format=jsonp';
 	};
 
+	/*** BACKBONE MODELS ***/
 	var Place = Backbone.Model.extend({
 		headerText: function() {
 			return this.get('name');
@@ -53,6 +54,7 @@ $(function(){
 		urlRoot: toTastyPieRootUrl('special')
 	});
 
+	/*** CONSTANTS/CACHED OBJECTS ***/
 	var typeCollectionMap = {
 		place: new Places({
 			filters: {
@@ -86,11 +88,7 @@ $(function(){
 		}
 	};
 
-	// helper function to be used in template to encode resource uri's embedded in links
-	Handlebars.registerHelper('uriEncode', function(string) {
-		return encodeURIComponent(string);
-	});
-
+	/*** BACKBONE VIEWS ***/
 	// expects el to have two subdivs, .content-status and .content-list
 	var FeedView = Backbone.View.extend({
 		initialize: function(options) {
@@ -112,15 +110,20 @@ $(function(){
 		}
 	});
 
-	/*** VARIOUS CONTROLLER FUNCTIONS: WILL BE MODULARIZED LATER ***/
+	/*** VARIOUS CONTROLLER FUNCTIONS: WILL BE COMBINED INTO PROPER CONTROLLER LATER ***/
+	var resourceTypePending = null;		// guard against multiple quick tab clicks, ensures only last async collection fetch request gets displayed
 	var changeFeed = function(resourceType) {
 		var collection = typeCollectionMap[resourceType];
 		var contentEl = $('#explore div:jqmData(role="content")');
 		var tpl, contentView;
+
+		// remember this resource type as the last one requested
+		resourceTypePending = resourceType;
+
+		$.mobile.showPageLoadingMsg();
 		if (collection) {
 			tpl = typeTemplateMap[resourceType].feeditem;
 
-			$.mobile.showPageLoadingMsg();
 			contentView = new FeedView({
 				collection: collection,
 				tagName: 'ul',
@@ -128,24 +131,39 @@ $(function(){
 				itemTemplate: typeTemplateMap[resourceType].feeditem
 			});
 
+			// all fetch callbacks are guarded by a resourceTypePending check to ensure
+			// this fetch was the last one actually requested by the user
 			collection.fetch({
 				success: function(collection, response) {
-					contentEl.html(contentView.render().el);
+					if(resourceTypePending === resourceType) {
+						contentEl.html(contentView.render().el);
+					}
 				},
 				error: function(collection, response) {
-					contentEl.html("Error retreiving data.");
-					$.mobile.loading('show');
+					if(resourceTypePending === resourceType) {
+						contentEl.html("Error retreiving data.");
+					}
 				},
 				complete: function() {
-					$.mobile.hidePageLoadingMsg();
+					if(resourceTypePending === resourceType) {
+						$.mobile.hidePageLoadingMsg();
+					}
 				},
 				timeout: 2000
 			});
 		}
 		else {
-			contentEl.html("invalid url");
+			if(resourceTypePending === resourceType) {
+				contentEl.html("invalid url");
+				$.mobile.hidePageLoadingMsg();
+			}
 		}
 	};
+
+	// helper function to be used in template to encode resource uri's embedded in links
+	Handlebars.registerHelper('uriEncode', function(string) {
+		return encodeURIComponent(string);
+	});
 
 	$(document).bind( "pagebeforechange", function(e, data) {
 		if (typeof data.toPage === "string") {
@@ -171,14 +189,13 @@ $(function(){
 					tpl = typeTemplateMap[resourceType].single;
 
 					id = decodeURIComponent(args['id']);
-					var model = collection.get(id);
+					var model = typeCollectionMap[resourceType].get(id);
 					
 					contentEl = $('#single .content');
 					contentEl.html(tpl(model.attributes));
 
 					// also add the title change
 					$('#single h1').text(model.headerText());
-
 				}
 			}
 		}
