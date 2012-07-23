@@ -27,7 +27,7 @@
 </head>
 
 <body>
-  <div data-role="page" id="feed">
+  <div data-role="page" id="explore">
     <div data-role="header">
       <!-- Top bar appears on all pages -->
       <div id="top-bar">
@@ -41,23 +41,20 @@
       </div> <!-- #top-bar -->
 
       <!-- Site nav not shown on single pages -->
-      <nav class="feed-nav" data-role="navbar">
+      <nav class="explore-nav" data-role="navbar">
         <ul>
-          <li><a href="#feed?type=now">NOW</a></li>
-          <li><a href="#feed?type=place">Places</a></li>
-          <li><a href="#feed?type=event">Events</a></li>
-          <li><a href="#feed?type=special">Specials</a></li>
-          <li><a href="#feed?type=news">News</a></li>
+          <li><a href="#explore?type=now">NOW</a></li>
+          <li><a href="#explore?type=place">Places</a></li>
+          <li><a href="#explore?type=event">Events</a></li>
+          <li><a href="#explore?type=special">Specials</a></li>
+          <li><a href="#explore?type=news">News</a></li>
         </ul>
       </nav> <!-- #site-nav -->
 
     </div><!-- /header -->
 
-    <div data-role="content" class="content">
-      <div class="content-list">
-        Content List
-      </div>
-      <div class="content-status"></div>
+    <div data-role="content" class="explore-main">
+
     </div><!-- /content -->
     
     <div data-role="footer" style="display:none">

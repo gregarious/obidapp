@@ -69,7 +69,7 @@ body {
 	}
 }
 
-// A hack to compensate for weird overflow with #feed-nav
+// A hack to compensate for weird overflow with #explore-nav
 #main-view {
 	overflow-x: hidden;
 	background: $light-green;
@@ -77,7 +77,7 @@ body {
 
 /* NAVIGATION ---------- */
 
-.feed-nav ul li {
+.explore-nav ul li {
 	margin-top: 40px;
 	.ui-btn-text {
 		font-weight:  normal;	
@@ -99,23 +99,23 @@ body {
 }
 
 // .ui-icon-now {
-// 	background-image: url('../../img/icons/feed-nav/now.png');
+// 	background-image: url('../../img/icons/explore-nav/now.png');
 // }
 
 // .ui-icon-places {
-// 	background-image: url('../../img/icons/feed-nav/places.png');
+// 	background-image: url('../../img/icons/explore-nav/places.png');
 // }
 
 // .ui-icon-events {
-// 	background-image: url('../../img/icons/feed-nav/events.png');
+// 	background-image: url('../../img/icons/explore-nav/events.png');
 // }
 
 // .ui-icon-bulletin {
-// 	background-image: url('../../img/icons/feed-nav/bulletin.png');
+// 	background-image: url('../../img/icons/explore-nav/bulletin.png');
 // }
 
 // .ui-icon-specials {
-// 	background-image: url('../../img/icons/feed-nav/special-status.png');
+// 	background-image: url('../../img/icons/explore-nav/special-status.png');
 // }	
 
 /* COMPONENTS --------- */

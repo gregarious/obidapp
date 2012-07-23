@@ -91,6 +91,72 @@ $(function(){
 		return encodeURIComponent(string);
 	});
 
+	// expects el to have two subdivs, .content-status and .content-list
+	var ExploreView = Backbone.View.extend({
+		initialize: function() {
+			this.elements = {};
+			// create loading status div
+			this.elements.status = $('<div/>', {
+				'class': 'explore-status'
+			}).appendTo(this.el);
+
+			// create main elements for displaying data (may want to handle this as a subview)
+			this.elements.main = $('<ul/>', {
+				'class': 'explore-content'
+			}).appendTo(this.el);
+
+			_.bindAll(this, 'render', 'hideStatus', 'showStatus');
+		},
+
+		setStatus: function(message, show) {
+			show = _.isUndefined(show) ? true : show;	// default show to true
+			this.elements.status.text(message);
+			if(show) {
+				this.showStatus();
+			}
+		},
+
+		showStatus: function() {
+			this.elements.main.hide();
+			this.elements.status.show();
+		},
+
+		hideStatus: function() {
+			this.elements.status.hide();
+			this.elements.main.show();
+		},
+
+		setContent: function(collection, itemTemplate) {
+			this.collection = collection;
+			this.itemTemplate = itemTemplate;
+
+			if(this.collection) {
+				this.collection.on("reset", this.render);
+				this.collection.on("reset", this.hideStatus);
+			}
+		},
+
+		render: function() {
+			this.elements.main.html('');
+			if(this.collection) {
+				this.collection.each(function(m) {
+					var rendered;
+					if(this.itemTemplate) {
+						rendered = this.itemTemplate(m.attributes);
+					}
+					else {
+						rendered = '';
+					}
+					this.elements.main.append('<li>' + rendered + '</li>');
+				}, this);
+			}
+		}
+	});
+
+	var exploreView = new ExploreView({
+		el: $("#explore .explore-main")
+	});
+
 	$(document).bind( "pagebeforechange", function(e, data) {
 		if (typeof data.toPage === "string") {
 			var url = $.mobile.path.parseUrl(data.toPage);
@@ -109,44 +175,31 @@ $(function(){
 
 				var resourceType = args['type'];
 				var collection = typeCollectionMap[args['type']];
-				var contentEl = null,
-					tpl = null;
-				if (page === 'feed') {
-					contentEl = $('#feed .content');
-					var statusEl = contentEl.find('.content-status');
-					var listEl = contentEl.find('.content-list');
-
+				var tpl;
+				if (page === 'explore') {
 					if (collection) {
-						listEl.html('').hide();
-						statusEl.html('loading...').show();
-
+						tpl = typeTemplateMap[resourceType].feeditem;
+						exploreView.setContent(collection, tpl);
+						exploreView.setStatus('loading...');
 						collection.fetch({
-							success: function(collection, response) {
-								listEl.append('<ul data-role="listview" data-theme="g">');
-								collection.each(function(m){
-									tpl = typeTemplateMap[resourceType].feeditem;
-									listEl.append('<li>' + tpl(m.attributes) + '</li>');
-								});
-								listEl.append('</ul>').show();
-								statusEl.hide();
-							},
 							error: function(collection, response) {
-								statusEl.html('error');
+								exploreView.setStatus("Error retreiving data.");
 							},
 							timeout: 2000
 						});
 					}
 					else {
-						listEl.hide();
-						statusEl.html('internal error: invalid url').show();
+						exploreView.setContent(null, null);
+						exploreView.setStatus("invalid url");
 					}
 				}
 				else if (page === 'single') {
+					tpl = typeTemplateMap[resourceType].single;
+
 					id = decodeURIComponent(args['id']);
 					var model = collection.get(id);
 					
 					contentEl = $('#single .content');
-					tpl = typeTemplateMap[resourceType].single;
 					contentEl.html(tpl(model.attributes));
 
 					// also add the title change

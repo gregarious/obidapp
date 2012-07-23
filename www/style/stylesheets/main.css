@@ -195,23 +195,23 @@ body {
 
 /* NAVIGATION ---------- */
 /* line 80, ../sass/main.scss */
-.feed-nav ul li {
+.explore-nav ul li {
   margin-top: 40px;
 }
 /* line 82, ../sass/main.scss */
-.feed-nav ul li .ui-btn-text {
+.explore-nav ul li .ui-btn-text {
   font-weight: normal;
 }
 /* line 86, ../sass/main.scss */
-.feed-nav ul li .ui-btn-icon-top .ui-btn-inner {
+.explore-nav ul li .ui-btn-icon-top .ui-btn-inner {
   padding-top: 40px;
 }
 /* line 90, ../sass/main.scss */
-.feed-nav ul li .ui-btn-icon-top .ui-btn-inner .ui-icon, .feed-nav ul li .ui-btn-icon-bottom .ui-btn-inner .ui-icon {
+.explore-nav ul li .ui-btn-icon-top .ui-btn-inner .ui-icon, .explore-nav ul li .ui-btn-icon-bottom .ui-btn-inner .ui-icon {
   margin-left: -15px;
 }
 /* line 94, ../sass/main.scss */
-.feed-nav ul li .ui-icon {
+.explore-nav ul li .ui-icon {
   height: 30px;
   width: 30px;
 }
