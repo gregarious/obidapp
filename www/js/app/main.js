@@ -92,70 +92,60 @@ $(function(){
 	});
 
 	// expects el to have two subdivs, .content-status and .content-list
-	var ExploreView = Backbone.View.extend({
-		initialize: function() {
-			this.elements = {};
-			// create loading status div
-			this.elements.status = $('<div/>', {
-				'class': 'explore-status'
-			}).appendTo(this.el);
-
-			// create main elements for displaying data (may want to handle this as a subview)
-			this.elements.main = $('<ul/>', {
-				'class': 'explore-content'
-			}).appendTo(this.el);
-
-			_.bindAll(this, 'render', 'hideStatus', 'showStatus');
-		},
-
-		setStatus: function(message, show) {
-			show = _.isUndefined(show) ? true : show;	// default show to true
-			this.elements.status.text(message);
-			if(show) {
-				this.showStatus();
-			}
-		},
-
-		showStatus: function() {
-			this.elements.main.hide();
-			this.elements.status.show();
-		},
-
-		hideStatus: function() {
-			this.elements.status.hide();
-			this.elements.main.show();
-		},
-
-		setContent: function(collection, itemTemplate) {
-			this.collection = collection;
-			this.itemTemplate = itemTemplate;
-
-			if(this.collection) {
-				this.collection.on("reset", this.render);
-				this.collection.on("reset", this.hideStatus);
-			}
+	var FeedView = Backbone.View.extend({
+		initialize: function(options) {
+			_.bindAll(this, 'render');
+			this.itemTemplate = options.itemTemplate;
 		},
 
 		render: function() {
-			this.elements.main.html('');
+			this.$el.empty();
 			if(this.collection) {
 				this.collection.each(function(m) {
-					var rendered;
-					if(this.itemTemplate) {
-						rendered = this.itemTemplate(m.attributes);
-					}
-					else {
-						rendered = '';
-					}
-					this.elements.main.append('<li>' + rendered + '</li>');
+					this.$el.append(
+						'<li>' +
+							this.itemTemplate(m.attributes) +
+						'</li>');
 				}, this);
 			}
+			return this;
 		}
 	});
 
-	var exploreView = new ExploreView({
-		el: $("#explore .explore-main")
-	});
+	/*** VARIOUS CONTROLLER FUNCTIONS: WILL BE MODULARIZED LATER ***/
+	var changeFeed = function(resourceType) {
+		var collection = typeCollectionMap[resourceType];
+		var contentEl = $('#explore div:jqmData(role="content")');
+		var tpl, contentView;
+		if (collection) {
+			tpl = typeTemplateMap[resourceType].feeditem;
+
+			$.mobile.showPageLoadingMsg();
+			contentView = new FeedView({
+				collection: collection,
+				tagName: 'ul',
+				className: 'feed',
+				itemTemplate: typeTemplateMap[resourceType].feeditem
+			});
+
+			collection.fetch({
+				success: function(collection, response) {
+					contentEl.html(contentView.render().el);
+				},
+				error: function(collection, response) {
+					contentEl.html("Error retreiving data.");
+					$.mobile.loading('show');
+				},
+				complete: function() {
+					$.mobile.hidePageLoadingMsg();
+				},
+				timeout: 2000
+			});
+		}
+		else {
+			contentEl.html("invalid url");
+		}
+	};
 
 	$(document).bind( "pagebeforechange", function(e, data) {
 		if (typeof data.toPage === "string") {
@@ -174,24 +164,8 @@ $(function(){
 				}
 
 				var resourceType = args['type'];
-				var collection = typeCollectionMap[args['type']];
-				var tpl;
 				if (page === 'explore') {
-					if (collection) {
-						tpl = typeTemplateMap[resourceType].feeditem;
-						exploreView.setContent(collection, tpl);
-						exploreView.setStatus('loading...');
-						collection.fetch({
-							error: function(collection, response) {
-								exploreView.setStatus("Error retreiving data.");
-							},
-							timeout: 2000
-						});
-					}
-					else {
-						exploreView.setContent(null, null);
-						exploreView.setStatus("invalid url");
-					}
+					changeFeed(resourceType);
 				}
 				else if (page === 'single') {
 					tpl = typeTemplateMap[resourceType].single;
