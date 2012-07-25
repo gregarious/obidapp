@@ -147,6 +147,7 @@ $(function(){
 				complete: function() {
 					if(resourceTypePending === resourceType) {
 						$.mobile.hidePageLoadingMsg();
+						contentEl.trigger("create");
 					}
 				},
 				timeout: 2000
@@ -193,6 +194,7 @@ $(function(){
 					
 					contentEl = $('#single .content');
 					contentEl.html(tpl(model.attributes));
+					contentEl.trigger("create");
 
 					// also add the title change
 					$('#single h1').text(model.headerText());
