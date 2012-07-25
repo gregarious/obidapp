@@ -89,9 +89,9 @@ $(function(){
 			this.template = options.template;
 			this.categories = options.categories;
 
-			// pass the DOM-based submit event along as a CategoryForm event
-			this.$el.on('submit', $.proxy(function(e) {
-				e.preventDefault();
+			// when user "submits" form, trigger the submit event and close the parent dialog
+			// not using a true submit button/event because preventDefault won't work
+			this.$el.on('click', '.ok-button', $.proxy(function(e) {
 				this.trigger('submit', e);
 			}, this));
 
@@ -274,6 +274,7 @@ $(function(){
 				template: Handlebars.compile($("#tpl-category-form").html())
 			});
 			categoryFormEl.html(catForm.render().el);
+			categoryFormEl.trigger("create");
 			catForm.on('submit', function(categories) {
 				console.log('received categories: ' + categories);
 				// TODO: pass in the categories to a collection filter
