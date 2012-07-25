@@ -128,6 +128,7 @@ $(function(){
 				collection: collection,
 				tagName: 'ul',
 				className: 'feed',
+				attributes: {'data-role':'listview'},
 				itemTemplate: typeTemplateMap[resourceType].feeditem
 			});
 

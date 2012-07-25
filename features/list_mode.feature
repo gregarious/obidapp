@@ -108,4 +108,18 @@ Feature: List items link to single Object pages
         Then the user is taken to the single page with the page title 'Party on Fifth Ave'
 
 
-	Scenario: 
+Feature: Event lists are ordered by date
+	In order to browse Events by date more easily
+	As a user of the app
+	I want to be able to view the date of Events immediately
+
+	Scenario: Events are ordered by date
+		Given the user is viewing the Events feed
+		And there are Events named 'Coolest Event' and 'Second coolest event' with the start and end dates '2012-8-12 14:00'-'2012-8-12 17:00' and '2012-10-12 14:00'-'2012-10-12 17:00' respectively
+		Then the event named 'Coolest Event' will appear before 'Second Coolest Event'
+	
+	# If there is time for this:
+	Scenario: Events are divided into days
+		Given the user is viewing the Events feed
+		And there are Events named 'Coolest Event' and 'Second coolest event' with the start and end dates '2012-8-12 14:00'-'2012-8-12 17:00' and '2012-10-12 14:00'-'2012-10-12 17:00' respectively
+		Then 'Coolest Event' will appear directly under the banner 'Sunday 2012-8-12'

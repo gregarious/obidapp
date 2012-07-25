@@ -31,12 +31,14 @@
     <div data-role="header">
       <!-- Top bar appears on all pages -->
       <div id="top-bar">
-        <!-- <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png"> -->
+        <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png">
         <div id="view-options">
-          <img src="../img/icons/search.png">
 
           <!-- Map icon to be switched to list depending on template -->
-          <img src="../img/icons/map.png">
+          <!-- Also, order is switched due to float -->
+          <img src="img/icons/map.png">
+          <img src="img/icons/search.png">
+
         </div> <!-- .view-options -->
       </div> <!-- #top-bar -->
 
@@ -68,8 +70,7 @@
       <a data-role="button" data-rel="back">&larr; Back</a>
     </div><!-- /header -->
 
-    <div data-role="content" class="content">
-
+    <div data-role="content" class="content">      
     </div><!-- /content -->
 
     <div data-role="footer" style="display:none">
@@ -79,28 +80,49 @@
 
   <!-- Inline templates -->
   <script type="text/html" id="tpl-feeditem-place">
-    <a href="#single?type=place&id={{uriEncode resource_uri}}">{{name}}</a>
+      <a href="#single?type=place&id={{uriEncode resource_uri}}">
+        <img src="http://127.0.0.1:8000{{image}}" />
+        <h3 class="ul-li-heading">{{name}}</h3>
+        <p class="ul-li-desc">{{location.address}}</p>
+      </a>
   </script>
 
   <script type="text/html" id="tpl-single-place">
-    <p>{{name}}</p>
-    <p>{{location.address}}</p>
+    <h1>{{name}}</h1>
+
   </script>
 
   <script type="text/html" id="tpl-feeditem-event">
-    <a href="#single?type=event&id={{uriEncode resource_uri}}">{{name}}</a>
+    <a href="#single?type=event&id={{uriEncode resource_uri}}">
+      <img src="http://127.0.0.1:8000{{image}}" />
+      <h3 class="ul-li-heading">{{name}}</h3>
+      <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
+      <p class="ui-li-desc">Mike &amp; Tonys</p>
+    </a>
   </script>
 
   <script type="text/html" id="tpl-single-event">
-    <p>{{name}}</p>
-    <p>{{dtstart}} - {{dtend}}</p>
+    <div class="single-thumb">
+      <img src="http://127.0.0.1:8000{{image}}" />
+    </div>
+    <div class="single-head-content">
+      <h1>{{name}}</h1>
+      <p><strong>{{dtstart}} - {{dtend}}</strong></p>
+      <p>Mike &amp; Tonys</p>
+      <p>123 Craig St</p>
+    </div>
   </script>
 
   <script type="text/html" id="tpl-feeditem-special">
-    <a href="#single?type=special&id={{uriEncode resource_uri}}">{{title}}</a>
+    <a href="#single?type=special&id={{uriEncode resource_uri}}">
+      <h3 class="ul-li-heading">{{title}}</h3>
+      <p class="ul-li-desc">{{place}}</p>
+      <p class="ul-li-desc">Until {{dexpires}}</p>
+    </a>
   </script>
 
   <script type="text/html" id="tpl-single-special">
+    <h1>{{title}}</h1>
     <p>{{title}}</p>
     <p>Expires on {{dexpires}}</p>
   </script>
