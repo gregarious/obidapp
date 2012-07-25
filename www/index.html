@@ -7,6 +7,7 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style/stylesheets/jqmobile/jquery.mobile-1.1.1.css">
+  <link rel="stylesheet" href="style/stylesheets/jqmobile/scenable.css">
 
   <!-- Load dependencies directly: don't worry about Require.js for these -->
   <script src="js/libs/jquery-1.7.2.js"></script>
@@ -55,7 +56,7 @@
 
     </div><!-- /header -->
 
-    <div data-role="content">
+    <div data-role="content" data-theme="a">
 
     </div><!-- /content -->
     
@@ -65,9 +66,9 @@
   </div>
 
   <div data-role="page" id="single">
-    <div data-role="header">
+    <div data-role="header" data-theme="b">
       <h1>Title</h1>
-      <a data-role="button" data-rel="back">&larr; Back</a>
+      <a data-role="button" data-rel="back" data-theme="a">&larr; Back</a>
     </div><!-- /header -->
 
     <div data-role="content" class="content">      
@@ -102,15 +103,21 @@
   </script>
 
   <script type="text/html" id="tpl-single-event">
-    <div class="single-thumb">
-      <img src="http://127.0.0.1:8000{{image}}" />
+    <div class="single-header">
+      <div class="single-thumb">
+        <img src="http://127.0.0.1:8000{{image}}" />
+      </div>
+      <div class="single-head-content">
+        <h1 class="ui-li-heading">{{name}}</h1>
+        <p><strong>{{dtstart}} - {{dtend}}</strong></p>
+        <p>Mike &amp; Tonys</p>
+        <p>123 Craig St</p>
+      </div>
     </div>
-    <div class="single-head-content">
-      <h1>{{name}}</h1>
-      <p><strong>{{dtstart}} - {{dtend}}</strong></p>
-      <p>Mike &amp; Tonys</p>
-      <p>123 Craig St</p>
+    <div class="single-content">
+      <p>{{description}}</p>
     </div>
+
   </script>
 
   <script type="text/html" id="tpl-feeditem-special">

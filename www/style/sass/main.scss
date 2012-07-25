@@ -1,5 +1,30 @@
 @import "base";
 
+.single-thumb {
+	width: 20%;
+	@include box-sizing(border-box);
+	float: left;
+	padding-right: 1em;
+
+	img {
+		width: 100%;
+	}
+}
+
+.single-head-content {
+	width: 80%;
+	float: left;
+}
+
+.single-content, .single-header {
+	width: 100%;
+	@include clearfix;
+}
+
+.single-header {
+	padding: 1em 0	;
+}
+
 #top-logo {
 	height: 50px;
 	float: left;
@@ -24,3 +49,5 @@
 	
 		}
 }
+
+// jQuery Mobile overrides
