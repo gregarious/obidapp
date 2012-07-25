@@ -32,7 +32,8 @@
       <!-- Top bar appears on all pages -->
       <div id="top-bar">
         <!-- <img id="top-logo" src="../img/logos/oakland-white-betatag-100w.png"> -->
-        <div id="view-options">
+        <a href="/" data-ajax="false"><button>Home</button></a>
+        <div id="view-options">                
           <img src="../img/icons/search.png">
 
           <!-- Map icon to be switched to list depending on template -->
@@ -62,6 +63,11 @@
     </div><!-- /footer -->
   </div>
 
+  <div data-role="dialog" id="category-form">
+    <!-- all dynamic -->
+  </div>
+
+
   <div data-role="page" id="single">
     <div data-role="header">
       <h1>Title</h1>
@@ -83,8 +89,12 @@
   </script>
 
   <script type="text/html" id="tpl-single-place">
+    <ul>
+    <li>
     <p>{{name}}</p>
     <p>{{location.address}}</p>
+    </li>
+    </ul>
   </script>
 
   <script type="text/html" id="tpl-feeditem-event">
@@ -105,6 +115,14 @@
     <p>Expires on {{dexpires}}</p>
   </script>
 
-
+  <script type="text/html" id="tpl-category-form">
+    <fieldset data-role="controlgroup">
+    {{#categories}}
+      <input type="checkbox" name="{{value}}" id="checkbox-{{value}}"/>
+      <label for="checkbox-{{value}}">{{label}}</label>
+    {{/categories}}
+    </fieldset>
+    <input type="submit" name="submit" data-role="button" value="OK"/>
+  </script>
 </body>
 </html>

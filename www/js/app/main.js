@@ -54,39 +54,6 @@ $(function(){
 		urlRoot: toTastyPieRootUrl('special')
 	});
 
-	/*** CONSTANTS/CACHED OBJECTS ***/
-	var typeCollectionMap = {
-		place: new Places({
-			filters: {
-				listed: true
-			}
-		}),
-		event: new Events({
-			filters: {
-				listed: true
-			}
-		}),
-		special: new Specials({
-			filters: {
-				listed: true
-			}
-		})
-	};
-
-	var typeTemplateMap = {
-		place: {
-			feeditem: Handlebars.compile($('#tpl-feeditem-place').html()),
-			single: Handlebars.compile($('#tpl-single-place').html())
-		},
-		event: {
-			feeditem: Handlebars.compile($('#tpl-feeditem-event').html()),
-			single: Handlebars.compile($('#tpl-single-event').html())
-		},
-		special: {
-			feeditem: Handlebars.compile($('#tpl-feeditem-special').html()),
-			single: Handlebars.compile($('#tpl-single-special').html())
-		}
-	};
 
 	/*** BACKBONE VIEWS ***/
 	// expects el to have two subdivs, .content-status and .content-list
@@ -105,61 +72,182 @@ $(function(){
 							this.itemTemplate(m.attributes) +
 						'</li>');
 				}, this);
+				this.$el.append('<hr/><a href="#category-form">Categories</a>');
 			}
 			return this;
 		}
 	});
 
-	/*** VARIOUS CONTROLLER FUNCTIONS: WILL BE COMBINED INTO PROPER CONTROLLER LATER ***/
-	var resourceTypePending = null;		// guard against multiple quick tab clicks, ensures only last async collection fetch request gets displayed
-	var changeFeed = function(resourceType) {
-		var collection = typeCollectionMap[resourceType];
+	var CategoryForm = Backbone.View.extend({
+		tagName: 'form',
+
+		events: {
+			'submit': 'submitted'
+		},
+
+		initialize: function(options) {
+			this.template = options.template;
+			this.categories = options.categories;
+
+			// pass the DOM-based submit event along as a CategoryForm event
+			this.$el.on('submit', $.proxy(function(e) {
+				e.preventDefault();
+				this.trigger('submit', e);
+			}, this));
+
+			_.bindAll(this, 'render', 'submitted');
+		},
+
+		render: function() {
+			this.$el.html(this.template({'categories': this.categories}));
+			return this;
+		},
+
+		// handles DOM submit event, triggers event that passes along object with {category: bool} entries
+		submitted: function(e) {
+			console.log('hahah');
+			var inputs = $(e.target).serializeArray();
+			
+			// fill the categories array with the chosen names
+			var categories = [];
+			inputs = _.each(inputs, function(obj) {
+				if(obj.name !== 'submit') {
+					categories.push(obj.name);
+				}
+			});
+			this.trigger('submit', categories);
+			e.preventDefault();
+		}
+	});
+
+	// Various configuration settings for the resource types
+	var typeSettings = {
+		place: {
+			collection: new Places({
+				filters: {
+					listed: true
+				}
+			}),
+			templates: {
+				feeditem: Handlebars.compile($('#tpl-feeditem-place').html()),
+				single: Handlebars.compile($('#tpl-single-place').html())
+			}
+		},
+		event: {
+			collection: new Events({
+				filters: {
+					listed: true
+				}
+			}),
+			templates: {
+				feeditem: Handlebars.compile($('#tpl-feeditem-event').html()),
+				single: Handlebars.compile($('#tpl-single-event').html())
+			}
+		},
+		special: {
+			collection: new Specials({
+				filters: {
+					listed: true
+				}
+			}),
+			templates: {
+				feeditem: Handlebars.compile($('#tpl-feeditem-special').html()),
+				single: Handlebars.compile($('#tpl-single-special').html())
+			}
+		}
+		};
+
+
+	var exploreController = (function() {
+		// DOM elements in initial page skeleton
 		var contentEl = $('#explore div:jqmData(role="content")');
-		var tpl, contentView;
+		var categoryFormEl = $('#category-form');
 
-		// remember this resource type as the last one requested
-		resourceTypePending = resourceType;
+		var currentViews = {
+			contentView: null,
+			categoryForm: null,
+			type: null
+		};
 
-		$.mobile.showPageLoadingMsg();
-		if (collection) {
-			tpl = typeTemplateMap[resourceType].feeditem;
+		var loadingPromise = null;
+		var displayMode = 'list';
 
-			contentView = new FeedView({
+		var controller = {};
+		controller.changeFeed = function(resourceType) {
+			var settings = typeSettings[resourceType],
+				collection = null,
+				itemTemplate = null;
+
+			if(resourceType === currentViews.type) {
+				return;
+			}
+
+			// clear out the current view entries, including detatching event handlers
+			if(currentViews.categoryForm) {
+				currentViews.categoryForm.off();
+			}
+			currentViews.categoryForm = null;
+			currentViews.contentView = null;
+			currentViews.type = resourceType;
+
+			// if no settings were found, the resource type isn't supported
+			if(!settings) {
+				contentEl.html("invalid resource type");
+				return;
+			}
+
+			collection = settings.collection;
+			itemTemplate = settings.templates.feeditem;
+
+			// temp debug
+			collection.categories = [
+				{label: 'Cat 1', value: 'cat1'},
+				{label: 'Cat 2', value: 'cat2'},
+				{label: 'Cat 3', value: 'cat3'},
+				{label: 'Cat 4', value: 'cat4'}
+			];
+
+			// now time to set up the two subviews according to the collection
+			$.mobile.showPageLoadingMsg();
+
+			// First set up the content view: a FeedView based on the given collection
+			currentViews.contentView = new FeedView({
 				collection: collection,
 				tagName: 'ul',
 				className: 'feed',
-				itemTemplate: typeTemplateMap[resourceType].feeditem
+				attributes: {'data-role': 'listview'},
+				itemTemplate: itemTemplate
 			});
 
-			// all fetch callbacks are guarded by a resourceTypePending check to ensure
-			// this fetch was the last one actually requested by the user
+			// Now fetch the collection asynchronously (could move this up to directly below the promise being created)
 			collection.fetch({
 				success: function(collection, response) {
-					if(resourceTypePending === resourceType) {
-						contentEl.html(contentView.render().el);
-					}
+					contentEl.html(currentViews.contentView.render().el);
 				},
 				error: function(collection, response) {
-					if(resourceTypePending === resourceType) {
-						contentEl.html("Error retreiving data.");
-					}
+					contentEl.html("Error retreiving data.");
 				},
 				complete: function() {
-					if(resourceTypePending === resourceType) {
-						$.mobile.hidePageLoadingMsg();
-						contentEl.trigger("create");
-					}
+					$.mobile.hidePageLoadingMsg();
+					contentEl.trigger("create");
 				},
 				timeout: 2000
 			});
-		}
-		else {
-			if(resourceTypePending === resourceType) {
-				contentEl.html("invalid url");
-				$.mobile.hidePageLoadingMsg();
-			}
-		}
-	};
+
+			// create a new category form and hook up an event handler to it
+			var catForm = currentViews.categoryForm = new CategoryForm({
+				categories: collection.categories,
+				template: Handlebars.compile($("#tpl-category-form").html())
+			});
+			categoryFormEl.html(catForm.render().el);
+			catForm.on('submit', function(categories) {
+				console.log('received categories: ' + categories);
+				// TODO: pass in the categories to a collection filter
+			});
+		};
+		return controller;
+	})();
+
 
 	// helper function to be used in template to encode resource uri's embedded in links
 	Handlebars.registerHelper('uriEncode', function(string) {
@@ -168,6 +256,7 @@ $(function(){
 
 	$(document).bind( "pagebeforechange", function(e, data) {
 		if (typeof data.toPage === "string") {
+			// router stand-in logic
 			var url = $.mobile.path.parseUrl(data.toPage);
 			var match = /^\#(.+)\?(.*)/.exec(url.hash);
 			if (match) {
@@ -182,15 +271,16 @@ $(function(){
 					});
 				}
 
+				// actual controller logic
 				var resourceType = args['type'];
 				if (page === 'explore') {
-					changeFeed(resourceType);
+					exploreController.changeFeed(resourceType);
 				}
 				else if (page === 'single') {
-					tpl = typeTemplateMap[resourceType].single;
+					var tpl = typeSettings[resourceType].templates.single;
 
 					id = decodeURIComponent(args['id']);
-					var model = typeCollectionMap[resourceType].get(id);
+					var model = typeSettings[resourceType].collection.get(id);
 					
 					contentEl = $('#single .content');
 					contentEl.html(tpl(model.attributes));
