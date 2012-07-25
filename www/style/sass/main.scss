@@ -1,465 +1,53 @@
 @import "base";
 
-body {
+.single-thumb {
+	width: 20%;
+	@include box-sizing(border-box);
+	float: left;
+	padding-right: 1em;
+
+	img {
+		width: 100%;
+	}
+}
+
+.single-head-content {
+	width: 80%;
+	float: left;
+}
+
+.single-content, .single-header {
 	width: 100%;
-	font-family: Helvetica, Arial, sans-serif;
-}
-
-#header-view {
-	@include clearfix();
-}
-
-#login-view { 
-	background: $dark-grey;
-}
-
-#welcome-logo {
-	display: block;
-	margin: auto;
-}
-
-#top-bar {
-	background: $dark-grey;
-	height: 40px;
-	position: fixed;
-	width: 100%;
-	z-index: 999;
-
-	&>* {
-		@include column(4);
-	}
-
-	#top-logo { 
-		
-		img {
-			width: auto;
-			height: 50px;
-		}
-	}
-
-	#view-options {
-		padding: 0.5em;
-
-		img {
-			height: 20px;
-			float: right;
-
-			&:first-child {
-				margin-left: 10px;
-			}
-		}
-	}
-
-	#current-user {
-		text-align: center;
-		display: inline;
-		color: #fff;
-		margin-top: 10px;
-	}
-}
-
-#content-view {
-	position: relative;
 	@include clearfix;
-	.single-page & {
-		margin: 0 5px;
-		background: $light-grey;
-		@include box-shadow(#666 0 0 2px);
-		padding: 10px;
-	}
-}
-
-// A hack to compensate for weird overflow with #explore-nav
-#main-view {
-	overflow-x: hidden;
-	background: $light-green;
-}
-
-/* NAVIGATION ---------- */
-
-.explore-nav ul li {
-	margin-top: 40px;
-	.ui-btn-text {
-		font-weight:  normal;	
-	}
-	
-	.ui-btn-icon-top .ui-btn-inner {
-		padding-top: 40px;
-	}
-
-	.ui-btn-icon-top .ui-btn-inner .ui-icon, .ui-btn-icon-bottom .ui-btn-inner .ui-icon {
-		margin-left: -15px;
-	}
-
-	.ui-icon {
-		height: 30px;
-		width: 30px;
-	}
-
-}
-
-// .ui-icon-now {
-// 	background-image: url('../../img/icons/explore-nav/now.png');
-// }
-
-// .ui-icon-places {
-// 	background-image: url('../../img/icons/explore-nav/places.png');
-// }
-
-// .ui-icon-events {
-// 	background-image: url('../../img/icons/explore-nav/events.png');
-// }
-
-// .ui-icon-bulletin {
-// 	background-image: url('../../img/icons/explore-nav/bulletin.png');
-// }
-
-// .ui-icon-specials {
-// 	background-image: url('../../img/icons/explore-nav/special-status.png');
-// }	
-
-/* COMPONENTS --------- */
-
-.tags {
-	margin: 0.1em 0;
-	@extend .horiz-ul;
-	li {
-		background-color: #f9f9f9;
-		border: 1px solid #e1e1e1;
-		@include border-radius(5px);
-		color: #666;
-		font-size: 11px;
-		padding: 0.3em;
-		margin-right: 0.5em;
-	}
-}
-
-/* FEED ITEMS --------- */
-
-.item-list {
-	margin-bottom: 1.5em;
-	&>li {
-		@include clearfix();
-		font-size: 0.9em;
-		line-height: 1.3em;
-		//margin: 1% 0;
-		padding: 2%;
-		margin: 1%;
-		border-bottom: 1px solid #aaa;
-		@include single-box-shadow;
-		background: #fff;
-
-		a {
-			@include unstyled-link;	
-		}
-
-		&:active {
-			@include background-image(linear-gradient(#e5e5e5, #fff));		
-		}
-	}
-}
-
-.item-title {
-	margin: 0;
-	line-height: 1.2em;
-	font-size: 1em;
-	font-weight: 600;
-	//@include single-text-shadow(#444, 1px, 1px, 1px);
-}
-
-.item-thumb {
-	&>img {
-		@extend .flex-img;
-		max-height: 200px;	
-		max-width: 200px;	
-	}
-	
-	@include column(2.75);
-}
-
-.item-content {
-	@include column(9.25);
-	padding-left: 1em;
-}
-
-.item-details {
-	font-size: 0.8em;
-}
-
-/* SINGLE ---------- */
-
-#top-bar-single {
-	@include background(linear-gradient(#222, $dark-grey));
-	@include column(12);
-	@include box-shadow(#666 0 1px 2px);
-	padding: 0.3em;
-	//height: 35px;
-	position: fixed;
-	z-index: 999;
-	border: 2px solid $dark-grey;
-	a, h1, span {
-		@include column(3);
-	}
-
-	h1 {
-		@include column(6);
-		color: #fff;
-		float: left;
-		margin: 0.3em 1em 0;
-		text-align: center;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	div {
-		@include column(1);
-	}
-
-	a {
-		
-	}
 }
 
 .single-header {
-	margin: 40px 0 0;
-	padding: 10px;
-	@include clearfix;	background: #fff;
-	@include box-shadow(#666 0 0 2px);
-	margin-bottom: 0.5em;
-
-	.item-title {
-		//font-size: 1.1em;
-		
-	}
-
-	.item-details {
-		line-height: 1.1em;
-	}
-		
+	padding: 1em 0	;
 }
 
-.single-content {
-	padding: 0.5em;
-	@include column(12);
+#top-logo {
+	height: 50px;
+	float: left;
+	width: auto;
 	position: relative;
-	background: #fff;
-	@include box-shadow(#666 0 0 2px);
-
-	p {
-		font-size: 0.8em;
-		line-height: 1.1em;
-	}
-
-	#mapCanvas {
-		@include column(12);
-		//@include background-image(linear-gradient(#fff, #e1e1e1));
-		@include box-shadow(#666 0 0 2px);
-		margin-bottom: 10px;
-		height: 100px;
-		overflow: hidden;
-		//margin: 0 0 10px 10px;
-	}
+	top: 5px;
+	z-index: 100;
 }
 
-.social {
-	@include column(12);
-	margin: 0.5em 0 1em;
-	div {
-		@include column(6);
-		padding: 5px;
-		text-align: center;
-		font-size: 0.9em;
-		@include box-shadow(#444 1px 1px 3px);
-		&:first-child {
-			border-right: 1px solid $green;
-
-		}
-
-		@include background-image(linear-gradient(#e5e5e5, #e1e1e1));
-	}
+#top-bar {
+	height: 50px;
 }
 
-/* FOOTER ------------ */
-
-.sorting {
-	width: 100%;
-	position: fixed;
-	bottom: 0;
-
-	ul li {
-		font-size: 0.8em;
-		@include box-shadow(#777 0 -1px 3px);
-		@include column(4);
-		padding: 0.5em;
-		border: 1px solid #999;
-		background: $dark-grey;
-		color: #fff;
-
-		&.selected {
-			background: $yellow;
-			@include box-shadow(#fff 0 0 0);
-			font-weight: bold;
-			color: #000;
-		}
-	}
-}
-
-#settings-drawer {
-	background: #222;
-	color: #fff;
-	height: 80px;
-	width: 100%;
-	padding-top: 30px;
-	text-align: center;
-	position: fixed;
-	bottom: 0;
-	display: none;
-}
-
-/* BULLETIN ----------- */
-
-.snippet {
-	margin-bottom: 1em;
-}
-
-.news {
-	a {
-		@include unstyled-link;	
-	}
-	.btn {
-		@include column(12);
-		padding: 0.5em;
-
-		// text-align: center;
-		// @include background-image(linear-gradient($light-blue, $med-blue));
-		@include border-radius(5px);
-		// border: $light-grey 2px solid;
-		// color: #fff;
-		// 
-
-		@include button-gradient;
-	}
-}
-
-// Comments
-
-.comment-form {
-	margin: 1em 0;
-}
-
-.comments {
-	@include column(12);
-	font-size: 0.9em;
-	ol, ul {
-		margin-left: 2em;
-	
-			li, li li {
-			margin-bottom: 1em;
-		}
-	}
-}
-
-/* PLACES ---------- */
-
-.action-list {
-	@include column(12);
-	margin-bottom: 0.5em;
-	ul {
-		@include clearfix;
-
-		li {
-			width: 32.5%;
-			float: left;
-			text-align: center;
-			@include background-image(linear-gradient(#e5e5e5, #ccc));
-			padding: 0.7em;
-			@include box-sizing(border-box);
-			margin-right: 0.2em;
-			&:last-child {
-				margin-right: 0;
-			}
-		}
-	}
-}
-
-.single-place-nav {
-	color: #fff;
-
-	li {
-		background: $dark-grey;
-		border-bottom: 2px solid $med-grey;
-		//border-right: 2px solid $dark-grey;
-		@include border-top-radius(5px);
-  		width: 30%;
-  		padding: 0.3em;
-  		font-size: 0.9em;
-  		margin: 0 0.5%;
-
-  		&:last-child {
-  			margin: 0;
-  		}
-
-  		&:hover {
-  			background: $light-green;
-  		}
-
-  		&.selected {
-  			background: $yellow;
-  			//border-color: #fff;
-  			color: #000;
-  		}
-	}
-}
-
-.place-info {
-	p {
-		display: inline;
-	}
-	&>.item-details {
-		@include column(12);
+#view-options {
+	float: right;
+	padding-top: 10px;
+	img {
 		float: right;
-		font-size: 0.9em;
-
-	li {
-			margin-bottom: 0.5em;
-
-			.detail-title {
-				font-weight: bold;
-			}
+		//height: 30px;
+		
+			margin-right: 10px;
+	
 		}
-	}
 }
 
-
-#placeMapCanvas {
-	height: 100px;
-	@include column(5);
-	overflow: hidden;
-	position: relative;
-	margin: 0 0.5em 0 0.5em;
-}
-
-/* SPECIALS ---------- */
-
-.specials {
-	.item-thumb {
-		background: green;
-		@include border-radius(10px);
-		@include box-shadow(red);
-	}
-}
-
-#special-status {
-	background: #999;
-	width: 100%;
-	padding: 10px 0;
-	position: fixed;
-	bottom: 0;
-	button {
-		font-size: 1.5em;
-		width: 90%;
-		display: block;
-		margin: auto;
-	}
-}
+// jQuery Mobile overrides

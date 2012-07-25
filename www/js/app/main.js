@@ -215,7 +215,7 @@ $(function(){
 				collection: collection,
 				tagName: 'ul',
 				className: 'feed',
-				attributes: {'data-role': 'listview'},
+				attributes: {'data-role':'listview'},
 				itemTemplate: itemTemplate
 			});
 
