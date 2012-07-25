@@ -173,7 +173,8 @@ $(function(){
 		var displayMode = 'list';
 
 		var controller = {};
-		controller.changeFeed = function(resourceType) {
+
+		controller.prepareContent = function(resourceType) {
 			var settings = typeSettings[resourceType],
 				collection = null,
 				itemTemplate = null;
@@ -254,32 +255,43 @@ $(function(){
 		return encodeURIComponent(string);
 	});
 
+	// returns an object with the properies "page" and "args", or null
+	// this is a simple routine to stand in for router parsing
+	var parseHash = function(url) {
+		var match = /^\#(.+)\?(.*)/.exec(url.hash);
+		if (match) {
+			var page = match[1];
+			var args = {};
+			if (match[2]) {
+				_.each(match[2].split("&"), function(clause){
+					var submatch = /(.*)=(.*)/.exec(clause);
+					if (submatch[1]) {
+						args[submatch[1]] = submatch[2];
+					}
+				});
+			}
+			return {
+				page: page,
+				args: args
+			};
+		}
+		else {
+			return null;
+		}
+	};
+
 	$(document).bind( "pagebeforechange", function(e, data) {
 		if (typeof data.toPage === "string") {
-			// router stand-in logic
-			var url = $.mobile.path.parseUrl(data.toPage);
-			var match = /^\#(.+)\?(.*)/.exec(url.hash);
-			if (match) {
-				var page = match[1];
-				var args = {};
-				if (match[2]) {
-					_.each(match[2].split("&"), function(clause){
-						var submatch = /(.*)=(.*)/.exec(clause);
-						if (submatch[1]) {
-							args[submatch[1]] = submatch[2];
-						}
-					});
+			var route = parseHash($.mobile.path.parseUrl(data.toPage));
+			if (route) {
+				var resourceType = route.args['type'];
+				if (route.page === 'explore') {
+					exploreController.prepareContent(resourceType);
 				}
-
-				// actual controller logic
-				var resourceType = args['type'];
-				if (page === 'explore') {
-					exploreController.changeFeed(resourceType);
-				}
-				else if (page === 'single') {
+				else if (route.page === 'single') {
 					var tpl = typeSettings[resourceType].templates.single;
 
-					id = decodeURIComponent(args['id']);
+					id = decodeURIComponent(route.args['id']);
 					var model = typeSettings[resourceType].collection.get(id);
 					
 					contentEl = $('#single .content');
