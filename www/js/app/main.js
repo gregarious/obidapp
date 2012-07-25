@@ -171,13 +171,25 @@ $(function(){
 
 		var displayMode = 'list';
 
-		var awaitingData = null;	// See "Notes on awaitingData" below
+		/* Notes on awaitingData:
+		*   Since the collection fetch callbacks below are responsible for updating
+		*   the content DOM, and a user could request a new instance of this function
+		*   before that callback returns, we need an object to be sent into the
+		*   callbacks that knows whether we still want the display to occur. Acts
+		*   as a super-simple Deferred object with only a pending status.
+		*/
+		var awaitingData = null;
 		
 		var controller = {};
-		controller.prepareContent = function(resourceType) {
+		controller.setContent = function(resourceType) {
 			var settings = typeSettings[resourceType],
 				collection = null,
 				itemTemplate = null;
+
+			// tell the old awaitingData object that we're not interested anymore
+			if(awaitingData) {
+				awaitingData.pending = false;
+			}
 
 			// no work to be done here, just return
 			if(resourceType === currentViews.type) {
@@ -224,20 +236,9 @@ $(function(){
 				itemTemplate: itemTemplate
 			});
 
-			/* Notes on awaitingData:
-			*   Since the collection fetch callback is responsible for updating the
-			*   content DOM, and a user could request a new instance of this function
-			*   before that callback returns, we need an object to be sent into the
-			*   callbacks that knows whether we still want the display to occur. Acts
-			*   as a super-simple Deferred object with only a pending status.
-			*/
-
-			// tell the old awaitingData object that we're not interested anymore
-			if(awaitingData) {
-				awaitingData.pending = false;
-			}
-			// create a new one in which we say we are interested
+			// create a new object in which we say we are interested
 			awaitingData = {
+				type: resourceType,
 				pending: true
 			};
 			
@@ -260,7 +261,7 @@ $(function(){
 						if(awaitingData.pending) {
 							$.mobile.hidePageLoadingMsg();
 							contentEl.trigger("create");
-							awaitingData.pending = true;	// this is kind of meaningless, but it wraps up the object's lifespan well
+							awaitingData.pending = false;	// this is kind of meaningless, but it wraps up the object's lifespan well
 						}
 					},
 					timeout: 2000
@@ -318,7 +319,7 @@ $(function(){
 			if (route) {
 				var resourceType = route.args['type'];
 				if (route.page === 'explore') {
-					exploreController.prepareContent(resourceType);
+					exploreController.setContent(resourceType);
 				}
 				else if (route.page === 'single') {
 					var tpl = typeSettings[resourceType].templates.single;
