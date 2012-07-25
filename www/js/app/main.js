@@ -169,19 +169,23 @@ $(function(){
 			type: null
 		};
 
-		var loadingPromise = null;
 		var displayMode = 'list';
 
+		var awaitingData = null;	// See "Notes on awaitingData" below
+		
 		var controller = {};
-
 		controller.prepareContent = function(resourceType) {
 			var settings = typeSettings[resourceType],
 				collection = null,
 				itemTemplate = null;
 
+			// no work to be done here, just return
 			if(resourceType === currentViews.type) {
 				return;
 			}
+
+			
+			$.mobile.showPageLoadingMsg();
 
 			// clear out the current view entries, including detatching event handlers
 			if(currentViews.categoryForm) {
@@ -194,6 +198,7 @@ $(function(){
 			// if no settings were found, the resource type isn't supported
 			if(!settings) {
 				contentEl.html("invalid resource type");
+				$.mobile.hidePageLoadingMsg();
 				return;
 			}
 
@@ -209,7 +214,6 @@ $(function(){
 			];
 
 			// now time to set up the two subviews according to the collection
-			$.mobile.showPageLoadingMsg();
 
 			// First set up the content view: a FeedView based on the given collection
 			currentViews.contentView = new FeedView({
@@ -220,20 +224,48 @@ $(function(){
 				itemTemplate: itemTemplate
 			});
 
-			// Now fetch the collection asynchronously (could move this up to directly below the promise being created)
-			collection.fetch({
-				success: function(collection, response) {
-					contentEl.html(currentViews.contentView.render().el);
-				},
-				error: function(collection, response) {
-					contentEl.html("Error retreiving data.");
-				},
-				complete: function() {
-					$.mobile.hidePageLoadingMsg();
-					contentEl.trigger("create");
-				},
-				timeout: 2000
-			});
+			/* Notes on awaitingData:
+			*   Since the collection fetch callback is responsible for updating the
+			*   content DOM, and a user could request a new instance of this function
+			*   before that callback returns, we need an object to be sent into the
+			*   callbacks that knows whether we still want the display to occur. Acts
+			*   as a super-simple Deferred object with only a pending status.
+			*/
+
+			// tell the old awaitingData object that we're not interested anymore
+			if(awaitingData) {
+				awaitingData.pending = false;
+			}
+			// create a new one in which we say we are interested
+			awaitingData = {
+				pending: true
+			};
+			
+			// Now fetch the collection asynchronously
+			// we wrap this up in a closure so the current instance of awaitingData is
+			// used inside the callbacks
+			(function(awaitingData) {
+				collection.fetch({
+					success: function(collection, response) {
+						if(awaitingData.pending) {
+							contentEl.html(currentViews.contentView.render().el);
+						}
+					},
+					error: function(collection, response) {
+						if(awaitingData.pending) {
+							contentEl.html("Error retreiving data.");
+						}
+					},
+					complete: function() {
+						if(awaitingData.pending) {
+							$.mobile.hidePageLoadingMsg();
+							contentEl.trigger("create");
+							awaitingData.pending = true;	// this is kind of meaningless, but it wraps up the object's lifespan well
+						}
+					},
+					timeout: 2000
+				});
+			})(awaitingData);
 
 			// create a new category form and hook up an event handler to it
 			var catForm = currentViews.categoryForm = new CategoryForm({
