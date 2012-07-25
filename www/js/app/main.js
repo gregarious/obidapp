@@ -288,6 +288,12 @@ $(function(){
 		return encodeURIComponent(string);
 	});
 
+	// helper function to be used in template to encode resource uri's embedded in links
+	Handlebars.registerHelper('domainUri', function(string) {
+		return 'http://127.0.0.1:8000' + string;
+	});
+
+
 	// returns an object with the properies "page" and "args", or null
 	// this is a simple routine to stand in for router parsing
 	var parseHash = function(url) {

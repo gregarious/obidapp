@@ -88,7 +88,7 @@
   <!-- Inline templates -->
   <script type="text/html" id="tpl-feeditem-place">
       <a href="#single?type=place&id={{uriEncode resource_uri}}">
-        <img src="http://127.0.0.1:8000{{image}}" />
+        <img src="{{domainUri image}}" />
         <h3 class="ul-li-heading">{{name}}</h3>
         <p class="ul-li-desc">{{location.address}}</p>
       </a>
@@ -101,7 +101,7 @@
 
   <script type="text/html" id="tpl-feeditem-event">
     <a href="#single?type=event&id={{uriEncode resource_uri}}">
-      <img src="http://127.0.0.1:8000{{image}}" />
+      <img src="{{domainUri image}}" />
       <h3 class="ul-li-heading">{{name}}</h3>
       <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
       <p class="ui-li-desc">Mike &amp; Tonys</p>
@@ -111,7 +111,7 @@
   <script type="text/html" id="tpl-single-event">
     <div class="single-header">
       <div class="single-thumb">
-        <img src="http://127.0.0.1:8000{{image}}" />
+        <img src="{{domainUri image}}" />
       </div>
       <div class="single-head-content">
         <h1 class="ui-li-heading">{{name}}</h1>
