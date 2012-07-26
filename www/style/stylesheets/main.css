@@ -105,6 +105,11 @@ body {
 }
 
 /* line 3, ../sass/main.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 7, ../sass/main.scss */
 .single-thumb {
   width: 20%;
   -webkit-box-sizing: border-box;
@@ -113,30 +118,30 @@ body {
   float: left;
   padding-right: 1em;
 }
-/* line 9, ../sass/main.scss */
+/* line 13, ../sass/main.scss */
 .single-thumb img {
   width: 100%;
 }
 
-/* line 14, ../sass/main.scss */
+/* line 18, ../sass/main.scss */
 .single-head-content {
   width: 80%;
   float: left;
 }
 
-/* line 19, ../sass/main.scss */
+/* line 23, ../sass/main.scss */
 .single-content, .single-header {
   width: 100%;
   overflow: hidden;
   *zoom: 1;
 }
 
-/* line 24, ../sass/main.scss */
+/* line 28, ../sass/main.scss */
 .single-header {
   padding: 1em 0;
 }
 
-/* line 28, ../sass/main.scss */
+/* line 32, ../sass/main.scss */
 #top-logo {
   height: 50px;
   float: left;
@@ -146,18 +151,57 @@ body {
   z-index: 100;
 }
 
-/* line 37, ../sass/main.scss */
+/* line 41, ../sass/main.scss */
 #top-bar {
   height: 50px;
 }
 
-/* line 41, ../sass/main.scss */
+/* line 45, ../sass/main.scss */
 #view-options {
   float: right;
   padding-top: 10px;
 }
-/* line 44, ../sass/main.scss */
+/* line 48, ../sass/main.scss */
 #view-options img {
   float: right;
   margin-right: 10px;
+}
+
+/* line 57, ../sass/main.scss */
+.sorting {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+/* line 65, ../sass/main.scss */
+#map-mode {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* line 71, ../sass/main.scss */
+#map_canvas {
+  overflow: hidden;
+  *zoom: 1;
+  width: 100%;
+  background-color: green;
+  min-height: 100%;
+  height: 100%;
+}
+
+/* line 79, ../sass/main.scss */
+.load-more {
+  width: 30%;
+  position: absolute;
+  bottom: 20%;
+  right: 0;
+  background: yellow;
+  padding: 0.5em;
+}
+
+/* line 90, ../sass/main.scss */
+.ui-link-inherit {
+  padding-top: 0.2em !important;
 }

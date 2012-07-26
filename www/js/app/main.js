@@ -68,7 +68,7 @@ $(function(){
 			if(this.collection) {
 				this.collection.each(function(m) {
 					this.$el.append(
-						'<li>' +
+						'<li data-theme="e">' +
 							this.itemTemplate(m.attributes) +
 						'</li>');
 				}, this);
