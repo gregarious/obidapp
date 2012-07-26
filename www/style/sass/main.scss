@@ -58,6 +58,7 @@ html, body {
 	width: 100%;
 	position: absolute;
 	bottom: 0;
+	height: 30px;
 }
 
 // Map
@@ -79,10 +80,60 @@ html, body {
 .load-more {
 	width: 30%;
 	position: absolute;
-	bottom: 20%;
+	bottom: 40px;
 	right: 0;
 	background: yellow;
 	padding: 0.5em;
+}
+
+.custom-infowindow {
+	padding: 5px;
+	@include box-sizing(border-box);
+	width: 100%;
+	height: auto;
+	background: url('../../img/assets/black-trans.png');
+	color: #fff;
+	position: absolute;
+	top: 105px;
+	max-height: 100px;
+	@include clearfix;
+
+	.infowindow-info {
+		float: left;
+		width: 86%;
+		padding: 0.4em;
+		@include box-sizing(border-box);
+		font-size: 0.9em;
+		@include text-shadow(1px 1px 1px #000);
+	}
+
+	img {
+		width: 50px;
+		height: 50px;
+		float: left;
+		margin-right: 15px;
+	}
+
+	.next, .prev {
+		width: 7%;
+		padding: 0.4em 0;
+		@include box-sizing(border-box);
+		img {
+			width: 100%;
+			height: auto;
+		}
+		//height: 10px;
+		//background: green;
+	}
+
+	.next {
+		float: right;
+	}
+
+
+	.prev {
+		float: left;
+	}
 }
 
 // jQuery Mobile overrides
@@ -91,4 +142,9 @@ html, body {
 	padding-top: 0.2em !important;
 	//padding-bottom: 0.2em !important;
 }
+
+.explore-nav {
+	height: 55px;
+}
+
 
