@@ -68,7 +68,7 @@
   <div data-role="page" id="single">
     <div data-role="header" data-theme="b">
       <h1>Title</h1>
-      <a data-role="button" data-rel="back" data-theme="a">&larr; Back</a>
+      <a data-role="button" data-rel="back" data-theme="b">&larr; Back</a>
     </div><!-- /header -->
 
     <div data-role="content" class="content">      
@@ -82,7 +82,11 @@
   <!-- Inline templates -->
   <script type="text/html" id="tpl-feeditem-place">
       <a href="#single?type=place&id={{uriEncode resource_uri}}">
-        <img src="http://127.0.0.1:8000{{image}}" />
+        {{#if image}}
+          <img src="http://127.0.0.1:8000{{image}}" />
+        {{else}}
+          <img src="img/defaults/default-place.png" />
+        {{/if}}
         <h3 class="ul-li-heading">{{name}}</h3>
         <p class="ul-li-desc">{{location.address}}</p>
       </a>
@@ -95,7 +99,13 @@
 
   <script type="text/html" id="tpl-feeditem-event">
     <a href="#single?type=event&id={{uriEncode resource_uri}}">
-      <img src="http://127.0.0.1:8000{{image}}" />
+      
+      {{#if image}}
+        <img src="http://127.0.0.1:8000{{image}}" />
+      {{else}}
+        <img src="img/defaults/default-event.png" />
+      {{/if}}
+
       <h3 class="ul-li-heading">{{name}}</h3>
       <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
       <p class="ui-li-desc">Mike &amp; Tonys</p>
