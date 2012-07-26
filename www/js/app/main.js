@@ -60,7 +60,46 @@ $(function(){
 		*/
 		var awaitingData = null;
 		
+		/* Private functions for Controller */
+
+		var createCategoryForm = function(collection) {
+			// create a new category form and hook up an event handler to it
+			var catForm = new CategoryForm({
+				categories: collection.categories,
+				template: Handlebars.compile($("#tpl-category-form").html())
+			});
+			categoryFormEl.html(catForm.render().el);
+			categoryFormEl.trigger("create");
+			catForm.on('submit', function(categories) {
+				console.log('received categories: ' + categories);
+				// TODO: pass in the categories to a collection filter
+			});
+			return catForm;
+		};
+
+		var createContentView = function(collection, itemTemplate) {
+			if (displayMode === 'list') {
+				return new ListFeedView({
+					collection: collection,
+					tagName: 'ul',
+					className: 'feed',
+					attributes: {'data-role':'listview'},
+					itemTemplate: itemTemplate
+				});
+			}
+			else {
+				var view = new MapFeedView({
+					collection: collection,
+					itemTemplate: itemTemplate
+				});
+			}
+		};
+
 		var controller = {};
+		controller.toggleDisplayMode = function() {
+			displayMode = (displayMode === 'list') ? 'map' : 'list';
+		};
+
 		controller.setContent = function(resourceType) {
 			var settings = typeSettings[resourceType],
 				collection = null,
@@ -75,9 +114,7 @@ $(function(){
 			if(resourceType === currentViews.type) {
 				return;
 			}
-
-			
-			$.mobile.showPageLoadingMsg();
+			currentViews.type = resourceType;
 
 			// clear out the current view entries, including detatching event handlers
 			if(currentViews.categoryForm) {
@@ -85,7 +122,9 @@ $(function(){
 			}
 			currentViews.categoryForm = null;
 			currentViews.contentView = null;
-			currentViews.type = resourceType;
+
+			// before doing the heavy lifting, show a loading message
+			$.mobile.showPageLoadingMsg();
 
 			// if no settings were found, the resource type isn't supported
 			if(!settings) {
@@ -97,6 +136,10 @@ $(function(){
 			collection = settings.collection;
 			itemTemplate = settings.templates.feeditem;
 
+			// now time to set up the two subviews according to the collection
+			currentViews.contentView = createContentView(collection, itemTemplate);
+			currentViews.categoryForm = createCategoryForm(collection);
+
 			// temp debug
 			collection.categories = [
 				{label: 'Cat 1', value: 'cat1'},
@@ -104,17 +147,6 @@ $(function(){
 				{label: 'Cat 3', value: 'cat3'},
 				{label: 'Cat 4', value: 'cat4'}
 			];
-
-			// now time to set up the two subviews according to the collection
-
-			// First set up the content view: a FeedView based on the given collection
-			currentViews.contentView = new FeedView({
-				collection: collection,
-				tagName: 'ul',
-				className: 'feed',
-				attributes: {'data-role':'listview'},
-				itemTemplate: itemTemplate
-			});
 
 			// create a new object in which we say we are interested
 			awaitingData = {
@@ -147,20 +179,7 @@ $(function(){
 					timeout: 2000
 				});
 			})(awaitingData);
-
-			// create a new category form and hook up an event handler to it
-			var catForm = currentViews.categoryForm = new CategoryForm({
-				categories: collection.categories,
-				template: Handlebars.compile($("#tpl-category-form").html())
-			});
-			categoryFormEl.html(catForm.render().el);
-			categoryFormEl.trigger("create");
-			catForm.on('submit', function(categories) {
-				console.log('received categories: ' + categories);
-				// TODO: pass in the categories to a collection filter
-			});
 		};
-		return controller;
 	})();
 
 
@@ -214,7 +233,7 @@ $(function(){
 					id = decodeURIComponent(route.args['id']);
 					var model = typeSettings[resourceType].collection.get(id);
 					
-					contentEl = $('#single .content');
+					var contentEl = $('#single .content');
 					contentEl.html(tpl(model.attributes));
 					contentEl.trigger("create");
 
