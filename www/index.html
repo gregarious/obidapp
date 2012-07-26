@@ -26,10 +26,28 @@
   <script src="js/app/views.js"></script>
   <script src="js/app/main.js"></script>
 
+  <!-- Maps API -->
+   <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBs7pwJR2UazpCXdmAdcCnl0jjn1ML9Du0&sensor=false"></script>
+
+  <script>
+  // Lara's Simple Map (case by titlecase.org)
+
+  function initialize() {
+    var mapOptions = {
+      center: new google.maps.LatLng(-34.397, 150.644),
+      zoom: 8,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        mapOptions);
+  }
+  </script>
+
   <link rel="stylesheet" type="text/css" href="style/stylesheets/main.css">
 </head>
 
-<body>
+<body onload="initialize()">
   <div data-role="page" id="explore">
     <div data-role="header">
       <!-- Top bar appears on all pages -->
@@ -119,6 +137,20 @@
     <div id="map_canvas">
     </div>
 
+    <div class="custom-infowindow">
+      <div class="prev">
+        <img src="img/assets/arrow-left.png" />
+      </div>
+      <div class="infowindow-info">
+        <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/161484_14205248_278738875_n.jpg" />
+        <h1>Item title</h1>
+        <p>Item address</p>
+        <p>Category1, Category2</p>
+      </div>
+      <div class="next">
+        <img src="img/assets/arrow-right.png">
+      </div>
+    </div>
     <div class="load-more">
       Load more...
     </div>
