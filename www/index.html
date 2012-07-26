@@ -32,9 +32,10 @@
     <div data-role="header">
       <!-- Top bar appears on all pages -->
       <div id="top-bar">
-        <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png">
+        <a href="/" data-ajax="false">
+          <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png">
+        </a>
         <div id="view-options">
-
           <!-- Map icon to be switched to list depending on template -->
           <!-- Also, order is switched due to float -->
           <img src="img/icons/map.png">
@@ -65,6 +66,11 @@
     </div><!-- /footer -->
   </div>
 
+  <div data-role="dialog" id="category-form">
+    <!-- all dynamic -->
+  </div>
+
+
   <div data-role="page" id="single">
     <div data-role="header" data-theme="b">
       <h1>Title</h1>
@@ -83,7 +89,7 @@
   <script type="text/html" id="tpl-feeditem-place">
       <a href="#single?type=place&id={{uriEncode resource_uri}}">
         {{#if image}}
-          <img src="http://127.0.0.1:8000{{image}}" />
+          <img src="{{domainUri image}}" />
         {{else}}
           <img src="img/defaults/default-place.png" />
         {{/if}}
@@ -99,13 +105,11 @@
 
   <script type="text/html" id="tpl-feeditem-event">
     <a href="#single?type=event&id={{uriEncode resource_uri}}">
-      
       {{#if image}}
-        <img src="http://127.0.0.1:8000{{image}}" />
+        <img src="{{domainUri image}}" />
       {{else}}
         <img src="img/defaults/default-event.png" />
       {{/if}}
-
       <h3 class="ul-li-heading">{{name}}</h3>
       <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
       <p class="ui-li-desc">Mike &amp; Tonys</p>
@@ -115,7 +119,7 @@
   <script type="text/html" id="tpl-single-event">
     <div class="single-header">
       <div class="single-thumb">
-        <img src="http://127.0.0.1:8000{{image}}" />
+        <img src="{{domainUri image}}" />
       </div>
       <div class="single-head-content">
         <h1 class="ui-li-heading">{{name}}</h1>
@@ -144,6 +148,14 @@
     <p>Expires on {{dexpires}}</p>
   </script>
 
-
+  <script type="text/html" id="tpl-category-form">
+    <fieldset data-role="controlgroup">
+    {{#categories}}
+      <input type="checkbox" name="{{value}}" id="checkbox-{{value}}"/>
+      <label for="checkbox-{{value}}">{{label}}</label>
+    {{/categories}}
+    </fieldset>
+    <a class="ok-button" data-role="button" data-rel="back">OK</a>
+  </script>
 </body>
 </html>
