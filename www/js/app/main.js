@@ -79,7 +79,7 @@ $(function(){
 
 		var createContentView = function(collection, itemTemplate) {
 			if (displayMode === 'list') {
-				return new ListFeedView({
+				return new FeedView({
 					collection: collection,
 					tagName: 'ul',
 					className: 'feed',
@@ -88,10 +88,7 @@ $(function(){
 				});
 			}
 			else {
-				var view = new MapFeedView({
-					collection: collection,
-					itemTemplate: itemTemplate
-				});
+				return null;
 			}
 		};
 
@@ -180,6 +177,7 @@ $(function(){
 				});
 			})(awaitingData);
 		};
+		return controller;
 	})();
 
 

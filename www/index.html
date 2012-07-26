@@ -7,7 +7,7 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style/stylesheets/jqmobile/jquery.mobile-1.1.1.css">
-  <link rel="stylesheet" href="style/stylesheets/jqmobile/scenable.css">
+  <link rel="stylesheet" href="style/stylesheets/jqmobile/scenable2.css">
 
   <!-- Load dependencies directly: don't worry about Require.js for these -->
   <script src="js/libs/jquery-1.7.2.js"></script>
@@ -35,25 +35,25 @@
       <!-- Top bar appears on all pages -->
       <div id="top-bar">
         <a href="/" data-ajax="false">
-          <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png">
+          <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png" />
         </a>
         <div id="view-options">
           <!-- Map icon to be switched to list depending on template -->
           <!-- Also, order is switched due to float -->
-          <img src="img/icons/map.png">
-          <img src="img/icons/search.png">
+          <img src="img/icons/map.png" />
+          <img src="img/icons/search.png" />
 
         </div> <!-- .view-options -->
       </div> <!-- #top-bar -->
 
       <!-- Site nav not shown on single pages -->
-      <nav class="explore-nav" data-role="navbar">
+      <nav class="explore-nav" data-role="navbar" data-iconpos="top">
         <ul>
-          <li><a href="#explore?type=now">NOW</a></li>
-          <li><a href="#explore?type=place">Places</a></li>
-          <li><a href="#explore?type=event">Events</a></li>
-          <li><a href="#explore?type=special">Specials</a></li>
-          <li><a href="#explore?type=news">News</a></li>
+          <li><a href="#explore?type=now" data-icon="delete">NOW</a></li>
+          <li><a href="#explore?type=place" data-icon="plus">Places</a></li>
+          <li><a href="#explore?type=event" data-icon="minus">Events</a></li>
+          <li><a href="#explore?type=special" data-icon="check">Specials</a></li>
+          <li><a href="#explore?type=news" data-icon="gear">News</a></li>
         </ul>
       </nav> <!-- #site-nav -->
 
@@ -76,7 +76,7 @@
   <div data-role="page" id="single">
     <div data-role="header" data-theme="b">
       <h1>Title</h1>
-      <a data-role="button" data-rel="back" data-theme="a">&larr; Back</a>
+      <a data-role="button" data-rel="back" data-theme="b">&larr; Back</a>
     </div><!-- /header -->
 
     <div data-role="content" class="content">      
@@ -87,10 +87,61 @@
     </div><!-- /footer -->
   </div><!-- /page -->
 
+  <div data-role="page" id="map-mode">
+    <div data-role="header">
+      <!-- Top bar appears on all pages -->
+      <div id="top-bar">
+        <a href="/" data-ajax="false">
+          <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png">
+        </a>
+        <div id="view-options">
+          <!-- Map icon to be switched to list depending on template -->
+          <!-- Also, order is switched due to float -->
+          <img src="img/icons/map.png" />
+          <img src="img/icons/search.png">
+
+        </div> <!-- .view-options -->
+      </div> <!-- #top-bar -->
+
+      <!-- Site nav not shown on single pages -->
+      <nav class="explore-nav" data-role="navbar" data-iconpos="top">
+        <ul>
+          <li><a href="#explore?type=now" data-icon="delete">NOW</a></li>
+          <li><a href="#explore?type=place" data-icon="plus">Places</a></li>
+          <li><a href="#explore?type=event" data-icon="minus">Events</a></li>
+          <li><a href="#explore?type=special" data-icon="check">Specials</a></li>
+          <li><a href="#explore?type=news" data-icon="gear">News</a></li>
+        </ul>
+      </nav> <!-- #site-nav -->
+
+    </div><!-- /header -->
+
+    <div id="map_canvas">
+    </div>
+
+    <div class="load-more">
+      Load more...
+    </div>
+
+    <div class="sorting">
+      <nav data-role="navbar">
+        <ul>
+          <li><a>Close</a></li>
+          <li><a>Popular</a></li>
+          <li><a>Category</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
   <!-- Inline templates -->
   <script type="text/html" id="tpl-feeditem-place">
       <a href="#single?type=place&id={{uriEncode resource_uri}}">
-        <img src="{{domainUri image}}" />
+        {{#if image}}
+          <img src="{{domainUri image}}" />
+        {{else}}
+          <img src="img/defaults/default-place.png" />
+        {{/if}}
         <h3 class="ul-li-heading">{{name}}</h3>
         <p class="ul-li-desc">{{location.address}}</p>
       </a>
@@ -103,7 +154,11 @@
 
   <script type="text/html" id="tpl-feeditem-event">
     <a href="#single?type=event&id={{uriEncode resource_uri}}">
-      <img src="{{domainUri image}}" />
+      {{#if image}}
+        <img src="{{domainUri image}}" />
+      {{else}}
+        <img src="img/defaults/default-event.png" />
+      {{/if}}
       <h3 class="ul-li-heading">{{name}}</h3>
       <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
       <p class="ui-li-desc">Mike &amp; Tonys</p>
@@ -137,9 +192,9 @@
   </script>
 
   <script type="text/html" id="tpl-single-special">
-    <h1>{{title}}</h1>
-    <p>{{title}}</p>
+    <h1 class="ul-li-heading">{{title}}</h1>
     <p>Expires on {{dexpires}}</p>
+    <div data-role="button">Grab it!</div>
   </script>
 
   <script type="text/html" id="tpl-category-form">
