@@ -1,125 +1,6 @@
 $(function(){
 	console.log("ready!");
 
-	window.Scenable = {};
-
-	/*** Backbone model/collection definitions **/
-	var jsonpSync = function(method, model, options) {
-		var opts = options || {};
-		opts.dataType = "jsonp";
-		return Backbone.sync(method, model, opts);
-	};
-
-	Backbone.Model.prototype.sync = jsonpSync;
-	Backbone.Collection.prototype.sync = jsonpSync;
-
-	var toTastyPieRootUrl = function(resourceType) {
-		return 'http://127.0.0.1:8000/api/v1/' + resourceType + '/?format=jsonp';
-	};
-
-	/*** BACKBONE MODELS ***/
-	var Place = Backbone.Model.extend({
-		headerText: function() {
-			return this.get('name');
-		},
-		urlRoot: toTastyPieRootUrl('place')
-	});
-
-	var Event = Backbone.Model.extend({
-		headerText: function() {
-			return this.get('name');
-		},
-		urlRoot: toTastyPieRootUrl('event')
-	});
-
-	var Special = Backbone.Model.extend({
-		headerText: function() {
-			return this.get('title');
-		},
-		urlRoot: toTastyPieRootUrl('special')
-	});
-
-	var Places = Backbone.Collection.extend({
-		model: Place,
-		urlRoot: toTastyPieRootUrl('place')
-	});
-
-	var Events = Backbone.Collection.extend({
-		model: Event,
-		urlRoot: toTastyPieRootUrl('event')
-	});
-
-	var Specials = Backbone.Collection.extend({
-		model: Special,
-		urlRoot: toTastyPieRootUrl('special')
-	});
-
-
-	/*** BACKBONE VIEWS ***/
-	// expects el to have two subdivs, .content-status and .content-list
-	var FeedView = Backbone.View.extend({
-		initialize: function(options) {
-			_.bindAll(this, 'render');
-			this.itemTemplate = options.itemTemplate;
-		},
-
-		render: function() {
-			this.$el.empty();
-			if(this.collection) {
-				this.collection.each(function(m) {
-					this.$el.append(
-						'<li>' +
-							this.itemTemplate(m.attributes) +
-						'</li>');
-				}, this);
-				this.$el.append('<hr/><a href="#category-form">Categories</a>');
-			}
-			return this;
-		}
-	});
-
-	var CategoryForm = Backbone.View.extend({
-		tagName: 'form',
-
-		events: {
-			'submit': 'submitted'
-		},
-
-		initialize: function(options) {
-			this.template = options.template;
-			this.categories = options.categories;
-
-			// when user "submits" form, trigger the submit event and close the parent dialog
-			// not using a true submit button/event because preventDefault won't work
-			this.$el.on('click', '.ok-button', $.proxy(function(e) {
-				this.trigger('submit', e);
-			}, this));
-
-			_.bindAll(this, 'render', 'submitted');
-		},
-
-		render: function() {
-			this.$el.html(this.template({'categories': this.categories}));
-			return this;
-		},
-
-		// handles DOM submit event, triggers event that passes along object with {category: bool} entries
-		submitted: function(e) {
-			console.log('hahah');
-			var inputs = $(e.target).serializeArray();
-			
-			// fill the categories array with the chosen names
-			var categories = [];
-			inputs = _.each(inputs, function(obj) {
-				if(obj.name !== 'submit') {
-					categories.push(obj.name);
-				}
-			});
-			this.trigger('submit', categories);
-			e.preventDefault();
-		}
-	});
-
 	// Various configuration settings for the resource types
 	var typeSettings = {
 		place: {
@@ -155,8 +36,7 @@ $(function(){
 				single: Handlebars.compile($('#tpl-single-special').html())
 			}
 		}
-		};
-
+	};
 
 	var exploreController = (function() {
 		// DOM elements in initial page skeleton
