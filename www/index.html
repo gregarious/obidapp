@@ -48,8 +48,8 @@
         <div id="view-options">
           <!-- Map icon to be switched to list depending on template -->
           <!-- Also, order is switched due to float -->
-          <img src="img/icons/map.png" />
-          <img src="img/icons/search.png" />
+          <img class="icon-display" src="img/icons/map.png" />
+          <img class="icon-search" src="img/icons/search.png" />
 
         </div> <!-- .view-options -->
       </div> <!-- #top-bar -->
@@ -79,6 +79,15 @@
   <div data-role="dialog" id="category-form">
     <!-- all dynamic -->
   </div>
+
+  <div data-role="dialog" id="search-form">
+    <form>
+      <label for="input-query">Search:</label>
+      <input type="search" name="query" id="input-query" value="" />
+      <a class="ok-button" data-role="button">OK</a>
+    </form>
+  </div>
+
 
   <div data-role="page" id="single">
     <div data-role="header" data-theme="b">
@@ -111,7 +120,13 @@
         </li>
       {{/models}}
     </ul>
-    <a href="#category-form" data-role="button">Categories</a>
+    <div class="sorting">
+      <nav data-role="navbar">
+        <ul>
+          <li><a class="category-button" data-theme="d">Category</a></li>
+        </ul>
+      </nav>
+    </div>
   </script>
 
   <script type="text/html" id="tpl-single-place">
@@ -135,7 +150,13 @@
         </li>
       {{/models}}
     </ul>
-    <a href="#category-form" data-role="button">Categories</a>
+    <div class="sorting">
+      <nav data-role="navbar">
+        <ul>
+          <li><a class="category-button" data-theme="d">Category</a></li>
+        </ul>
+      </nav>
+    </div>
   </script>
 
   <script type="text/html" id="tpl-single-event">
@@ -167,7 +188,13 @@
       </li>
     {{/models}}
     </ul>
-    <a href="#category-form" data-role="button">Categories</a>
+    <div class="sorting">
+      <nav data-role="navbar">
+        <ul>
+          <li><a class="category-button" data-theme="d">Category</a></li>
+        </ul>
+      </nav>
+    </div>
   </script>
 
   <script type="text/html" id="tpl-single-special">
@@ -203,7 +230,7 @@
     <div class="sorting">
       <nav data-role="navbar">
         <ul>
-          <li><a href="#category-form" data-theme="d">Category</a></li>
+          <li><a class="category-button" data-theme="d">Category</a></li>
         </ul>
       </nav>
     </div>
@@ -216,13 +243,7 @@
       <label for="checkbox-{{value}}">{{label}}</label>
     {{/categories}}
     </fieldset>
-    <a class="ok-button" data-role="button" data-rel="back">OK</a>
-  </script>
-
-  <script type="text/html" id="tpl-search-form">
-    <label for="input-query">Search:</label>
-    <input type="search" name="query" id="input-query" value="" />
-    <a class="ok-button" data-role="button" data-rel="back">OK</a>
+    <a class="ok-button" data-role="button">OK</a>
   </script>
 </body>
 </html>

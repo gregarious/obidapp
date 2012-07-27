@@ -1,14 +1,15 @@
 $(function(){
-	Scenable.controllers.exploreController = (function() {
+	var controller = Scenable.controllers.exploreController = (function() {
 		// DOM elements in initial page skeleton
 		var contentEl = $('#explore div:jqmData(role="content")');
-		var categoryFormEl = $('#category-form');
 
 		var currentViews = {
 			contentView: null,
-			categoryForm: null,
 			type: null
 		};
+
+		// TODO: package this up with currentViews
+		var collection = null;
 
 		var displayMode = 'map';
 		var focusItem = null;	// currently just used to track which map icon is focused
@@ -24,34 +25,22 @@ $(function(){
 		
 		/* Private functions for Controller */
 
-		// create a new category form and hook up an event handler to it
-		var createCategoryForm = function(collection) {
-			var catForm = new Scenable.views.CategoryForm({
-				categories: collection.categories
-			});
-			categoryFormEl.html(catForm.render().el);
-			categoryFormEl.trigger("create");
-			catForm.on('submit', function(categories) {
-				console.log('received categories:' + categories);
-				// TODO: pass in the categories to a collection filter
-			});
-			return catForm;
-		};
-
 		// create a new content view with the stored collection
 		var createContentView = function(collection, listTemplate) {
+			var view;
 			if (displayMode === 'list') {
-				return new Scenable.views.ListFeedView({
+				view = new Scenable.views.ListFeedView({
 					collection: collection,
 					template: listTemplate
 				});
 			}
 			else {
-				return new Scenable.views.MapFeedView({
+				view = new Scenable.views.MapFeedView({
 					collection: collection,
 					template: Handlebars.compile($("#tpl-mapfeed").html())
 				});
 			}
+			return view;
 		};
 
 		var controller = {};
@@ -69,7 +58,6 @@ $(function(){
 		// big mother function that display content and hooks up event handlers
 		controller.setContent = function(resourceType) {
 			var settings = Scenable.typeSettings[resourceType],
-				collection = null,
 				itemTemplate = null;
 
 			if (!settings) {
@@ -90,11 +78,10 @@ $(function(){
 			currentViews.type = resourceType;
 
 			// clear out the current view entries, including detatching event handlers
-			if(currentViews.categoryForm) {
-				currentViews.categoryForm.off();
+			if(currentViews.contentView) {
+				currentViews.contentView.off();
+				currentViews.contentView = null;
 			}
-			currentViews.categoryForm = null;
-			currentViews.contentView = null;
 
 			// before doing the heavy lifting, show a loading message
 			$.mobile.showPageLoadingMsg();
@@ -106,11 +93,11 @@ $(function(){
 				return;
 			}
 
-			collection = settings.collection;
+			this.collection = settings.collection;
 			listTemplate = settings.templates.listfeed;
 
 			// temp debug
-			collection.categories = [
+			this.collection.categories = [
 				{label: 'Cat 1', value: 'cat1'},
 				{label: 'Cat 2', value: 'cat2'},
 				{label: 'Cat 3', value: 'cat3'},
@@ -118,8 +105,8 @@ $(function(){
 			];
 
 			// now time to set up the two subviews according to the collection
-			currentViews.contentView = createContentView(collection, listTemplate);
-			currentViews.categoryForm = createCategoryForm(collection);
+			currentViews.contentView = createContentView(this.collection, listTemplate);
+			currentViews.contentView.on('filterRequested', this.activateFilterForm, this);
 
 			// create a new object in which we say we are interested
 			awaitingData = {
@@ -131,7 +118,7 @@ $(function(){
 			// we wrap this up in a closure so the current instance of awaitingData is
 			// used inside the callbacks
 			(function(awaitingData, self) {
-				collection.fetch({
+				self.collection.fetch({
 					success: function(collection, response) {
 						if(awaitingData.pending) {
 							contentEl.html(currentViews.contentView.render().el);
@@ -164,18 +151,46 @@ $(function(){
 
 		controller.activateSearch = function() {
 			console.log('controller.activateSearch');
+			var dialogEl = $('#search-form');
+			
+			// shortcut using a fill Backbone view. unncessary for static dialog
+			dialogEl.on('click', '.ok-button', $.proxy(function(e){
+				var input = dialogEl.find('[name="query"]');
+				var query = input.val();
+				input.val('');
+
+				dialogEl.off('click', '.ok-button');
+				dialogEl.dialog('close');
+				
+				this.runSearch(query);
+			}, this));
+
+			$.mobile.changePage(dialogEl);
 		};
 
 		controller.runSearch = function(query) {
-			console.log('controller.runSearch');
+			console.log('controller.runSearch | query: ' + query);
 		};
 
 		controller.activateFilterForm = function() {
 			console.log('controller.activateFilterForm');
+			var dialogEl = $('#category-form');
+			var catForm = new Scenable.views.CategoryForm({
+				categories: this.collection.categories
+			});
+			dialogEl.html(catForm.render().el);
+			dialogEl.trigger("create");
+			catForm.on('submit', function(categories) {
+				catForm.off();
+				dialogEl.dialog('close');
+				this.runFilter(categories);
+			}, this);
+			// dialogEl should have data-role="dialog"
+			$.mobile.changePage(dialogEl);
 		};
 
-		controller.runFilter = function(filters) {
-			console.log('controller.runFilter');
+		controller.runFilter = function(categories) {
+			console.log('controller.runFilter | categories: ' + categories);
 		};
 
 		controller.showNextPage = function() {
@@ -216,5 +231,13 @@ $(function(){
 	})();
 
 	// add observer pattern pub capabilities
-	_.extend(Scenable.controllers.exploreController, Backbone.Events);
+	_.extend(controller, Backbone.Events);
+
+	// random DOM-binding as a consequence of header section being tied up in jQM
+	$('#explore .icon-search').on('click',
+		$.proxy(controller.activateSearch, controller));
+
+	$('#explore .icon-display').on('click',
+		$.proxy(controller.setDisplayMode, controller));
+
 });
