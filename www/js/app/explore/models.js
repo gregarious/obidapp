@@ -25,17 +25,43 @@
 		urlRoot: toTastyPieRootUrl('special')
 	});
 
-	Scenable.models.Places = Backbone.Collection.extend({
+	var BaseCollection = Backbone.Collection.extend({
+		offset: null,
+		limit: null,
+		filters: null,
+		query: null,
+
+		// availble options: offset, limit, filters, query
+		setQueryOptions: function(options) {
+			this.offset = options.offset || null;
+			this.limit = options.limit || null;
+			this.filters = options.filters || null;
+			this.query = options.query || null;
+		},
+
+		toQueryString: function() {
+			var keys = ['offset', 'limit', 'filters', 'query'];
+			var clauses = [];
+			for (key in keys) {
+				if (this[key] === null) {
+					clauses.push(key + "=" + this[key]);
+				}
+			}
+			return clauses.join("&");
+		}
+	});
+
+	Scenable.models.Places = BaseCollection.extend({
 		model: Scenable.models.Place,
 		urlRoot: toTastyPieRootUrl('place')
 	});
 
-	Scenable.models.Events = Backbone.Collection.extend({
+	Scenable.models.Events = BaseCollection.extend({
 		model: Scenable.models.Event,
 		urlRoot: toTastyPieRootUrl('event')
 	});
 
-	Scenable.models.Specials = Backbone.Collection.extend({
+	Scenable.models.Specials = BaseCollection.extend({
 		model: Scenable.models.Special,
 		urlRoot: toTastyPieRootUrl('special')
 	});

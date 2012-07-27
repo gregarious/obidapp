@@ -1,5 +1,5 @@
 $(function(){
-	Scenable.controllers.ExploreController = (function() {
+	Scenable.controllers.exploreController = (function() {
 		// DOM elements in initial page skeleton
 		var contentEl = $('#explore div:jqmData(role="content")');
 		var categoryFormEl = $('#category-form');
@@ -54,10 +54,30 @@ $(function(){
 			}
 		};
 
-		var setContent = function(resourceType) {
+		var focusItem = null;	// currently just used to track which map icon is focused
+
+		var controller = {};
+
+		controller.activate = function() {
+			console.log('ExploreController activated.');
+			// no-op: jQM handles this during the page change
+		};
+
+		controller.deactivate = function() {
+			console.log('ExploreController deactivated.');
+			// no-op: jQM handles this during the page change
+		};
+
+		// big mother function that display content and hooks up event handlers
+		controller.setContent = function(resourceType) {
 			var settings = Scenable.typeSettings[resourceType],
 				collection = null,
 				itemTemplate = null;
+
+			if (!settings) {
+				console.log('Warning: Unknown type arg "' + resourceType + '"for ExploreController to act on.');
+				return;
+			}
 
 			// tell the old awaitingData object that we're not interested anymore
 			if(awaitingData) {
@@ -111,7 +131,7 @@ $(function(){
 			// Now fetch the collection asynchronously
 			// we wrap this up in a closure so the current instance of awaitingData is
 			// used inside the callbacks
-			(function(awaitingData) {
+			(function(awaitingData, self) {
 				collection.fetch({
 					success: function(collection, response) {
 						if(awaitingData.pending) {
@@ -128,35 +148,71 @@ $(function(){
 							$.mobile.hidePageLoadingMsg();
 							contentEl.trigger("create");
 							awaitingData.pending = false;	// this is kind of meaningless, but it wraps up the object's lifespan well
+							self.trigger('ready');	// officially done processing request now
 						}
 					},
 					timeout: 2000
 				});
-			})(awaitingData);
+			})(awaitingData, this);
 		};
 
-		var controller = {};
-
-		controller.act = function(args) {
-			var resourceType = args.type;
-			if (resourceType) {
-				setContent(resourceType);
-			}
-			else {
-				console.log('Warning: Unknown type arg "' + resourceType + '"for ExploreController to act on.');
-			}
+		controller.setDisplayMode = function(mode) {
+			console.log('controller.setDisplayMode');
 		};
 
-		controller.activate = function() {
-			console.log('ExploreController activated.');
-			// no-op: jQM handles this during the page change
+		controller.activateSearch = function() {
+			console.log('controller.activateSearch');
 		};
 
-		controller.deactivate = function() {
-			console.log('ExploreController deactivated.');
-			// no-op: jQM handles this during the page change
+		controller.runSearch = function(query) {
+			console.log('controller.runSearch');
 		};
+
+		controller.activateFilterForm = function() {
+			console.log('controller.activateFilterForm');
+		};
+
+		controller.runFilter = function(filters) {
+			console.log('controller.runFilter');
+		};
+
+		controller.showNextPage = function() {
+			console.log('controller.showNextPage');
+		};
+
+		controller.showPrevPage = function() {
+			console.log('controller.showPrevPage');
+		};
+
+		controller.itemClicked = function(itemId) {
+			console.log('controller.itemClicked');
+		};
+
+		controller.refreshFeed = function() {
+			console.log('controller.refreshFeed');
+		};
+
+		// Map-specific interface
+		controller.mapMarkerClicked = function() {
+			console.log('controller.mapMarkerClicked');
+		};
+
+		controller.mapFocusChange = function(x, y, width, height) {
+			console.log('controller.mapFocusChange');
+		};
+
+		controller.mapNextItem = function() {
+			console.log('controller.mapNextItem');
+		};
+
+		controller.mapPrevItem = function() {
+			console.log('controller.mapPrevItem');
+		};
+
 
 		return controller;
 	})();
+
+	// add observer pattern pub capabilities
+	_.extend(Scenable.controllers.exploreController, Backbone.Events);
 });

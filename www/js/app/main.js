@@ -15,10 +15,6 @@ $(function(){
 	Scenable.appController = (function(){
 
 		var currentSubctrl = null;
-		var pageCtrlMap = {
-			'explore': Scenable.controllers.ExploreController,
-			'single': Scenable.controllers.DetailController
-		};
 
 		// converts a url querystring into a JS object
 		var parseArgs = function(hashargs) {
@@ -37,10 +33,29 @@ $(function(){
 			if (currentSubctrl !== subctrl) {
 				if (currentSubctrl) {
 					currentSubctrl.deactivate();
+					currentSubctrl.off();
 				}
 				currentSubctrl = subctrl;
 				currentSubctrl.activate();
 			}
+		};
+
+		// currently just uses the "type" arg to call setContent
+		var handleRouteExplore = function(args) {
+			var ctrl = Scenable.controllers.exploreController;
+			if (currentSubctrl !== ctrl) {
+				setActiveSubcontroller(ctrl);
+				ctrl.on('ready',function(){console.log('sub ready');});
+			}
+			ctrl.setContent(args.type);
+			
+		};
+
+		var handleRouteDetail = function(args) {
+			var ctrl = Scenable.controllers.detailController;
+			setActiveSubcontroller(ctrl);
+			ctrl.setContent(args.type,
+				decodeURIComponent(args.id));
 		};
 
 		return {
@@ -50,10 +65,11 @@ $(function(){
 				if (match) {
 					var page = match[1];
 					var args = parseArgs(match[2]);
-					subctrl = pageCtrlMap[page];
-					if (subctrl) {
-						setActiveSubcontroller(subctrl);
-						subctrl.act(args);
+					if (page === 'explore') {
+						handleRouteExplore(args);
+					}
+					else if (page === 'single') {
+						handleRouteDetail(args);
 					}
 					else {
 						console.log('Warning: unregistered controller "' + page + '" requested.');
