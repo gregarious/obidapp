@@ -8,7 +8,7 @@ $(function(){
 				}
 			}),
 			templates: {
-				feeditem: Handlebars.compile($('#tpl-feeditem-place').html()),
+				listfeed: Handlebars.compile($('#tpl-listfeed-place').html()),
 				single: Handlebars.compile($('#tpl-single-place').html())
 			}
 		},
@@ -19,7 +19,7 @@ $(function(){
 				}
 			}),
 			templates: {
-				feeditem: Handlebars.compile($('#tpl-feeditem-event').html()),
+				listfeed: Handlebars.compile($('#tpl-listfeed-event').html()),
 				single: Handlebars.compile($('#tpl-single-event').html())
 			}
 		},
@@ -30,7 +30,7 @@ $(function(){
 				}
 			}),
 			templates: {
-				feeditem: Handlebars.compile($('#tpl-feeditem-special').html()),
+				listfeed: Handlebars.compile($('#tpl-listfeed-special').html()),
 				single: Handlebars.compile($('#tpl-single-special').html())
 			}
 		}

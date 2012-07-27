@@ -23,8 +23,8 @@ $(function(){
 		
 		/* Private functions for Controller */
 
+		// create a new category form and hook up an event handler to it
 		var createCategoryForm = function(collection) {
-			// create a new category form and hook up an event handler to it
 			var catForm = new Scenable.views.CategoryForm({
 				categories: collection.categories,
 				template: Handlebars.compile($("#tpl-category-form").html())
@@ -39,14 +39,12 @@ $(function(){
 			return catForm;
 		};
 
+		// create a new content view with the stored collection
 		var createContentView = function(collection, itemTemplate) {
 			if (displayMode === 'list') {
-				return new Scenable.views.FeedView({
+				return new Scenable.views.ListFeedView({
 					collection: collection,
-					tagName: 'ul',
-					className: 'feed',
-					attributes: {'data-role':'listview'},
-					itemTemplate: itemTemplate
+					template: listTemplate
 				});
 			}
 			else {
@@ -75,7 +73,8 @@ $(function(){
 				itemTemplate = null;
 
 			if (!settings) {
-				console.log('Warning: Unknown type arg "' + resourceType + '"for ExploreController to act on.');
+				console.log('Warning: Unknown type arg "' + resourceType +
+					'"for ExploreController to act on.');
 				return;
 			}
 
@@ -108,7 +107,7 @@ $(function(){
 			}
 
 			collection = settings.collection;
-			itemTemplate = settings.templates.feeditem;
+			listTemplate = settings.templates.listfeed;
 
 			// temp debug
 			collection.categories = [
@@ -119,7 +118,7 @@ $(function(){
 			];
 
 			// now time to set up the two subviews according to the collection
-			currentViews.contentView = createContentView(collection, itemTemplate);
+			currentViews.contentView = createContentView(collection, listTemplate);
 			currentViews.categoryForm = createCategoryForm(collection);
 
 			// create a new object in which we say we are interested

@@ -1,25 +1,21 @@
 (function(){
-	// expects el to have two subdivs, .content-status and .content-list
-	Scenable.views.FeedView = Backbone.View.extend({
+	var BaseFeedView = Backbone.View.extend({
 		initialize: function(options) {
 			_.bindAll(this, 'render');
-			this.itemTemplate = options.itemTemplate;
+			this.template = options.template;
 		},
 
 		render: function() {
-			this.$el.empty();
-			if(this.collection) {
-				this.collection.each(function(m) {
-					this.$el.append(
-						'<li>' +
-							this.itemTemplate(m.attributes) +
-						'</li>');
-				}, this);
-				this.$el.append('<hr/><a href="#category-form">Categories</a>');
-			}
+			var context = {
+				'models': this.collection.map(function(m) {
+					return m.attributes;
+				})
+			};
+			this.$el.html(this.template(context));
 			return this;
 		}
 	});
+	Scenable.views.ListFeedView = BaseFeedView;
 
 	Scenable.views.CategoryForm = Backbone.View.extend({
 		tagName: 'form',

@@ -33,7 +33,7 @@ $(function(){
 			if (currentSubctrl !== subctrl) {
 				if (currentSubctrl) {
 					currentSubctrl.deactivate();
-					currentSubctrl.off();
+					currentSubctrl.off();	// turn off ALL event handlers
 				}
 				currentSubctrl = subctrl;
 				currentSubctrl.activate();
@@ -48,12 +48,13 @@ $(function(){
 				ctrl.on('ready',function(){console.log('sub ready');});
 			}
 			ctrl.setContent(args.type);
-			
 		};
 
 		var handleRouteDetail = function(args) {
 			var ctrl = Scenable.controllers.detailController;
-			setActiveSubcontroller(ctrl);
+			if (currentSubctrl !== ctrl) {
+				setActiveSubcontroller(ctrl);
+			}
 			ctrl.setContent(args.type,
 				decodeURIComponent(args.id));
 		};

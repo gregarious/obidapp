@@ -170,34 +170,47 @@
   </div>
 
   <!-- Inline templates -->
-  <script type="text/html" id="tpl-feeditem-place">
-      <a href="#single?type=place&id={{uriEncode resource_uri}}">
-        {{#if image}}
-          <img src="{{domainUri image}}" />
-        {{else}}
-          <img src="img/defaults/default-place.png" />
-        {{/if}}
-        <h3 class="ul-li-heading">{{name}}</h3>
-        <p class="ul-li-desc">{{location.address}}</p>
-      </a>
+  <script type="text/html" id="tpl-listfeed-place">
+    <ul class="feed" data-role="listview">
+      {{#models}}
+        <li>
+          <a href="#single?type=place&id={{uriEncode resource_uri}}">
+            {{#if image}}
+              <img src="{{domainUri image}}" />
+            {{else}}
+              <img src="img/defaults/default-place.png" />
+            {{/if}}
+            <h3 class="ul-li-heading">{{name}}</h3>
+            <p class="ul-li-desc">{{location.address}}</p>
+          </a>
+        </li>
+      {{/models}}
+    </ul>
+    <a href="#category-form" data-role="button">Categories</a>
   </script>
 
   <script type="text/html" id="tpl-single-place">
     <h1>{{name}}</h1>
-
   </script>
 
-  <script type="text/html" id="tpl-feeditem-event">
-    <a href="#single?type=event&id={{uriEncode resource_uri}}">
-      {{#if image}}
-        <img src="{{domainUri image}}" />
-      {{else}}
-        <img src="img/defaults/default-event.png" />
-      {{/if}}
-      <h3 class="ul-li-heading">{{name}}</h3>
-      <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
-      <p class="ui-li-desc">Mike &amp; Tonys</p>
-    </a>
+  <script type="text/html" id="tpl-listfeed-event">
+    <ul class="feed" data-role="listview">
+      {{#models}}
+        <li>
+          <a href="#single?type=event&id={{uriEncode resource_uri}}">
+            {{#if image}}
+              <img src="{{domainUri image}}" />
+            {{else}}
+              <img src="img/defaults/default-event.png" />
+            {{/if}}
+            <h3 class="ul-li-heading">{{name}}</h3>
+            <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
+            <p class="ui-li-desc">Mike &amp; Tonys</p>
+          </a>
+        </li>
+      {{/models}}
+    </ul>
+    <a href="#category-form" data-role="button">Categories</a>
   </script>
 
   <script type="text/html" id="tpl-single-event">
@@ -215,15 +228,21 @@
     <div class="single-content">
       <p>{{description}}</p>
     </div>
-
   </script>
 
-  <script type="text/html" id="tpl-feeditem-special">
-    <a href="#single?type=special&id={{uriEncode resource_uri}}">
-      <h3 class="ul-li-heading">{{title}}</h3>
-      <p class="ul-li-desc">{{place}}</p>
-      <p class="ul-li-desc">Until {{dexpires}}</p>
-    </a>
+  <script type="text/html" id="tpl-listfeed-special">
+    <ul class="feed" data-role="listview">
+    {{#models}}
+      <li>
+        <a href="#single?type=special&id={{uriEncode resource_uri}}">
+          <h3 class="ul-li-heading">{{title}}</h3>
+          <p class="ul-li-desc">{{place}}</p>
+          <p class="ul-li-desc">Until {{dexpires}}</p>
+        </a>
+      </li>
+    {{/models}}
+    </ul>
+    <a href="#category-form" data-role="button">Categories</a>
   </script>
 
   <script type="text/html" id="tpl-single-special">
