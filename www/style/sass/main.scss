@@ -4,6 +4,55 @@ html, body {
 	height: 100%;
 }
 
+.explore-nav {
+	height: 55px;
+
+	ul li a {
+	
+	}
+	
+}
+
+html.ui-mobile body.ui-mobile-viewport div#map-mode.ui-page div.ui-header nav.explore-nav ul li a span span {
+	font-size: 0.9em;	
+}
+
+#top-logo {
+	height: 30px;
+	float: left;
+	width: auto;
+	position: relative;
+	top: 5px;
+	z-index: 100;
+}
+
+#top-bar {
+	height: 30px;
+}
+
+#view-options {
+	float: right;
+	padding-top: 5px;
+	img {
+		height: 20px;
+		width: auto;
+		float: right;
+		//height: 30px;
+		margin-right: 10px;
+	
+		}
+}
+
+.sorting {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	height: 30px;
+}
+
+
+// Singles
+
 .single-thumb {
 	width: 20%;
 	@include box-sizing(border-box);
@@ -29,37 +78,7 @@ html, body {
 	padding: 1em 0	;
 }
 
-#top-logo {
-	height: 50px;
-	float: left;
-	width: auto;
-	position: relative;
-	top: 5px;
-	z-index: 100;
-}
 
-#top-bar {
-	height: 50px;
-}
-
-#view-options {
-	float: right;
-	padding-top: 10px;
-	img {
-		float: right;
-		//height: 30px;
-		
-			margin-right: 10px;
-	
-		}
-}
-
-.sorting {
-	width: 100%;
-	position: absolute;
-	bottom: 0;
-	height: 30px;
-}
 
 // Map
 
@@ -94,7 +113,7 @@ html, body {
 	background: url('../../img/assets/black-trans.png');
 	color: #fff;
 	position: absolute;
-	top: 105px;
+	top: 85px;
 	max-height: 100px;
 	@include clearfix;
 
@@ -143,8 +162,5 @@ html, body {
 	//padding-bottom: 0.2em !important;
 }
 
-.explore-nav {
-	height: 55px;
-}
 
 

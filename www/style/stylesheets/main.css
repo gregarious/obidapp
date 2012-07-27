@@ -110,6 +110,52 @@ html, body {
 }
 
 /* line 7, ../sass/main.scss */
+.explore-nav {
+  height: 55px;
+}
+
+/* line 16, ../sass/main.scss */
+html.ui-mobile body.ui-mobile-viewport div#map-mode.ui-page div.ui-header nav.explore-nav ul li a span span {
+  font-size: 0.9em;
+}
+
+/* line 20, ../sass/main.scss */
+#top-logo {
+  height: 30px;
+  float: left;
+  width: auto;
+  position: relative;
+  top: 5px;
+  z-index: 100;
+}
+
+/* line 29, ../sass/main.scss */
+#top-bar {
+  height: 30px;
+}
+
+/* line 33, ../sass/main.scss */
+#view-options {
+  float: right;
+  padding-top: 5px;
+}
+/* line 36, ../sass/main.scss */
+#view-options img {
+  height: 20px;
+  width: auto;
+  float: right;
+  margin-right: 10px;
+}
+
+/* line 46, ../sass/main.scss */
+.sorting {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: 30px;
+}
+
+/* line 56, ../sass/main.scss */
 .single-thumb {
   width: 20%;
   -webkit-box-sizing: border-box;
@@ -118,71 +164,37 @@ html, body {
   float: left;
   padding-right: 1em;
 }
-/* line 13, ../sass/main.scss */
+/* line 62, ../sass/main.scss */
 .single-thumb img {
   width: 100%;
 }
 
-/* line 18, ../sass/main.scss */
+/* line 67, ../sass/main.scss */
 .single-head-content {
   width: 80%;
   float: left;
 }
 
-/* line 23, ../sass/main.scss */
+/* line 72, ../sass/main.scss */
 .single-content, .single-header {
   width: 100%;
   overflow: hidden;
   *zoom: 1;
 }
 
-/* line 28, ../sass/main.scss */
+/* line 77, ../sass/main.scss */
 .single-header {
   padding: 1em 0;
 }
 
-/* line 32, ../sass/main.scss */
-#top-logo {
-  height: 50px;
-  float: left;
-  width: auto;
-  position: relative;
-  top: 5px;
-  z-index: 100;
-}
-
-/* line 41, ../sass/main.scss */
-#top-bar {
-  height: 50px;
-}
-
-/* line 45, ../sass/main.scss */
-#view-options {
-  float: right;
-  padding-top: 10px;
-}
-/* line 48, ../sass/main.scss */
-#view-options img {
-  float: right;
-  margin-right: 10px;
-}
-
-/* line 57, ../sass/main.scss */
-.sorting {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  height: 30px;
-}
-
-/* line 66, ../sass/main.scss */
+/* line 85, ../sass/main.scss */
 #map-mode {
   height: 100%;
   position: relative;
   overflow: hidden;
 }
 
-/* line 72, ../sass/main.scss */
+/* line 91, ../sass/main.scss */
 #map_canvas {
   overflow: hidden;
   *zoom: 1;
@@ -192,7 +204,7 @@ html, body {
   height: 100%;
 }
 
-/* line 80, ../sass/main.scss */
+/* line 99, ../sass/main.scss */
 .load-more {
   width: 30%;
   position: absolute;
@@ -202,7 +214,7 @@ html, body {
   padding: 0.5em;
 }
 
-/* line 89, ../sass/main.scss */
+/* line 108, ../sass/main.scss */
 .custom-infowindow {
   padding: 5px;
   -webkit-box-sizing: border-box;
@@ -213,12 +225,12 @@ html, body {
   background: url("../../img/assets/black-trans.png");
   color: #fff;
   position: absolute;
-  top: 105px;
+  top: 85px;
   max-height: 100px;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 101, ../sass/main.scss */
+/* line 120, ../sass/main.scss */
 .custom-infowindow .infowindow-info {
   float: left;
   width: 86%;
@@ -229,14 +241,14 @@ html, body {
   font-size: 0.9em;
   text-shadow: 1px 1px 1px black;
 }
-/* line 110, ../sass/main.scss */
+/* line 129, ../sass/main.scss */
 .custom-infowindow img {
   width: 50px;
   height: 50px;
   float: left;
   margin-right: 15px;
 }
-/* line 117, ../sass/main.scss */
+/* line 136, ../sass/main.scss */
 .custom-infowindow .next, .custom-infowindow .prev {
   width: 7%;
   padding: 0.4em 0;
@@ -244,26 +256,21 @@ html, body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 121, ../sass/main.scss */
+/* line 140, ../sass/main.scss */
 .custom-infowindow .next img, .custom-infowindow .prev img {
   width: 100%;
   height: auto;
 }
-/* line 129, ../sass/main.scss */
+/* line 148, ../sass/main.scss */
 .custom-infowindow .next {
   float: right;
 }
-/* line 134, ../sass/main.scss */
+/* line 153, ../sass/main.scss */
 .custom-infowindow .prev {
   float: left;
 }
 
-/* line 141, ../sass/main.scss */
+/* line 160, ../sass/main.scss */
 .ui-link-inherit {
   padding-top: 0.2em !important;
-}
-
-/* line 146, ../sass/main.scss */
-.explore-nav {
-  height: 55px;
 }
