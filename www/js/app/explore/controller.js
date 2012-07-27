@@ -11,6 +11,7 @@ $(function(){
 		};
 
 		var displayMode = 'map';
+		var focusItem = null;	// currently just used to track which map icon is focused
 
 		/* Notes on awaitingData:
 		*   Since the collection fetch callbacks below are responsible for updating
@@ -26,14 +27,12 @@ $(function(){
 		// create a new category form and hook up an event handler to it
 		var createCategoryForm = function(collection) {
 			var catForm = new Scenable.views.CategoryForm({
-				categories: collection.categories,
-				template: Handlebars.compile($("#tpl-category-form").html())
+				categories: collection.categories
 			});
 			categoryFormEl.html(catForm.render().el);
 			categoryFormEl.trigger("create");
 			catForm.on('submit', function(categories) {
-				console.log('received categories:');
-				console.log(categories);
+				console.log('received categories:' + categories);
 				// TODO: pass in the categories to a collection filter
 			});
 			return catForm;
@@ -54,8 +53,6 @@ $(function(){
 				});
 			}
 		};
-
-		var focusItem = null;	// currently just used to track which map icon is focused
 
 		var controller = {};
 

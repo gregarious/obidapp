@@ -1,4 +1,4 @@
-(function(){
+$(function(){
 	Scenable.views.ListFeedView = Backbone.View.extend({
 		initialize: function(options) {
 			_.bindAll(this, 'render');
@@ -37,8 +37,10 @@
 		}
 	});
 
+	// Might consider replacing this with just a simply jQuery widget for controller to listen to
 	Scenable.views.CategoryForm = Backbone.View.extend({
 		tagName: 'form',
+		template: Handlebars.compile($("#tpl-category-form").html()),
 
 		events: {
 			// when user "submits" form, trigger the submit event and close the parent dialog
@@ -47,9 +49,7 @@
 		},
 
 		initialize: function(options) {
-			this.template = options.template;
 			this.categories = options.categories;
-
 			_.bindAll(this, 'render', 'submitted');
 		},
 
@@ -70,7 +70,33 @@
 				}
 			});
 			this.trigger('submit', categories);
-			e.preventDefault();
 		}
 	});
-})();
+
+// Might consider replacing this with just a simply jQuery widget for controller to listen to
+	Scenable.views.SearchForm = Backbone.View.extend({
+		tagName: 'form',
+		template: Handlebars.compile($("#tpl-search-form").html()),
+
+		events: {
+			// when user "submits" form, trigger the submit event and close the parent dialog
+			// not using a true submit button/event because preventDefault won't work
+			'click .ok-button': 'submitted'
+		},
+
+		initialize: function(options) {
+			_.bindAll(this, 'render', 'submitted');
+		},
+
+		render: function() {
+			this.$el.html(this.template());
+			return this;
+		},
+
+		// handles DOM submit event, triggers event that passes along object with {category: bool} entries
+		submitted: function(e) {
+			var query = this.$('[name]="query"').val();
+			this.trigger('submit', query);
+		}
+	});
+});
