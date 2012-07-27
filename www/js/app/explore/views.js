@@ -1,5 +1,5 @@
 (function(){
-	var BaseFeedView = Backbone.View.extend({
+	Scenable.views.ListFeedView = Backbone.View.extend({
 		initialize: function(options) {
 			_.bindAll(this, 'render');
 			this.template = options.template;
@@ -15,7 +15,27 @@
 			return this;
 		}
 	});
-	Scenable.views.ListFeedView = BaseFeedView;
+
+	Scenable.views.MapFeedView = Backbone.View.extend({
+		map: null,
+		mapOptions: {
+			center: new google.maps.LatLng(-34.397, 150.644),
+			zoom: 8,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		},
+
+		initialize: function(options) {
+			_.bindAll(this, 'render');
+			this.template = options.template;
+			this.itemTemplate = options.itemTemplate;
+		},
+
+		render: function() {
+			this.$el.html(this.template());
+			//this.map = new google.maps.Map(this.$('#map_canvas'), this.mapOptions);
+			return this;
+		}
+	});
 
 	Scenable.views.CategoryForm = Backbone.View.extend({
 		tagName: 'form',
@@ -40,7 +60,7 @@
 
 		// handles DOM submit event, triggers event that passes along object with {category: bool} entries
 		submitted: function(e) {
-			var inputs = $(e.target).serializeArray();
+			var inputs = this.$el.serializeArray();
 			
 			// fill the categories array with the chosen names
 			var categories = [];

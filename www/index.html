@@ -20,6 +20,10 @@
   <script src="js/libs/backbone-tastypie.js"></script>
   <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
 
+  <!-- Maps API -->
+   <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBs7pwJR2UazpCXdmAdcCnl0jjn1ML9Du0&sensor=false"></script>
+
   <!-- Main app entry point (restore the require.js hook if I get the chance -->
   <!-- <script data-main="js/app/main.js" src="js/libs/require-2.0.2.js"></script> -->
   <script src="js/app/env.js"></script>
@@ -30,27 +34,10 @@
   <script src="js/app/detail/controller.js"></script>
   <script src="js/app/main.js"></script>
 
-  <!-- Maps API -->
-   <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBs7pwJR2UazpCXdmAdcCnl0jjn1ML9Du0&sensor=false"></script>
-
-  <script>
-  // Lara's Simple Map (case by titlecase.org)
-  function initialize() {
-    var mapOptions = {
-      center: new google.maps.LatLng(-34.397, 150.644),
-      zoom: 8,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-        mapOptions);
-  }
-  </script>
-
   <link rel="stylesheet" type="text/css" href="style/stylesheets/main.css">
 </head>
 
-<body onload="initialize()">
+<body>
   <div data-role="page" id="explore">
     <div data-role="header">
       <!-- Top bar appears on all pages -->
@@ -93,7 +80,6 @@
     <!-- all dynamic -->
   </div>
 
-
   <div data-role="page" id="single">
     <div data-role="header" data-theme="b">
       <h1>Title</h1>
@@ -107,67 +93,6 @@
       Settings
     </div><!-- /footer -->
   </div><!-- /page -->
-
-  <div data-role="page" id="map-mode">
-    <div data-role="header">
-      <!-- Top bar appears on all pages -->
-      <div id="top-bar">
-        <a href="/" data-ajax="false">
-          <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png">
-        </a>
-        <div id="view-options">
-          <!-- Map icon to be switched to list depending on template -->
-          <!-- Also, order is switched due to float -->
-          <img src="img/icons/map.png" />
-          <img src="img/icons/search.png">
-
-        </div> <!-- .view-options -->
-      </div> <!-- #top-bar -->
-
-      <!-- Site nav not shown on single pages -->
-      <nav class="explore-nav" data-role="navbar" data-iconpos="top">
-        <ul>
-          <li><a href="#explore?type=now" data-icon="delete">NOW</a></li>
-          <li><a href="#explore?type=place" data-icon="plus">Places</a></li>
-          <li><a href="#explore?type=event" data-icon="minus">Events</a></li>
-          <li><a href="#explore?type=special" data-icon="check">Specials</a></li>
-          <li><a href="#explore?type=news" data-icon="gear">News</a></li>
-        </ul>
-      </nav> <!-- #site-nav -->
-
-    </div><!-- /header -->
-
-    <div id="map_canvas">
-    </div>
-
-    <div class="custom-infowindow">
-      <div class="prev">
-        <img src="img/assets/arrow-left.png" />
-      </div>
-      <div class="infowindow-info">
-        <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/161484_14205248_278738875_n.jpg" />
-        <h1>Item title</h1>
-        <p>Item address</p>
-        <p>Category1, Category2</p>
-      </div>
-      <div class="next">
-        <img src="img/assets/arrow-right.png">
-      </div>
-    </div>
-    <div class="load-more">
-      Load more...
-    </div>
-
-    <div class="sorting">
-      <nav data-role="navbar">
-        <ul>
-          <li><a data-theme="d">Close</a></li>
-          <li><a data-theme="d">Popular</a></li>
-          <li><a data-theme="d">Category</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
 
   <!-- Inline templates -->
   <script type="text/html" id="tpl-listfeed-place">
@@ -249,6 +174,39 @@
     <h1 class="ul-li-heading">{{title}}</h1>
     <p>Expires on {{dexpires}}</p>
     <div data-role="button">Grab it!</div>
+  </script>
+
+  <script type="text/html" id="tpl-mapfeed">
+    <div id="map_canvas">
+      I am a map!
+    </div>
+
+    <div class="custom-infowindow">
+      <div class="prev">
+        <img src="img/assets/arrow-left.png" />
+      </div>
+      <div class="infowindow-info">
+        <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/161484_14205248_278738875_n.jpg" />
+        <h1>Item title</h1>
+        <p>Item address</p>
+        <p>Category1, Category2</p>
+      </div>
+      <div class="next">
+        <img src="img/assets/arrow-right.png">
+      </div>
+    </div>
+
+    <div class="load-more">
+      Load more...
+    </div>
+
+    <div class="sorting">
+      <nav data-role="navbar">
+        <ul>
+          <li><a href="#category-form" data-theme="d">Category</a></li>
+        </ul>
+      </nav>
+    </div>
   </script>
 
   <script type="text/html" id="tpl-category-form">

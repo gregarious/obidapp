@@ -10,7 +10,7 @@ $(function(){
 			type: null
 		};
 
-		var displayMode = 'list';
+		var displayMode = 'map';
 
 		/* Notes on awaitingData:
 		*   Since the collection fetch callbacks below are responsible for updating
@@ -40,7 +40,7 @@ $(function(){
 		};
 
 		// create a new content view with the stored collection
-		var createContentView = function(collection, itemTemplate) {
+		var createContentView = function(collection, listTemplate) {
 			if (displayMode === 'list') {
 				return new Scenable.views.ListFeedView({
 					collection: collection,
@@ -48,7 +48,10 @@ $(function(){
 				});
 			}
 			else {
-				return null;
+				return new Scenable.views.MapFeedView({
+					collection: collection,
+					template: Handlebars.compile($("#tpl-mapfeed").html())
+				});
 			}
 		};
 
@@ -135,6 +138,9 @@ $(function(){
 					success: function(collection, response) {
 						if(awaitingData.pending) {
 							contentEl.html(currentViews.contentView.render().el);
+							if(currentViews.contentView.initMap) {
+								currentViews.contentView.initMap();
+							}
 						}
 					},
 					error: function(collection, response) {
