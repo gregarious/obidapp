@@ -22,6 +22,12 @@
 
   <!-- Main app entry point (restore the require.js hook if I get the chance -->
   <!-- <script data-main="js/app/main.js" src="js/libs/require-2.0.2.js"></script> -->
+  <script src="js/app/env.js"></script>
+  <script src="js/app/explore/models.js"></script>
+  <script src="js/app/explore/views.js"></script>
+  <script src="js/app/typesettings.js"></script>
+  <script src="js/app/explore/controller.js"></script>
+  <script src="js/app/detail/controller.js"></script>
   <script src="js/app/main.js"></script>
 
   <!-- Maps API -->
@@ -30,7 +36,6 @@
 
   <script>
   // Lara's Simple Map (case by titlecase.org)
-
   function initialize() {
     var mapOptions = {
       center: new google.maps.LatLng(-34.397, 150.644),
