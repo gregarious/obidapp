@@ -1,4 +1,17 @@
 $(function() {
+	var compileTpl = Scenable.helpers.compileTpl;
+	var templates = {
+		place: {
+			single: compileTpl('#tpl-single-place')
+		},
+		event: {
+			single: compileTpl('#tpl-single-event')
+		},
+		special: {
+			single: compileTpl('#tpl-single-special')
+		}
+	};
+
 	Scenable.controllers.detailController = {
 		activate: function() {
 			console.log('DetailController activated.');
@@ -7,8 +20,8 @@ $(function() {
 			console.log('DetailController deactivated.');
 		},
 		setContent: function(resourceType, id) {
-			var tpl = Scenable.typeSettings[resourceType].templates.single;
-			var model = Scenable.typeSettings[resourceType].collection.get(id);
+			var tpl = templates[resourceType].single;
+			var model = Scenable.typeCollectionMap[resourceType].get(id);
 			
 			var contentEl = $('#single .content');
 			contentEl.html(tpl(model.attributes));

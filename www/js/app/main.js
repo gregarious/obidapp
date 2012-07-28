@@ -48,6 +48,7 @@ $(function(){
 				ctrl.on('ready',function(){console.log('sub ready');});
 			}
 			ctrl.setContent(args.type);
+			ctrl.displayData('list');
 		};
 
 		var handleRouteDetail = function(args) {

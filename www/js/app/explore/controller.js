@@ -1,18 +1,50 @@
 $(function(){
+	// quick alias
+	var compileTpl = Scenable.helpers.compileTpl;
+	var templates = {
+		place: {
+			listfeed: compileTpl('#tpl-listfeed-place'),
+			infobox: null
+		},
+		event: {
+			listfeed: compileTpl('#tpl-listfeed-event'),
+			infobox: null
+		},
+		special: {
+			listfeed: compileTpl('#tpl-listfeed-special'),
+			infobox: null
+		}
+	};
+
 	var controller = Scenable.controllers.exploreController = (function() {
 		// DOM elements in initial page skeleton
 		var contentEl = $('#explore div:jqmData(role="content")');
 
-		var currentViews = {
-			contentView: null,
-			type: null
+		var viewState = {
+			active: null,	// will be set to one of the below items
+			map: {
+				view: null,
+				focusItem: null
+			},
+			list: {
+				view: null
+			}
 		};
 
-		// TODO: package this up with currentViews
-		var collection = null;
-
-		var displayMode = 'map';
-		var focusItem = null;	// currently just used to track which map icon is focused
+		var contentState = {
+			resourceType: null,
+			collection: null,
+			awaitingData: null,
+			valid: false,
+			// returns True the resource type is changed
+			update: function(resourceType) {
+				var changed = (this.resourceType !== resourceType);
+				this.resourceType = resourceType;
+				this.collection = Scenable.typeCollectionMap[resourceType];
+				this.valid = !_.isUndefined(this.collection);
+				return changed;
+			}
+		};
 
 		/* Notes on awaitingData:
 		*   Since the collection fetch callbacks below are responsible for updating
@@ -21,12 +53,10 @@ $(function(){
 		*   callbacks that knows whether we still want the display to occur. Acts
 		*   as a super-simple Deferred object with only a pending status.
 		*/
-		var awaitingData = null;
-		
-		/* Private functions for Controller */
 
+		/* Private functions for Controller */
 		// create a new content view with the stored collection
-		var createContentView = function(collection, listTemplate) {
+		var createContentView = function() {
 			var view;
 			if (displayMode === 'list') {
 				view = new Scenable.views.ListFeedView({
@@ -57,96 +87,95 @@ $(function(){
 
 		// big mother function that display content and hooks up event handlers
 		controller.setContent = function(resourceType) {
-			var settings = Scenable.typeSettings[resourceType],
-				itemTemplate = null;
-
-			if (!settings) {
-				console.log('Warning: Unknown type arg "' + resourceType +
-					'"for ExploreController to act on.');
-				return;
-			}
-
-			// tell the old awaitingData object that we're not interested anymore
-			if(awaitingData) {
-				awaitingData.pending = false;
-			}
-
 			// no work to be done here, just return
-			if(resourceType === currentViews.type) {
-				return;
-			}
-			currentViews.type = resourceType;
-
-			// clear out the current view entries, including detatching event handlers
-			if(currentViews.contentView) {
-				currentViews.contentView.off();
-				currentViews.contentView = null;
-			}
-
-			// before doing the heavy lifting, show a loading message
-			$.mobile.showPageLoadingMsg();
-
-			// if no settings were found, the resource type isn't supported
-			if(!settings) {
-				contentEl.html("invalid resource type");
-				$.mobile.hidePageLoadingMsg();
+			var changed = contentState.update(resourceType);
+			if(!changed) {
 				return;
 			}
 
-			this.collection = settings.collection;
-			listTemplate = settings.templates.listfeed;
+			if (!contentState.valid) {
+				console.log('Warning: Unknown type arg "' + resourceType +
+					'" for ExploreController to act on.');
+				contentState.awaitingData = null;
+				return;
+			}
+
+			// create both feed views (and remove any handlers from old ones if they exist)
+			if (viewState.list.view) {
+				viewState.list.view.off();
+			}
+			viewState.list.view = new Scenable.views.ListFeedView({
+				collection: contentState.collection,
+				template: templates[resourceType].listfeed
+			});
+			viewState.list.view.on('filterRequested', this.activateFilterForm, this);
+
+			if (viewState.map.view) {
+				viewState.map.view.off();
+			}
+			viewState.map.view = new Scenable.views.MapFeedView({
+				collection: contentState.collection
+				//infoTemplate: templates[resourceType].infobox
+			});
+			viewState.map.view.on('filterRequested', this.activateFilterForm, this);
 
 			// temp debug
-			this.collection.categories = [
+			contentState.collection.categories = [
 				{label: 'Cat 1', value: 'cat1'},
 				{label: 'Cat 2', value: 'cat2'},
 				{label: 'Cat 3', value: 'cat3'},
 				{label: 'Cat 4', value: 'cat4'}
 			];
 
-			// now time to set up the two subviews according to the collection
-			currentViews.contentView = createContentView(this.collection, listTemplate);
-			currentViews.contentView.on('filterRequested', this.activateFilterForm, this);
+			// we're going to fetch the collection now
+			contentState.awaitingData = $.Deferred();
 
-			// create a new object in which we say we are interested
-			awaitingData = {
-				type: resourceType,
-				pending: true
-			};
-			
-			// Now fetch the collection asynchronously
 			// we wrap this up in a closure so the current instance of awaitingData is
 			// used inside the callbacks
-			(function(awaitingData, self) {
-				self.collection.fetch({
+			(function(awaitingData) {
+				contentState.collection.fetch({
 					success: function(collection, response) {
-						if(awaitingData.pending) {
-							contentEl.html(currentViews.contentView.render().el);
-							if(currentViews.contentView.initMap) {
-								currentViews.contentView.initMap();
-							}
-						}
+						awaitingData.resolve();
 					},
 					error: function(collection, response) {
-						if(awaitingData.pending) {
-							contentEl.html("Error retreiving data.");
-						}
-					},
-					complete: function() {
-						if(awaitingData.pending) {
-							$.mobile.hidePageLoadingMsg();
-							contentEl.trigger("create");
-							awaitingData.pending = false;	// this is kind of meaningless, but it wraps up the object's lifespan well
-							self.trigger('ready');	// officially done processing request now
-						}
+						awaitingData.reject();
 					},
 					timeout: 2000
 				});
-			})(awaitingData, this);
+			})(contentState.awaitingData);
 		};
 
-		controller.setDisplayMode = function(mode) {
-			console.log('controller.setDisplayMode');
+		controller.displayData = function(mode) {
+			console.log('controller.displayData');
+			if (mode === 'list') {
+				viewState.active = viewState.list;
+			}
+			else if (mode === 'map') {
+				viewState.active = viewState.map;
+			}
+			else {
+				console.log('Warning: invalid display mode "' + mode + '"');
+			}
+
+			// if awaitngData is null, we never got any data
+			if (contentState.awaitingData === null) {
+				contentEl.html("No data to display.");
+				return;
+			}
+
+			// once data is retreived, we can display the active view
+			contentState.awaitingData.then(
+				function() {
+					contentEl.html(viewState.active.view.render().el);
+				},
+				function() {
+					contentEl.html("Error retreiving data.");
+				}
+			);
+			
+			contentState.awaitingData.always(function() {
+				contentEl.trigger("create");
+			});
 		};
 
 		controller.activateSearch = function() {
@@ -176,7 +205,7 @@ $(function(){
 			console.log('controller.activateFilterForm');
 			var dialogEl = $('#category-form');
 			var catForm = new Scenable.views.CategoryForm({
-				categories: this.collection.categories
+				categories: contentState.collection.categories
 			});
 			dialogEl.html(catForm.render().el);
 			dialogEl.trigger("create");
@@ -225,7 +254,6 @@ $(function(){
 		controller.mapPrevItem = function() {
 			console.log('controller.mapPrevItem');
 		};
-
 
 		return controller;
 	})();

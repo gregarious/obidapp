@@ -3,7 +3,11 @@ Scenable = {
 	collections: {},
 	views: {},
 	controllers: {},
-	helpers: {}
+	helpers: {
+		compileTpl: function(selector) {
+			return Handlebars.compile($(selector).html());
+		}
+	}
 };
 
 /*** Override Backbone's Model/Collection sync functions **/
