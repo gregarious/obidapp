@@ -13,12 +13,15 @@ $(function(){
 		special: {
 			listfeed: compileTpl('#tpl-listfeed-special'),
 			infobox: null
-		}
+		},
+		map: compileTpl('#tpl-mapfeed')
 	};
 
 	var controller = Scenable.controllers.exploreController = (function() {
 		// DOM elements in initial page skeleton
-		var contentEl = $('#explore div:jqmData(role="content")');
+		var contentEl = $('#explore div:jqmData(role="content")'),
+			listIcon = $("#explore .icon-display-list"),
+			mapIcon = $("#explore .icon-display-map");
 
 		var viewState = {
 			active: null,	// will be set to one of the below items
@@ -46,14 +49,6 @@ $(function(){
 			}
 		};
 
-		/* Notes on awaitingData:
-		*   Since the collection fetch callbacks below are responsible for updating
-		*   the content DOM, and a user could request a new instance of this function
-		*   before that callback returns, we need an object to be sent into the
-		*   callbacks that knows whether we still want the display to occur. Acts
-		*   as a super-simple Deferred object with only a pending status.
-		*/
-
 		/* Private functions for Controller */
 		// create a new content view with the stored collection
 		var createContentView = function() {
@@ -77,7 +72,18 @@ $(function(){
 
 		controller.activate = function() {
 			console.log('ExploreController activated.');
-			// no-op: jQM handles this during the page change
+			// look to the display to see what the current mode is
+			if (listIcon.is(":visible")) {
+				viewState.active = viewState.list;
+			}
+			else if (mapIcon.is(":visible")) {
+				viewState.active = viewState.map;
+			}
+			else {
+				viewState.active = null;
+			}
+
+			// jQM handles everything else
 		};
 
 		controller.deactivate = function() {
@@ -114,7 +120,8 @@ $(function(){
 				viewState.map.view.off();
 			}
 			viewState.map.view = new Scenable.views.MapFeedView({
-				collection: contentState.collection
+				collection: contentState.collection,
+				template: templates.map
 				//infoTemplate: templates[resourceType].infobox
 			});
 			viewState.map.view.on('filterRequested', this.activateFilterForm, this);
@@ -145,22 +152,16 @@ $(function(){
 			})(contentState.awaitingData);
 		};
 
-		controller.displayData = function(mode) {
+		controller.displayData = function() {
 			console.log('controller.displayData');
-			if (mode === 'list') {
-				viewState.active = viewState.list;
-			}
-			else if (mode === 'map') {
-				viewState.active = viewState.map;
-			}
-			else {
-				console.log('Warning: invalid display mode "' + mode + '"');
-			}
-
 			// if awaitngData is null, we never got any data
 			if (contentState.awaitingData === null) {
 				contentEl.html("No data to display.");
 				return;
+			}
+
+			if (!viewState.active) {
+				console.log('Warning: invalid display mode');
 			}
 
 			// once data is retreived, we can display the active view
@@ -177,6 +178,23 @@ $(function(){
 				contentEl.trigger("create");
 			});
 		};
+
+		controller.toggleDisplayMode = function() {
+			if (viewState.active === viewState.list) {
+				listIcon.hide();
+				mapIcon.show();
+				viewState.active = viewState.map;
+			}
+			else if (viewState.active === viewState.map) {
+				mapIcon.hide();
+				listIcon.show();
+				viewState.active = viewState.list;
+			}
+			else {
+				console.log('Warning: display mode error.');
+			}
+			this.displayData();
+		},
 
 		controller.activateSearch = function() {
 			console.log('controller.activateSearch');
@@ -266,6 +284,6 @@ $(function(){
 		$.proxy(controller.activateSearch, controller));
 
 	$('#explore .icon-display').on('click',
-		$.proxy(controller.setDisplayMode, controller));
+		$.proxy(controller.toggleDisplayMode, controller));
 
 });
