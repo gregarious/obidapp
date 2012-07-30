@@ -1,5 +1,5 @@
 <!-- List item links to single place page -->
-<li><a href="http://localhost/obidapp/www/mockups/event_single.php">
+<li><a href="event_single.php">
   <div class="item-thumb">
     <img src="https://lh6.googleusercontent.com/-DklyX2RWgLI/T5UvP4hB5dI/AAAAAAAiYQ8/G8eCMfkhQ6A/w132-h132-n/Emiliano%2527s%2BMexican%2BRestaurant%2B%2526%2BBar%2B%2528South%2BSide%2529" />
   </div>

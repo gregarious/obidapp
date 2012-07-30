@@ -89,7 +89,7 @@ body {
 	}
 
 	.menu-item-wrap {
-		@include column(3);
+		@include column(2.4);
 		@include unstyled-link;
 
 		li {
@@ -111,23 +111,23 @@ body {
 				background-color: $light-green !important;
 			}
 
-			&#now {
+			&#nav-now {
 				@include icon('feed-nav/now');
 			}
 
-			&#places {
+			&#nav-places {
 				@include icon('feed-nav/places');
 			}
 
-			&#events {
+			&#nav-events {
 				@include icon('feed-nav/events');
 			}
 
-			&#bulletin {
-				@include icon('feed-nav/bulletin');
+			&#nav-news {
+				@include icon('feed-nav/news');
 			}
 
-			&#specials {
+			&#nav-specials {
 				@include icon('feed-nav/specials');
 			}			
 		}
@@ -198,7 +198,7 @@ body {
 }
 
 .item-details {
-	font-size: 0.8em;
+	font-size: 0.9em;
 }
 
 /* SINGLE ---------- */
@@ -332,47 +332,25 @@ body {
 	display: none;
 }
 
-/* BULLETIN ----------- */
+/* NEWS ----------- */
 
-.snippet {
-	margin-bottom: 1em;
-}
-
-.news {
-	a {
-		@include unstyled-link;	
-	}
-	.btn {
-		@include column(12);
-		padding: 0.5em;
-
-		// text-align: center;
-		// @include background-image(linear-gradient($light-blue, $med-blue));
-		@include border-radius(5px);
-		// border: $light-grey 2px solid;
-		// color: #fff;
-		// 
-
-		@include button-gradient;
+#feed-news {
+	li {
+		padding: 0.8em;
 	}
 }
 
-// Comments
-
-.comment-form {
-	margin: 1em 0;
-}
-
-.comments {
+.snippet, .source {
 	@include column(12);
 	font-size: 0.9em;
-	ol, ul {
-		margin-left: 2em;
-	
-			li, li li {
-			margin-bottom: 1em;
-		}
-	}
+}
+
+.source, .date {
+	font-weight: bold;
+}
+
+.source {
+	color: $red;
 }
 
 /* PLACES ---------- */
@@ -449,7 +427,6 @@ body {
 		}
 	}
 }
-
 
 #placeMapCanvas {
 	height: 100px;

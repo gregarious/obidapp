@@ -10,8 +10,11 @@
 	<nav id="view-options">
 		<!-- Map icon to be switched to list depending on template -->
 		<!-- Also the icons are in reverse order for the layout -->
-		<img src="../img/icons/map.png">
-		<img src="../img/icons/search.png">
+		<a href="map_mode.php">
+			<img src="../img/icons/map.png" />
+			<img src="../img/icons/list.png" style="display: none;" />
+		</a>
+		<a href="search.php"><img src="../img/icons/search.png" /></a>
 	</nav> <!-- .view-options -->
 	
 </section> <!-- #top-bar -->
