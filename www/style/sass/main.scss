@@ -89,7 +89,7 @@ body {
 	}
 
 	.menu-item-wrap {
-		@include column(2.4);
+		@include column(3);
 		@include unstyled-link;
 
 		li {
@@ -100,7 +100,6 @@ body {
 			height: 60px;			
 			background-color: $light-grey !important;
 
-			
 			div {
 				font-size: 0.7em;
 				text-align: center;
