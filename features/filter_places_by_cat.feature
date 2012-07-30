@@ -1,7 +1,7 @@
 Feature: Filter Places by Category
     In order to make the Places feed more customized to user needs
     Users of the app looking for a specific type of Place
-    Should have the option to view only places of a specific category
+    Should have the option to view only Places of a specific Category
 
     Scenario: User clicks the Category button on the Places feed page
         Given a user is viewing the Places feed with a place named 'Good Beer Here' and a Place named 'Great Fries Here'
@@ -46,8 +46,3 @@ Feature: Filter Places by Category
         And the Places with the item titles 'Best Restaurant' and 'Cool Restaurant' are displayed
         When the user selects the Category 'All' from the Category menu
         Then the Places with the item titles 'Best Clothing' and 'Best Services' are added to the feed
-
-
-Feature: Filter Events by Category
-
-    
