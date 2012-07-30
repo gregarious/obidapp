@@ -231,9 +231,6 @@ body {
 		@include column(1);
 	}
 
-	a {
-		
-	}
 }
 
 .single-header {
@@ -330,6 +327,34 @@ body {
 	position: fixed;
 	bottom: 0;
 	display: none;
+}
+
+/* NOW ----------- */
+.page-now {
+	font-size: 0.9em;
+	line-height: 1.3em;
+	//margin: 1% 0;
+	padding: 2%;
+	margin: 1%;
+	border-bottom: 1px solid #aaa;
+	@include single-box-shadow;
+	background: #fff;
+
+	h1 {
+		font-size: 1.2em;
+		font-weight: bold;
+		//text-align: center;
+		margin: 0.5em 0 1em;
+	}
+
+	h2 {
+		font-size: 1em;
+		font-weight: bold;
+	}
+
+	p {
+		font-size: 0.9em;
+	}
 }
 
 /* NEWS ----------- */

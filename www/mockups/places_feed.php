@@ -1,7 +1,5 @@
-
-    
-    <?php $current = 'places'; ?>
-    <?php require('partials/feed_head.php'); ?>
+<?php $current = 'places'; ?>
+<?php require('partials/feed_head.php'); ?>
 
     <ul class="item-list">
 
