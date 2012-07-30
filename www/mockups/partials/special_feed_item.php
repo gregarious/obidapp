@@ -1,5 +1,5 @@
 <!-- List item links to single special page -->
-<li><a href="http://localhost/obidapp/www/mockups/special_single.template.html">
+<li><a href="special_single.php">
   <div class="item-thumb">
   	<img src="../img/defaults/default-special.png" />
   </div>
@@ -11,7 +11,7 @@
   		<li></li>
   		<li>
   			<!-- Loop through tags here -->
-			<ul class="tags">
+			<ul class="category">
 				<li>food</li>
 				<li>pizza</li>
 				<li>beer</li>

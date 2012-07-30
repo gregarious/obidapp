@@ -18,12 +18,10 @@
 
         <nav id="top-bar-single">
             <!-- This is a back button - indicates what page you are going back to -->
-            <a href="events_feed.template.html"><img src="../img/assets/back-btn.png"></a>
+            <a href="<?php echo $feed_page . '_feed.php'; ?>"><img src="../img/assets/back-btn.png"></a>
             <h1>Super duper duper duper long event name that should ne tuncated!! Yay!</h1>
         </nav> <!-- #top-bar-single -->
 
     </header> <!-- #header-view -->
 
     <div id="content-view">
-
-        <header class="single-header">

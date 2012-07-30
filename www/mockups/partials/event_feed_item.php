@@ -10,7 +10,7 @@
         <li>At Event Place name</li> <!-- or address if there is no name -->
         <li>
             <!-- Loop through tags here -->
-            <ul class="tags">
+            <ul class="category">
                 <li>food</li>
                 <li>pizza</li>
                 <li>beer</li>

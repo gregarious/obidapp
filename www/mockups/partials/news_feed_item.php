@@ -12,7 +12,7 @@
         
             <!-- Loop through tags here
             Are we doing tags on news? I don't think so.
-            <ul class="tags">
+            <ul class="category">
               <li>food</li>
               <li>pizza</li>
               <li>beer</li>

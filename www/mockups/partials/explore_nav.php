@@ -6,7 +6,7 @@
       	if($current == 'now') {
 			echo '<span class="menu-item-wrap"><li id="nav-now" class="selected"><div>Now</div></li></span>';
   		} else {
-  			echo '<a href="now.php" class="menu-item-wrap"><li id="nav-now"><div>NOW</div></li></a>';	
+  			echo '<a href="index.php" class="menu-item-wrap"><li id="nav-now"><div>NOW</div></li></a>';	
   		} ?>      
 
 

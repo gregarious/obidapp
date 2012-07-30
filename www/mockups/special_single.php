@@ -1,31 +1,8 @@
-<!doctype html>
-<!-- Conditional comment for mobile ie7 blogs.msdn.com/b/iemobile/ -->
-<!--[if IEMobile 7 ]>    <html class="no-js iem7" lang="en"> <![endif]-->
-<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<?php
+$feed_page="specials";
+require('partials/single_head.php');
+?>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="../style/stylesheets/main.css">
-
-</head>
-
-<body id="app-view">
-  <div id="main-view">
-      <!-- Header view for single pages -->
-    <header id="header-view" class="single-page">
-
-      <nav id="top-bar-single">
-          <!-- This is a back button - indicates what page you are going back to -->
-            <button><a href="http://localhost/obidapp/www/mockups/specials_feed.template.html">&larr; Specials</a></button>
-            <h1>Truncated special title...</h1>
-        </nav> <!-- .single-nav -->
-
-    </header> <!-- #header-view -->
-
-    <div id="content-view">
       <header class="single-header">
         <div class="item-thumb">
           <img src="../img/defaults/default-special.png" />
@@ -40,7 +17,7 @@
             <li>13 Available &bull; expires June 30</li>
             <li>         
               <!-- Loop through tags here -->
-              <ul class="tags">
+              <ul class="category">
                 <li>food</li>
                 <li>pizza</li>
                 <li>beer</li>
@@ -67,12 +44,4 @@
         <button class="grab-it">Grab it!</button>
       </footer>      </footer>
 
-    </div> <!-- #content-view -->
-
-    <footer id="settings-drawer" style="display:none">
-      Settings
-    </footer> <!-- #settings-drawer -->
-
-  </div>
-</body>
-</html>
+<?php require('partials/footer.php'); ?>
