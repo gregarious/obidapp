@@ -99,28 +99,28 @@ body {
 	bottom: 13px;
 	@include box-shadow(1px 1px 3px #000);
 	z-index: 999;
+	
 	ul {
 		@include clearfix;
-		
-		
 	}
 
 	li {
 		@include column(2.4);
-		@include unstyled-link;
 		cursor: pointer;
 		//width: 100%;
 		border-left: 1px solid #333;
 		padding: 0;
 		margin: 0;
 		height: 50px;			
-		@include background-image(linear-gradient(left top, #fff, #dddddd));
+		//@include background-image(linear-gradient(left top, #fff, #dddddd));
+		background-color: $light-grey !important;
 
-		div {
+		a {
 			font-size: 0.7em;
 			text-align: center;
 			display: block;
 			margin: 35px auto auto;
+			@include unstyled-link();
 		}
 
 		&.active {
@@ -149,6 +149,7 @@ body {
 	}
 }
 
+
 /* COMPONENTS --------- */
 
 .category {
@@ -163,6 +164,7 @@ body {
 		margin-right: 0.5em;
 	}
 }
+
 
 /* FEED ITEMS --------- */
 
@@ -416,11 +418,12 @@ body {
 .action-list {
 	@include column(12);
 	margin-bottom: 0.5em;
+
 	ul {
 		@include clearfix;
 
 		li {
-			width: 32.5%;
+			width: 49%;
 			float: left;
 			text-align: center;
 			@include background-image(linear-gradient(#e5e5e5, #ccc));
@@ -464,7 +467,6 @@ body {
   			color: #000;
   		}
 	}
-	
 }
 
 .place-info {
