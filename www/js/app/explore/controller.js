@@ -1,21 +1,32 @@
 $(function(){
 	// quick alias
 	var compileTpl = Scenable.helpers.compileTpl;
-	var templates = {
+	var typeSettings = {
 		places: {
-			listfeed: compileTpl('#tpl-listfeed-place'),
-			infobox: null
+			templates: {
+				listfeed: compileTpl('#tpl-listfeed-place'),
+				infobox: null
+			},
+			collection: new Scenable.models.Places()
 		},
 		events: {
-			listfeed: compileTpl('#tpl-listfeed-event'),
-			infobox: null
+			templates: {
+				listfeed: compileTpl('#tpl-listfeed-event'),
+				infobox: null
+			},
+			collection: new Scenable.models.Events()
 		},
 		specials: {
-			listfeed: compileTpl('#tpl-listfeed-special'),
-			infobox: null
-		},
-		map: compileTpl('#tpl-mapfeed')
+			templates: {
+				listfeed: compileTpl('#tpl-listfeed-special'),
+				infobox: null
+			},
+			collection: new Scenable.models.Specials()
+		}
 	};
+
+	// temporary var -- will move this when developing map feed
+	var mapTemplate = compileTpl('#tpl-mapfeed');
 
 	var controller = Scenable.controllers.exploreController = (function() {
 		// DOM elements in initial page skeleton
@@ -56,9 +67,15 @@ $(function(){
 			// returns True the resource type is changed
 			update: function(resourceType) {
 				var changed = (this.resourceType !== resourceType);
+				var settings = typeSettings[resourceType];
 				this.resourceType = resourceType;
-				this.collection = Scenable.typeCollectionMap[resourceType];
-				this.valid = !_.isUndefined(this.collection);
+				if (settings) {
+					this.collection = settings.collection;
+				}
+				else {
+					this.collection = null;
+				}
+				this.valid = !!this.collection;	// a bit hacky, but does exactly what we want
 				return changed;
 			}
 		};
@@ -87,7 +104,7 @@ $(function(){
 			}
 			views.feeds.list = new Scenable.views.ListFeedView({
 				collection: contentState.collection,
-				template: templates[resourceType].listfeed
+				template: typeSettings[resourceType].templates.listfeed
 			});
 
 			if (views.feeds.map) {
@@ -95,8 +112,8 @@ $(function(){
 			}
 			views.feeds.map = new Scenable.views.MapFeedView({
 				collection: contentState.collection,
-				template: templates.map
-				//infoTemplate: templates[resourceType].infobox
+				template: mapTemplate
+				//infoTemplate: typeSettings[resourceType].templates.infobox
 			});
 
 			// temp debug
