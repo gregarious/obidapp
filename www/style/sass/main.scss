@@ -5,6 +5,10 @@ body {
 	font-family: Helvetica, Arial, sans-serif;
 }
 
+#panel-explore {
+	background: $light-green;
+}
+
 #header-view {
 	@include clearfix();
 }
@@ -67,12 +71,6 @@ body {
 		@include box-shadow(#666 0 0 2px);
 		padding: 10px;
 	}
-}
-
-// A hack to compensate for weird overflow with #feed-nav
-#main-view {
-	overflow-x: hidden;
-	background: $light-green;
 }
 
 /* NAVIGATION ---------- */
@@ -150,6 +148,7 @@ body {
 /* FEED ITEMS --------- */
 
 .feed {
+	//@include clearfix();
 	margin-bottom: 1.5em;
 	&>li {
 		@include clearfix();

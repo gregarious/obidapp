@@ -35,20 +35,21 @@
 
 <body>
   <div id="panel-explore">
-    <div class="header">
+
+    <div id="header-view">
       <!-- Top bar appears on all pages -->
       <div id="top-bar">
-        <a href="/">
-          <!-- <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png" /> -->
-        </a>
-        <div id="view-options">
-          <!-- Map icon to be switched to list depending on template -->
-          <!-- Also, order is switched due to float -->
-          <button class="icon-display icon-display-list">list</button>
-          <button class="icon-display icon-display-map">map</button>
+        <div id="top-logo">
+          <img src="img/logos/oakland-white-betatag-100w.png" />
+        </div>
+        <!-- When we have logins, display username here. Placeholder for now -->
+        <div id="current-user">&nbsp;</div>
+        <nav id="view-options">
+          <img class="icon-display icon-display-list" src="img/icons/list.png" />
+          <img class="icon-display icon-display-map" src="img/icons/map.png" />
           <img class="icon-search" src="img/icons/search.png" />
+        </nav> <!-- .view-options -->
 
-        </div> <!-- .view-options -->
       </div> <!-- #top-bar -->
 
       <!-- Site nav not shown on single pages -->
@@ -62,16 +63,16 @@
         </ul>
       </nav> <!-- #site-nav -->
 
-    </div><!-- /header -->
+    </div><!-- .header -->
 
-    <div class="content">
-
-    </div><!-- /content -->
+    <div id="content-view">
+    </div><!-- .content -->
     
     <div style="display:none">
       Settings
     </div><!-- /footer -->
-  </div>
+
+  </div> <!-- #panel-explore -->
 
   <!-- Inline templates -->
   <script type="text/html" id="tpl-listfeed-place">

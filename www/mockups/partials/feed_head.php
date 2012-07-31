@@ -17,5 +17,5 @@
   		<?php require('explore_nav.php'); ?>
 	</header> <!-- #header-view -->
 
-  <div id="content-view" class="events">
+  <div id="content-view">
     
