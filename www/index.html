@@ -64,14 +64,10 @@
           </ul>
         </nav> <!-- #site-nav -->
 
-      </div><!-- .header -->
+      </div><!-- #header-view -->
 
       <div id="content-view">
-      </div><!-- .content -->
-      
-      <div style="display:none">
-        Settings
-      </div><!-- /footer -->
+      </div><!-- #content-view -->
     </div> <!-- #panel-explore -->
     
     <div id="panel-detail">
@@ -93,7 +89,7 @@
                 <img src="img/defaults/default-place.png" />
               {{/if}}
             </div>
-            
+
             <section class="item-content">
               <h1 class="item-title">{{name}}</h1>
               <ul class="item-details">
@@ -115,11 +111,12 @@
     </ul> <!-- .feed -->
 
     <div class="sorting">
-      <nav>
-        <ul>
-          <li><a class="category-button">Category</a></li>
-        </ul>
-      </nav>
+      <select>
+        <option default="default">Category</option>
+        <option>Retail</option>
+        <option>Food</option>
+        <option>Services</option>
+      </select>
     </div>
 
   </script> <!-- Places feed -->
@@ -165,12 +162,19 @@
     </ul>
 
     <div class="sorting">
-      <nav>
-        <ul>
-          <li><a class="category-button">Category</a></li>
-        </ul>
-      </nav>
+      <select>
+        <option>Category</option>
+        <option>Music</option>
+        <option>Arts</option>
+        <option>Lectures</option>
+        <option>Festivals</option>
+        <option>Food</option>
+        <option>Community</option>
+        <option>Sports</option>
+        <option>General Fun</option>
+      </select>
     </div>
+
   </script> <!-- Event feed -->
 
   <script type="text/html" id="tpl-single-event">
@@ -205,6 +209,7 @@
             <ul class="item-details">
               <li>{{place}}</li>
               <li>Until {{dexpires}}</li>
+              <li>{{total_available}} Available</li>
               <li>
                 <ul class="category">
                   <li>Food</li>
@@ -220,11 +225,12 @@
     </ul>
 
     <div class="sorting">
-      <nav>
-        <ul>
-          <li><a class="category-button">Category</a></li>
-        </ul>
-      </nav>
+      <select>
+        <option default="default">Category</option>
+        <option>Retail</option>
+        <option>Food</option>
+        <option>Services</option>
+      </select>
     </div>
 
   </script> <!-- Special feed -->
