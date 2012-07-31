@@ -743,7 +743,7 @@ body {
 }
 
 /* line 509, ../sass/main.scss */
-#special-status {
+.special-status {
   background: #999;
   width: 100%;
   padding: 10px 0;
@@ -751,7 +751,7 @@ body {
   bottom: 0;
 }
 /* line 515, ../sass/main.scss */
-#special-status button {
+.special-status button {
   font-size: 1.5em;
   width: 90%;
   display: block;
