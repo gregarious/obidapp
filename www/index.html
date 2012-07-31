@@ -12,7 +12,7 @@
   <script src="js/html5bp-helper.js"></script>
   <script src="js/libs/underscore-1.3.3.js"></script>
   <script src="js/libs/backbone-0.9.2.js"></script>
-  <script src="js/libs/backbone-tastypie.js"></script>
+  <!--<script src="js/libs/backbone-tastypie.js"></script>-->
   <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
 
   <!-- Maps API -->
@@ -24,6 +24,7 @@
   <script src="js/app/env.js"></script>
   <script src="js/app/explore/models.js"></script>
   <script src="js/app/explore/views.js"></script>
+  <script src="js/app/detail/views.js"></script>  
   <script src="js/app/typesettings.js"></script>
   <script src="js/app/explore/controller.js"></script>
   <script src="js/app/detail/controller.js"></script>
@@ -34,46 +35,48 @@
 </head>
 
 <body>
-  <div id="panel-explore">
+  <div id="root">
+    <div id="panel-explore">
+      <div id="header-view">
+        <!-- Top bar appears on all pages -->
+        <div id="top-bar">
+          <div id="top-logo">
+            <img src="img/logos/oakland-white-betatag-100w.png" />
+          </div>
+          <!-- When we have logins, display username here. Placeholder for now -->
+          <div id="current-user">&nbsp;</div>
+          <nav id="view-options">
+            <img class="icon-display icon-display-list" src="img/icons/list.png" />
+            <img class="icon-display icon-display-map" src="img/icons/map.png" />
+            <img class="icon-search" src="img/icons/search.png" />
+          </nav> <!-- .view-options -->
 
-    <div id="header-view">
-      <!-- Top bar appears on all pages -->
-      <div id="top-bar">
-        <div id="top-logo">
-          <img src="img/logos/oakland-white-betatag-100w.png" />
-        </div>
-        <!-- When we have logins, display username here. Placeholder for now -->
-        <div id="current-user">&nbsp;</div>
-        <nav id="view-options">
-          <img class="icon-display icon-display-list" src="img/icons/list.png" />
-          <img class="icon-display icon-display-map" src="img/icons/map.png" />
-          <img class="icon-search" src="img/icons/search.png" />
-        </nav> <!-- .view-options -->
+        </div> <!-- #top-bar -->
 
-      </div> <!-- #top-bar -->
+        <!-- Site nav not shown on single pages -->
+        <nav class="explore-nav">
+          <ul>
+            <li id="nav-now"><a href="#app/now">Now</a></li>
+            <li id="nav-places"><a href="#app/places">Places</a></li>
+            <li id="nav-events"><a href="#app/events">Events</a></li>
+            <li id="nav-specials"><a href="#app/specials">Specials</a></li>
+            <li id="nav-news"><a href="#app/news">News</a></li>
+          </ul>
+        </nav> <!-- #site-nav -->
 
-      <!-- Site nav not shown on single pages -->
-      <nav class="explore-nav">
-        <ul>
-          <li id="nav-now"><a href="#app/now">Now</a></li>
-          <li id="nav-places"><a href="#app/places">Places</a></li>
-          <li id="nav-events"><a href="#app/events">Events</a></li>
-          <li id="nav-specials"><a href="#app/specials">Specials</a></li>
-          <li id="nav-news"><a href="#app/news">News</a></li>
-        </ul>
-      </nav> <!-- #site-nav -->
+      </div><!-- .header -->
 
-    </div><!-- .header -->
-
-    <div id="content-view">
-    </div><!-- .content -->
+      <div id="content-view">
+      </div><!-- .content -->
+      
+      <div style="display:none">
+        Settings
+      </div><!-- /footer -->
+    </div> <!-- #panel-explore -->
     
-    <div style="display:none">
-      Settings
-    </div><!-- /footer -->
-
-  </div> <!-- #panel-explore -->
-
+    <div id="panel-detail">
+    </div>
+  </div>
   <!-- Inline templates -->
   <script type="text/html" id="tpl-listfeed-place">
 
@@ -131,7 +134,6 @@
       {{#models}}
         <li>
           <a href="#single?type=event&id={{uriEncode resource_uri}}">
-            
             <div class="item-thumb">
               {{#if image}}
                 <img src="{{domainUri image}}" />
@@ -145,6 +147,7 @@
               <ul class="item-details">
                 <li>{{dtstart}} - {{dtend}}</li>
                 <li>{{place.name}}</li>
+
                 <li>
                   <ul class="category">
                     <li>Festival</li>

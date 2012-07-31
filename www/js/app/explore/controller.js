@@ -19,9 +19,11 @@ $(function(){
 
 	var controller = Scenable.controllers.exploreController = (function() {
 		// DOM elements in initial page skeleton
-		var panelEl = $('#panel-explore');
-		var headerEl = panelEl.find('#header-view');
-		var contentEl = panelEl.find('#content-view');
+		var rootElement = $('#panel-explore');
+		rootElement.hide();
+		
+		var headerEl = rootElement.find('#header-view');
+		var contentEl = rootElement.find('#content-view');
 
 		var views = {
 			menu: new Scenable.views.MenuView({el: headerEl}),
@@ -215,6 +217,8 @@ $(function(){
 		controller.activate = function() {
 			console.log('+ ExploreController.activate.');
 
+			rootElement.show();
+
 			// draw menu
 			views.menu.render();
 
@@ -226,20 +230,21 @@ $(function(){
 		controller.deactivate = function() {
 			console.log('ExploreController.deactivate.');
 			views.menu.off();
+			rootElement.hide();
 		};
 
-		controller.setState = function(options, render) {
+		controller.setState = function(settings, render) {
 			// render defaults to true
 			render = _.isUndefined(render) ? true : render;
 
-			console.log('+ ExploreController.setState: ' + options.resourceType +
-							',' + options.displayMode);
+			console.log('+ ExploreController.setState: ' + settings.resourceType +
+							',' + settings.displayMode);
 			var changed = false;
-			if (!_.isUndefined(options.resourceType)) {
-				changed |= setContent(options.resourceType);
+			if (!_.isUndefined(settings.resourceType)) {
+				changed |= setContent(settings.resourceType);
 			}
-			if (!_.isUndefined(options.displayMode)) {
-				changed |= setDisplayMode(options.displayMode);
+			if (!_.isUndefined(settings.displayMode)) {
+				changed |= setDisplayMode(settings.displayMode);
 			}
 			if (changed && render) {
 				this.refreshDisplay();

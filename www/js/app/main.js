@@ -52,7 +52,7 @@ $(function(){
 
 		detailPage: function(resourceType, objectId) {
 			console.log('+ appController.detailPage: ' + resourceType + ',' + objectId);
-			this.pageTransition(states.detail);
+			this.pageTransition(this.states.detail);
 			this.states.detail.setState({
 				resourceType: resourceType,
 				objectId: objectId
