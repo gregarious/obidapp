@@ -5,19 +5,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="style/stylesheets/jqmobile/jquery.mobile-1.1.1.css">
-  <link rel="stylesheet" href="style/stylesheets/jqmobile/scenable2.css">
-
   <!-- Load dependencies directly: don't worry about Require.js for these -->
   <script src="js/libs/jquery-1.7.2.js"></script>
-  <script src="js/libs/jquery.mobile-1.1.1.js"></script>
 
   <script src="js/libs/modernizr-2.0.6.min.js"></script>
   <script src="js/html5bp-helper.js"></script>
   <script src="js/libs/underscore-1.3.3.js"></script>
   <script src="js/libs/backbone-0.9.2.js"></script>
-  <script src="js/libs/backbone-tastypie.js"></script>
+  <!--<script src="js/libs/backbone-tastypie.js"></script>-->
   <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
 
   <!-- Maps API -->
@@ -29,136 +24,158 @@
   <script src="js/app/env.js"></script>
   <script src="js/app/explore/models.js"></script>
   <script src="js/app/explore/views.js"></script>
+  <script src="js/app/detail/views.js"></script>  
   <script src="js/app/typesettings.js"></script>
   <script src="js/app/explore/controller.js"></script>
   <script src="js/app/detail/controller.js"></script>
   <script src="js/app/main.js"></script>
 
   <link rel="stylesheet" type="text/css" href="style/stylesheets/main.css">
+  
 </head>
 
 <body>
-  <div data-role="page" id="explore">
-    <div data-role="header">
-      <!-- Top bar appears on all pages -->
-      <div id="top-bar">
-        <a href="/" data-ajax="false">
-          <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png" />
-        </a>
-        <div id="view-options">
-          <!-- Map icon to be switched to list depending on template -->
-          <!-- Also, order is switched due to float -->
-          <img class="icon-display icon-display-list" src="img/icons/list.png" />
-          <img class="icon-display icon-display-map" src="img/icons/map.png" style="display:none"/>
-          <img class="icon-search" src="img/icons/search.png" />
+  <div id="root">
+    <div id="panel-explore">
+      <div id="header-view">
+        <!-- Top bar appears on all pages -->
+        <div id="top-bar">
+          <div id="top-logo">
+            <img src="img/logos/oakland-white-betatag-100w.png" />
+          </div>
+          <!-- When we have logins, display username here. Placeholder for now -->
+          <div id="current-user">&nbsp;</div>
+          <nav id="view-options">
+            <img class="icon-display icon-display-list" src="img/icons/list.png" />
+            <img class="icon-display icon-display-map" src="img/icons/map.png" />
+            <img class="icon-search" src="img/icons/search.png" />
+          </nav> <!-- .view-options -->
 
-        </div> <!-- .view-options -->
-      </div> <!-- #top-bar -->
+        </div> <!-- #top-bar -->
 
-      <!-- Site nav not shown on single pages -->
-      <nav class="explore-nav" data-role="navbar" data-iconpos="top">
-        <ul>
-          <li><a href="#explore?type=now" data-icon="delete">NOW</a></li>
-          <li><a href="#explore?type=place" data-icon="plus">Places</a></li>
-          <li><a href="#explore?type=event" data-icon="minus">Events</a></li>
-          <li><a href="#explore?type=special" data-icon="check">Specials</a></li>
-          <li><a href="#explore?type=news" data-icon="gear">News</a></li>
-        </ul>
-      </nav> <!-- #site-nav -->
+        <!-- Site nav not shown on single pages -->
+        <nav class="explore-nav">
+          <ul>
+            <li id="nav-now"><a href="#app/now">Now</a></li>
+            <li id="nav-places"><a href="#app/places">Places</a></li>
+            <li id="nav-events"><a href="#app/events">Events</a></li>
+            <li id="nav-specials"><a href="#app/specials">Specials</a></li>
+            <li id="nav-news"><a href="#app/news">News</a></li>
+          </ul>
+        </nav> <!-- #site-nav -->
 
-    </div><!-- /header -->
+      </div><!-- #header-view -->
 
-    <div data-role="content" data-theme="a">
-
-    </div><!-- /content -->
+      <div id="content-view">
+      </div><!-- #content-view -->
+    </div> <!-- #panel-explore -->
     
-    <div data-role="footer" style="display:none">
-      Settings
-    </div><!-- /footer -->
+    <div id="panel-detail">
+    </div>
   </div>
-
-  <div data-role="dialog" id="category-form">
-    <!-- all dynamic -->
-  </div>
-
-  <div data-role="dialog" id="search-form">
-    <form>
-      <label for="input-query">Search:</label>
-      <input type="search" name="query" id="input-query" value="" />
-      <a class="ok-button" data-role="button">OK</a>
-    </form>
-  </div>
-
-
-  <div data-role="page" id="single">
-    <div data-role="header" data-theme="b">
-      <h1>Title</h1>
-      <a data-role="button" data-rel="back" data-theme="b">&larr; Back</a>
-    </div><!-- /header -->
-
-    <div data-role="content" class="content">      
-    </div><!-- /content -->
-
-    <div data-role="footer" style="display:none">
-      Settings
-    </div><!-- /footer -->
-  </div><!-- /page -->
-
   <!-- Inline templates -->
   <script type="text/html" id="tpl-listfeed-place">
-    <ul class="feed" data-role="listview">
+
+    <ul class="feed">
+
       {{#models}}
         <li>
-          <a href="#single?type=place&id={{uriEncode resource_uri}}">
-            {{#if image}}
-              <img src="{{domainUri image}}" />
-            {{else}}
-              <img src="img/defaults/default-place.png" />
-            {{/if}}
-            <h3 class="ul-li-heading">{{name}}</h3>
-            <p class="ul-li-desc">{{location.address}}</p>
+          <a href="#app/places/{{id}}">
+            
+            <div class="item-thumb">
+              {{#if image}}
+                <img src="{{domainUri image}}" />
+              {{else}}
+                <img src="img/defaults/default-place.png" />
+              {{/if}}
+            </div>
+
+            <section class="item-content">
+              <h1 class="item-title">{{name}}</h1>
+              <ul class="item-details">
+                <li>{{location.address}}</li>
+                <li>
+                  <!-- Obviously this is static content and wont be -->
+                  <ul class="category">
+                    <li>Food</li>
+                    <li>Retail</li>
+                  </ul> <!-- .category -->
+                </li>
+              </ul> <!-- .item-details -->
+            </section> <!-- .item-content -->
+
           </a>
-        </li>
+        </li> <!-- feed list item -->
       {{/models}}
-    </ul>
+
+    </ul> <!-- .feed -->
+
     <div class="sorting">
-      <nav data-role="navbar">
-        <ul>
-          <li><a class="category-button" data-theme="d">Category</a></li>
-        </ul>
-      </nav>
+      <select>
+        <option default="default">Category</option>
+        <option>Retail</option>
+        <option>Food</option>
+        <option>Services</option>
+      </select>
     </div>
-  </script>
+
+  </script> <!-- Places feed -->
 
   <script type="text/html" id="tpl-single-place">
     <h1>{{name}}</h1>
-  </script>
+  </script> <!-- Single Place -->
 
   <script type="text/html" id="tpl-listfeed-event">
-    <ul class="feed" data-role="listview">
+    <ul class="feed">
+
       {{#models}}
         <li>
-          <a href="#single?type=event&id={{uriEncode resource_uri}}">
-            {{#if image}}
-              <img src="{{domainUri image}}" />
-            {{else}}
-              <img src="img/defaults/default-event.png" />
-            {{/if}}
-            <h3 class="ul-li-heading">{{name}}</h3>
-            <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
-            <p class="ui-li-desc">Mike &amp; Tonys</p>
+          <a href="#app/events/{{id}}">
+            <div class="item-thumb">
+              {{#if image}}
+                <img src="{{domainUri image}}" />
+              {{else}}
+                <img src="img/defaults/default-event.png" />
+              {{/if}}
+            </div>
+
+            <section class="item-content">
+              <h1 class="item-title">{{name}}</h1>
+              <ul class="item-details">
+                <li>{{dtstart}} - {{dtend}}</li>
+                <li>{{place.name}}</li>
+
+                <li>
+                  <ul class="category">
+                    <li>Festival</li>
+                    <li>Lectures</li>
+                    <li>General Fun</li>
+                  </ul>
+                </li>
+              </ul> <!-- .item-details -->
+            </section> <!-- .item-content -->
+
           </a>
-        </li>
+        </li> <!-- feed item -->
       {{/models}}
+
     </ul>
+
     <div class="sorting">
-      <nav data-role="navbar">
-        <ul>
-          <li><a class="category-button" data-theme="d">Category</a></li>
-        </ul>
-      </nav>
+      <select>
+        <option>Category</option>
+        <option>Music</option>
+        <option>Arts</option>
+        <option>Lectures</option>
+        <option>Festivals</option>
+        <option>Food</option>
+        <option>Community</option>
+        <option>Sports</option>
+        <option>General Fun</option>
+      </select>
     </div>
-  </script>
+
+  </script> <!-- Event feed -->
 
   <script type="text/html" id="tpl-single-event">
     <div class="single-header">
@@ -175,34 +192,54 @@
     <div class="single-content">
       <p>{{description}}</p>
     </div>
-  </script>
+  </script> <!-- Single Event -->
 
   <script type="text/html" id="tpl-listfeed-special">
-    <ul class="feed" data-role="listview">
+    <ul class="feed">
+
     {{#models}}
       <li>
-        <a href="#single?type=special&id={{uriEncode resource_uri}}">
-          <h3 class="ul-li-heading">{{title}}</h3>
-          <p class="ul-li-desc">{{place}}</p>
-          <p class="ul-li-desc">Until {{dexpires}}</p>
+        <a href="#app/specials/{{id}}">
+          <div class="item-thumb">
+              <img src="img/defaults/default-special.png" />
+          </div>
+
+          <section class="item-content">
+            <h1 class="item-title">{{title}}</h1>
+            <ul class="item-details">
+              <li>{{place}}</li>
+              <li>Until {{dexpires}}</li>
+              <li>{{total_available}} Available</li>
+              <li>
+                <ul class="category">
+                  <li>Food</li>
+                  <li>Services</li>
+                </ul>
+            </ul> <!-- .item-details -->
+          </section> <!-- .item-content -->
+
         </a>
       </li>
     {{/models}}
+
     </ul>
+
     <div class="sorting">
-      <nav data-role="navbar">
-        <ul>
-          <li><a class="category-button" data-theme="d">Category</a></li>
-        </ul>
-      </nav>
+      <select>
+        <option default="default">Category</option>
+        <option>Retail</option>
+        <option>Food</option>
+        <option>Services</option>
+      </select>
     </div>
-  </script>
+
+  </script> <!-- Special feed -->
 
   <script type="text/html" id="tpl-single-special">
     <h1 class="ul-li-heading">{{title}}</h1>
     <p>Expires on {{dexpires}}</p>
-    <div data-role="button">Grab it!</div>
-  </script>
+    <div>Grab it!</div>
+  </script> <!-- Single Special -->
 
   <script type="text/html" id="tpl-mapfeed">
     <div id="map_canvas">
@@ -229,22 +266,22 @@
     </div>
 
     <div class="sorting">
-      <nav data-role="navbar">
+      <nav>
         <ul>
-          <li><a class="category-button" data-theme="d">Category</a></li>
+          <li><a class="category-button">Category</a></li>
         </ul>
       </nav>
     </div>
   </script>
 
   <script type="text/html" id="tpl-category-form">
-    <fieldset data-role="controlgroup">
+    <fieldset>
     {{#categories}}
       <input type="checkbox" name="{{value}}" id="checkbox-{{value}}"/>
       <label for="checkbox-{{value}}">{{label}}</label>
     {{/categories}}
     </fieldset>
-    <a class="ok-button" data-role="button">OK</a>
+    <a class="ok-button">OK</a>
   </script>
 </body>
 </html>
