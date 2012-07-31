@@ -31,7 +31,7 @@ body {
 
 #top-bar {
 	background: $dark-grey;
-	height: 40px;
+	height: 44px;
 
 	&>* {
 		@include column(4);
@@ -114,7 +114,7 @@ body {
 		padding: 0;
 		margin: 0;
 		height: 50px;			
-		background-color: $light-grey !important;
+		@include background-image(linear-gradient(left top, #fff, #dddddd));
 
 		div {
 			font-size: 0.7em;

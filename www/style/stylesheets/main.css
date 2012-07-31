@@ -142,7 +142,7 @@ body {
 /* line 32, ../sass/main.scss */
 #top-bar {
   background: #444444;
-  height: 40px;
+  height: 44px;
 }
 /* line 36, ../sass/main.scss */
 #top-bar > * {
@@ -236,7 +236,11 @@ body {
   padding: 0;
   margin: 0;
   height: 50px;
-  background-color: #f1f1f1 !important;
+  background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0%, #ffffff), color-stop(100%, #dddddd));
+  background-image: -webkit-linear-gradient(left top, #ffffff, #dddddd);
+  background-image: -moz-linear-gradient(left top, #ffffff, #dddddd);
+  background-image: -o-linear-gradient(left top, #ffffff, #dddddd);
+  background-image: linear-gradient(left top, #ffffff, #dddddd);
 }
 /* line 72, ../sass/_base.scss */
 .explore-nav li:active, .explore-nav li:focus {
