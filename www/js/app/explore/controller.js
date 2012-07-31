@@ -20,8 +20,8 @@ $(function(){
 	var controller = Scenable.controllers.exploreController = (function() {
 		// DOM elements in initial page skeleton
 		var panelEl = $('#panel-explore');
-		var headerEl = panelEl.find('.header');
-		var contentEl = panelEl.find('.content');
+		var headerEl = panelEl.find('#header-view');
+		var contentEl = panelEl.find('#content-view');
 
 		var views = {
 			menu: new Scenable.views.MenuView({el: headerEl}),
