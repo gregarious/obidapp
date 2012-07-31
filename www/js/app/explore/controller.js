@@ -28,30 +28,20 @@ $(function(){
 			feeds: {
 				list: null,
 				map: null,
-				activeView: null,
+				activeLabel: null,
 				toggleActive: function() {
-					if (this.activeView === this.list) this.activeView = this.map;
-					else if (this.activeView === this.map) this.activeView = this.list;
-					return this.getActiveLabel();
+					if (this.activeLabel === 'list') this.activeLabel = 'map';
+					else if (this.activeLabel === 'map') this.activeLabel = 'list';
+					return this.activeLabel;
 				},
 				setActive: function(mode) {
-					this.activeView = this[mode] || null;
+					this.activeLabel = mode;
 				},
 				getActiveLabel: function() {
-					if (this.activeView === this.list) {
-						return 'list';
-					}
-					else if (this.activeView === this.map) {
-						return 'map';
-					}
-					return null;
+					return this.activeLabel;
 				},
-				// sets view and maintains active one
-				setViews: function(listView, mapView) {
-					var active = this.getActiveLabel();
-					this.list = listView;
-					this.map = mapView;
-					this.setActive(active);
+				getActiveView: function() {
+					return this[this.activeLabel];
 				}
 			}
 		};
@@ -71,66 +61,41 @@ $(function(){
 			}
 		};
 
-		var controller = {};
-
-		controller.activate = function() {
-			console.log('ExploreController activated.');
-
-			// draw menu
-			views.menu.render();
-
-			// attach event handlers
-			// TODO: make nav items href and router based?
-			views.menu.on('click:navItem', function(label) {
-				this.setContent(label);
-				this.refreshDisplay();
-			}, this);
-			views.menu.on('click:displayMode', this.toggleDisplayMode, this);
-			views.menu.on('click:searchOn', this.activateSearch, this);
-		};
-
-		controller.deactivate = function() {
-			console.log('ExploreController deactivated.');
-			views.menu.off();
-		};
-
 		// sets the current feed collection and creates views to display it
-		controller.setContent = function(resourceType) {
-			console.log('controller.setContent: ' + resourceType);
+		// returns false if content is unchanged, true otherwise
+		var setContent = function(resourceType) {
+			console.log('- controller.setContent: ' + resourceType);
 			// no work to be done here, just return
 			var changed = contentState.update(resourceType);
 			if(!changed) {
-				return;
+				console.log('(unchanged content)');
+				return false;
 			}
 
 			if (!contentState.valid) {
 				console.log('Warning: Unknown type arg "' + resourceType +
 					'" for ExploreController to act on.');
 				contentState.awaitingData = null;
-				return;
+				return true;
 			}
 
 			// create both feed views (and remove any handlers from old ones if they exist)
 			if (views.feeds.list) {
 				views.feeds.list.off();
 			}
-			var newList = new Scenable.views.ListFeedView({
+			views.feeds.list = new Scenable.views.ListFeedView({
 				collection: contentState.collection,
 				template: templates[resourceType].listfeed
 			});
-			newList.on('filterRequested', this.activateFilterForm, this);
 
 			if (views.feeds.map) {
 				views.feeds.map.off();
 			}
-			var newMap = new Scenable.views.MapFeedView({
+			views.feeds.map = new Scenable.views.MapFeedView({
 				collection: contentState.collection,
 				template: templates.map
 				//infoTemplate: templates[resourceType].infobox
 			});
-			newMap.on('filterRequested', this.activateFilterForm, this);
-
-			views.feeds.setViews(newList, newMap);
 
 			// temp debug
 			contentState.collection.categories = [
@@ -158,41 +123,65 @@ $(function(){
 			})(contentState.awaitingData);
 
 			views.menu.setActiveNav(resourceType);
+			return true;
 		};
 
-		controller.setDisplayMode = function(mode) {
-			console.log('controller.setDisplayMode');
-			views.feeds.setActive(mode);
-			views.menu.setActiveDisplayMode(mode);
-		};
-
-		controller.refreshDisplay = function() {
-			console.log('controller.refreshDisplay');
-
-			views.menu.render();
-
-			// if awaitngData is null, we don't have data, and never got it
-			if (contentState.awaitingData === null) {
-				contentEl.html("No data to display.");
-				return;
+		// returns true if display mode is changed
+		var setDisplayMode = function(mode) {
+			console.log('- controller.setDisplayMode: ' + mode);
+			if (mode === views.feeds.activeLabel) {
+				return false;
 			}
-
-			if (!views.feeds.activeView) {
-				console.log('Warning: invalid display mode');
+			else {
+				views.feeds.setActive(mode);
+				views.menu.setActiveDisplayMode(mode);
+				return true;
 			}
-
-			// once data is retreived, we can display the active view
-			contentState.awaitingData.then(
-				function() {
-					contentEl.html(views.feeds.activeView.render().el);
-				},
-				function() {
-					contentEl.html("Error retreiving data.");
-				}
-			);
 		};
 
-		controller.toggleDisplayMode = function() {
+		var runSearch = function(query) {
+			console.log('- ExploreController.runSearch | query: ' + query);
+		};
+
+		var runFilter = function(categories) {
+			console.log('- ExploreController.runFilter | categories: ' + categories);
+		};
+
+		var showNextPage = function() {
+			console.log('- ExploreController.showNextPage');
+		};
+
+		var showPrevPage = function() {
+			console.log('- ExploreController.showPrevPage');
+		};
+
+		var itemClicked = function(itemId) {
+			console.log('- ExploreController.itemClicked');
+		};
+
+		var refreshFeed = function() {
+			console.log('- ExploreController.refreshFeed');
+		};
+
+		// Map-specific interface
+		var mapMarkerClicked = function() {
+			console.log('- ExploreController.mapMarkerClicked');
+		};
+
+		var mapFocusChange = function(x, y, width, height) {
+			console.log('- ExploreController.mapFocusChange');
+		};
+
+		var mapNextItem = function() {
+			console.log('- ExploreController.mapNextItem');
+		};
+
+		var mapPrevItem = function() {
+			console.log('- ExploreController.mapPrevItem');
+		};
+
+		var toggleDisplayMode = function() {
+			console.log('- ExploreController.toggleDisplayMode');
 			var newActive = views.feeds.toggleActive();
 			if (!newActive) {
 				console.log('Warning: display mode error.');
@@ -202,8 +191,8 @@ $(function(){
 			this.refreshDisplay();
 		};
 
-		controller.activateSearch = function() {
-			console.log('controller.activateSearch');
+		var activateSearch = function() {
+			console.log('- ExploreController.activateSearch');
 			// var dialogEl = $('#search-form');
 			
 			// // shortcut using a fill Backbone view. unncessary for static dialog
@@ -215,68 +204,78 @@ $(function(){
 			//	dialogEl.off('click', '.ok-button');
 			//	dialogEl.dialog('close');
 				
-			//	this.runSearch(query);
-			// }, this));
+			//	runSearch(query);
+			// }));
 
 			// $.mobile.changePage(dialogEl);
 		};
 
-		controller.runSearch = function(query) {
-			console.log('controller.runSearch | query: ' + query);
+		var controller = {};
+
+		controller.activate = function() {
+			console.log('+ ExploreController.activate.');
+
+			// draw menu
+			views.menu.render();
+
+			// attach event handlers
+			// TODO: make nav items href and router based?
+			views.menu.on('click:navItem', function(label) {
+				this.setState({resourceType: label});
+			}, this);
+			views.menu.on('click:displayMode', toggleDisplayMode, this);
+			views.menu.on('click:searchOn', activateSearch, this);
 		};
 
-		controller.activateFilterForm = function() {
-			console.log('controller.activateFilterForm');
-			// var dialogEl = $('#category-form');
-			// var catForm = new Scenable.views.CategoryForm({
-			//	categories: contentState.collection.categories
-			// });
-			// dialogEl.html(catForm.render().el);
-			// dialogEl.trigger("create");
-			// catForm.on('submit', function(categories) {
-			//	catForm.off();
-			//	dialogEl.dialog('close');
-			//	this.runFilter(categories);
-			// }, this);
-			// // dialogEl should have data-role="dialog"
-			// $.mobile.changePage(dialogEl);
+		controller.deactivate = function() {
+			console.log('ExploreController.deactivate.');
+			views.menu.off();
 		};
 
-		controller.runFilter = function(categories) {
-			console.log('controller.runFilter | categories: ' + categories);
+		controller.setState = function(options, render) {
+			// render defaults to true
+			render = _.isUndefined(render) ? true : render;
+
+			console.log('+ ExploreController.setState: ' + options.resourceType +
+							',' + options.displayMode);
+			var changed = false;
+			if (!_.isUndefined(options.resourceType)) {
+				changed |= setContent(options.resourceType);
+			}
+			if (!_.isUndefined(options.displayMode)) {
+				changed |= setDisplayMode(options.displayMode);
+			}
+			if (changed && render) {
+				this.refreshDisplay();
+			}
 		};
 
-		controller.showNextPage = function() {
-			console.log('controller.showNextPage');
-		};
+		controller.refreshDisplay = function() {
+			console.log('ExploreController.refreshDisplay');
 
-		controller.showPrevPage = function() {
-			console.log('controller.showPrevPage');
-		};
+			views.menu.render();
 
-		controller.itemClicked = function(itemId) {
-			console.log('controller.itemClicked');
-		};
+			// if awaitngData is null, we don't have data, and never got it
+			if (contentState.awaitingData === null) {
+				contentEl.html("No data to display.");
+				console.log(contentState.awaitingData);
+				return;
+			}
 
-		controller.refreshFeed = function() {
-			console.log('controller.refreshFeed');
-		};
+			if (!views.feeds.getActiveView()) {
+				console.log('Warning: invalid display mode');
+				return;
+			}
 
-		// Map-specific interface
-		controller.mapMarkerClicked = function() {
-			console.log('controller.mapMarkerClicked');
-		};
-
-		controller.mapFocusChange = function(x, y, width, height) {
-			console.log('controller.mapFocusChange');
-		};
-
-		controller.mapNextItem = function() {
-			console.log('controller.mapNextItem');
-		};
-
-		controller.mapPrevItem = function() {
-			console.log('controller.mapPrevItem');
+			// once data is retreived, we can display the active view
+			contentState.awaitingData.then(
+				function() {
+					contentEl.html(views.feeds.getActiveView().render().el);
+				},
+				function() {
+					contentEl.html("Error retreiving data.");
+				}
+			);
 		};
 
 		return controller;

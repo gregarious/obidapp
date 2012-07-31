@@ -12,80 +12,54 @@ Handlebars.registerHelper('domainUri', function(string) {
 // (note this isn't strictly necessary, but more complicated to maintain
 //  otherwise. Keep this way unless we need performance gains.)
 $(function(){
-	Scenable.appController = (function(){
+	Scenable.appController = new (Backbone.Router.extend({
+		states: {
+			explore: Scenable.controllers.exploreController,
+			detail: Scenable.controllers.detailController
+		},
+		currentState: null,
 
-		var currentSubctrl = null;
+		routes: {
+			"app/:resource/:id": 'detailPage',
+			"app/:resource": 'exploreFeed'
+		},
 
-		// converts a url querystring into a JS object
-		var parseArgs = function(hashargs) {
-			var args = {};
-			_.each(hashargs.split("&"), function(clause){
-				var match = /(.*)=(.*)/.exec(clause);
-				if (match[1]) {
-					args[match[1]] = match[2];
-				}
+		pageTransition: function(toState) {
+			if (this.currentState === toState) {
+				return;
+			}
+			if (this.currentState) {
+				this.currentState.deactivate();
+			}
+			this.currentState = toState;
+			toState.activate();
+			// no rules restricting transition
+
+		},
+
+		exploreFeed: function(resourceType) {
+			console.log('+ appController.exploreFeed: ' + resourceType);
+			this.pageTransition(this.states.explore);
+			this.states.explore.setState({
+				resourceType: resourceType
 			});
-			return args;
-		};
+		},
 
-		// ensurs the given sub-controller is the active one. if not, activates it.
-		var setActiveSubcontroller = function(subctrl) {
-			if (currentSubctrl !== subctrl) {
-				if (currentSubctrl) {
-					currentSubctrl.deactivate();
-					currentSubctrl.off();	// turn off ALL event handlers
-				}
-				currentSubctrl = subctrl;
-				currentSubctrl.activate();
-			}
-		};
+		detailPage: function(resourceType, objectId) {
+			console.log('+ appController.detailPage: ' + resourceType + ',' + objectId);
+			this.pageTransition(states.detail);
+			this.states.detail.setState({
+				resourceType: resourceType,
+				objectId: objectId
+			});
+		}
+	}))();
 
-		// currently just uses the "type" arg to call setContent
-		var handleRouteExplore = function(args) {
-			var ctrl = Scenable.controllers.exploreController;
-			if (currentSubctrl !== ctrl) {
-				setActiveSubcontroller(ctrl);
-				ctrl.on('ready',function(){console.log('sub ready');});
-			}
-			ctrl.setContent(args.type);
-			ctrl.setDisplayMode('list');
-			ctrl.refreshDisplay();
-		};
+	Scenable.appController.states.explore.setState({
+		displayMode: 'list'
+	}, false);
 
-		var handleRouteDetail = function(args) {
-			var ctrl = Scenable.controllers.detailController;
-			if (currentSubctrl !== ctrl) {
-				setActiveSubcontroller(ctrl);
-			}
-			ctrl.setContent(args.type,
-				decodeURIComponent(args.id));
-		};
-
-		return {
-			handleRoute: function(hashString) {
-				var match = /^\#(.+)\?(.*)/.exec(hashString);
-				if (match) {
-					var page = match[1];
-					var args = parseArgs(match[2]);
-					if (page === 'explore') {
-						handleRouteExplore(args);
-					}
-					else if (page === 'single') {
-						handleRouteDetail(args);
-					}
-					else {
-						console.log('Warning: unregistered controller "' + page + '" requested.');
-					}
-					// if no controller registered, no-op
-				}
-				else {
-					console.log('Warning: invalid hash "' + urlString + '" requested.');
-				}
-			}
-		};
-
-	})();
-
-	Scenable.appController.handleRoute("#explore?type=places");
-
+	Backbone.history.start();
+	// first page during development
+	Scenable.appController.navigate("app/places", {trigger: true});
 });
