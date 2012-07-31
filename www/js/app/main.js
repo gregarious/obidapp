@@ -20,8 +20,13 @@ $(function(){
 		currentState: null,
 
 		routes: {
+			"": 'index',
 			"app/:resource/:id": 'detailPage',
 			"app/:resource": 'exploreFeed'
+		},
+
+		index: function() {
+			this.navigate("app/now", {trigger: true});
 		},
 
 		pageTransition: function(toState) {
@@ -60,6 +65,4 @@ $(function(){
 	}, false);
 
 	Backbone.history.start();
-	// first page during development
-	Scenable.appController.navigate("app/places", {trigger: true});
 });

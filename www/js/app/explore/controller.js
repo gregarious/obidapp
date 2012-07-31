@@ -219,10 +219,6 @@ $(function(){
 			views.menu.render();
 
 			// attach event handlers
-			// TODO: make nav items href and router based?
-			views.menu.on('click:navItem', function(label) {
-				this.setState({resourceType: label});
-			}, this);
 			views.menu.on('click:displayMode', toggleDisplayMode, this);
 			views.menu.on('click:searchOn', activateSearch, this);
 		};
