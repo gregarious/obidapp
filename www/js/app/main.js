@@ -1,11 +1,6 @@
 // helper function to be used in template to encode resource uri's embedded in links
-Handlebars.registerHelper('uriEncode', function(string) {
-	return encodeURIComponent(string);
-});
-
-// helper function to be used in template to encode resource uri's embedded in links
 Handlebars.registerHelper('domainUri', function(string) {
-	return 'http://127.0.0.1:8000' + string;
+	return Scenable.constants.SITEURL + string;
 });
 
 // Define controller after app load

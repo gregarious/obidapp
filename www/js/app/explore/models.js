@@ -1,6 +1,6 @@
 (function(){
 	var toTastyPieRootUrl = function(resourceType) {
-		return 'http://127.0.0.1:8000/api/v1/' + resourceType;
+		return Scenable.constants.SITEURL + '/api/v1/' + resourceType;
 	};
 
 	/*** BACKBONE MODELS ***/
