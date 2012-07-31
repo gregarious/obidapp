@@ -80,7 +80,7 @@
 
       {{#models}}
         <li>
-          <a href="#single?type=place&id={{uriEncode resource_uri}}">
+          <a href="#app/places/{{id}}">
             
             <div class="item-thumb">
               {{#if image}}
@@ -130,7 +130,7 @@
 
       {{#models}}
         <li>
-          <a href="#single?type=event&id={{uriEncode resource_uri}}">
+          <a href="#app/events/{{id}}">
             <div class="item-thumb">
               {{#if image}}
                 <img src="{{domainUri image}}" />
@@ -199,7 +199,7 @@
 
     {{#models}}
       <li>
-        <a href="#single?type=special&id={{uriEncode resource_uri}}">
+        <a href="#app/specials/{{id}}">
           <div class="item-thumb">
               <img src="img/defaults/default-special.png" />
           </div>
