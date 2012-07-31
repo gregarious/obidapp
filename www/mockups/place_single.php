@@ -34,7 +34,6 @@ require('partials/single_head.php'); ?>
 				<li class="selected">Info</li>
 				<li>Events</li>
 				<li>Specials</li>
-				<!-- <li id="favorite-place">&#9827;</li> -->
 			</ul>
 		</nav> 
 
