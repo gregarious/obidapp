@@ -234,7 +234,7 @@ body {
   outline: none;
 }
 /* line 109, ../sass/main.scss */
-.explore-nav li div {
+.explore-nav li a {
   font-size: 0.7em;
   text-align: center;
   display: block;
