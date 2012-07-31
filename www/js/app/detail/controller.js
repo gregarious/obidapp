@@ -1,34 +1,62 @@
 $(function() {
 	var compileTpl = Scenable.helpers.compileTpl;
-	var templates = {
-		place: {
-			single: compileTpl('#tpl-single-place')
+	var typeSettings = {
+		places: {
+			Model: Scenable.models.Place,
+			template: compileTpl('#tpl-single-place')
 		},
-		event: {
-			single: compileTpl('#tpl-single-event')
+		events: {
+			Model: Scenable.models.Event,
+			template: compileTpl('#tpl-single-event')
 		},
-		special: {
-			single: compileTpl('#tpl-single-special')
+		specials: {
+			Model: Scenable.models.Special,
+			template: compileTpl('#tpl-single-special')
 		}
 	};
 
+	var rootElement = $('#panel-detail');
+	rootElement.hide();
+
 	Scenable.controllers.detailController = {
 		activate: function() {
-			console.log('DetailController activated.');
+			rootElement.show();
+			console.log('+ DetailController.activate');
 		},
 		deactivate: function() {
-			console.log('DetailController deactivated.');
+			rootElement.hide();
+			console.log('+ DetailController.deactivate');
 		},
-		setContent: function(resourceType, id) {
-			var tpl = templates[resourceType].single;
-			var model = Scenable.typeCollectionMap[resourceType].get(id);
+		setState: function(settings) {
+			console.log('+ DetailController.setState');
 			
-			var contentEl = $('#single .content');
-			contentEl.html(tpl(model.attributes));
-			contentEl.trigger("create");
+			var setup = typeSettings[settings.resourceType];
+			if (!setup) {
+				contentEl.html('invalid resource type');
+			}
 
-			// also add the title change
-			$('#single h1').text(model.headerText());
+			var model = new setup.Model({id: settings.objectId});
+
+			var view = new Scenable.views.DetailView({
+				model: model,
+				template: setup.template
+			});
+
+			rootElement.html('spinning...');
+
+			model.fetch({
+				success: function(asyncModel,response) {
+					// if the "model" variable has changed since the fetch went out, don't do anything with the response
+					if (asyncModel === model) {
+						rootElement.html(view.render().el);
+					}
+				},
+				error: function(asyncModel,response) {
+					if (asyncModel === model) {
+						rootElement.html('error from server');
+					}
+				}
+			});
 		}
 	};
 

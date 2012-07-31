@@ -1,6 +1,6 @@
 (function(){
 	var toTastyPieRootUrl = function(resourceType) {
-		return 'http://127.0.0.1:8000/api/v1/' + resourceType + '/?format=jsonp';
+		return 'http://127.0.0.1:8000/api/v1/' + resourceType;
 	};
 
 	/*** BACKBONE MODELS ***/
@@ -40,7 +40,8 @@
 		},
 
 		toQueryString: function() {
-			var keys = ['offset', 'limit', 'filters', 'query'];
+			var keys = ['offset', 'limit', 'filters', 'query'],
+				key;
 			var clauses = [];
 			for (key in keys) {
 				if (this[key] === null) {
@@ -48,21 +49,25 @@
 				}
 			}
 			return clauses.join("&");
+		},
+
+		parse: function(response) {
+			return response.objects;
 		}
 	});
 
 	Scenable.models.Places = BaseCollection.extend({
 		model: Scenable.models.Place,
-		urlRoot: toTastyPieRootUrl('place')
+		url: toTastyPieRootUrl('place')
 	});
 
 	Scenable.models.Events = BaseCollection.extend({
 		model: Scenable.models.Event,
-		urlRoot: toTastyPieRootUrl('event')
+		url: toTastyPieRootUrl('event')
 	});
 
 	Scenable.models.Specials = BaseCollection.extend({
 		model: Scenable.models.Special,
-		urlRoot: toTastyPieRootUrl('special')
+		url: toTastyPieRootUrl('special')
 	});
 })();
