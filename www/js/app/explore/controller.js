@@ -2,15 +2,15 @@ $(function(){
 	// quick alias
 	var compileTpl = Scenable.helpers.compileTpl;
 	var templates = {
-		place: {
+		places: {
 			listfeed: compileTpl('#tpl-listfeed-place'),
 			infobox: null
 		},
-		event: {
+		events: {
 			listfeed: compileTpl('#tpl-listfeed-event'),
 			infobox: null
 		},
-		special: {
+		specials: {
 			listfeed: compileTpl('#tpl-listfeed-special'),
 			infobox: null
 		},
@@ -19,18 +19,40 @@ $(function(){
 
 	var controller = Scenable.controllers.exploreController = (function() {
 		// DOM elements in initial page skeleton
-		var contentEl = $('#explore div:jqmData(role="content")'),
-			listIcon = $("#explore .icon-display-list"),
-			mapIcon = $("#explore .icon-display-map");
+		var panelEl = $('#panel-explore');
+		var headerEl = panelEl.find('.header');
+		var contentEl = panelEl.find('.content');
 
-		var viewState = {
-			active: null,	// will be set to one of the below items
-			map: {
-				view: null,
-				focusItem: null
-			},
-			list: {
-				view: null
+		var views = {
+			menu: new Scenable.views.MenuView({el: headerEl}),
+			feeds: {
+				list: null,
+				map: null,
+				activeView: null,
+				toggleActive: function() {
+					if (this.activeView === this.list) this.activeView = this.map;
+					else if (this.activeView === this.map) this.activeView = this.list;
+					return this.getActiveLabel();
+				},
+				setActive: function(mode) {
+					this.activeView = this[mode] || null;
+				},
+				getActiveLabel: function() {
+					if (this.activeView === this.list) {
+						return 'list';
+					}
+					else if (this.activeView === this.map) {
+						return 'map';
+					}
+					return null;
+				},
+				// sets view and maintains active one
+				setViews: function(listView, mapView) {
+					var active = this.getActiveLabel();
+					this.list = listView;
+					this.map = mapView;
+					this.setActive(active);
+				}
 			}
 		};
 
@@ -49,50 +71,32 @@ $(function(){
 			}
 		};
 
-		/* Private functions for Controller */
-		// create a new content view with the stored collection
-		var createContentView = function() {
-			var view;
-			if (displayMode === 'list') {
-				view = new Scenable.views.ListFeedView({
-					collection: collection,
-					template: listTemplate
-				});
-			}
-			else {
-				view = new Scenable.views.MapFeedView({
-					collection: collection,
-					template: Handlebars.compile($("#tpl-mapfeed").html())
-				});
-			}
-			return view;
-		};
-
 		var controller = {};
 
 		controller.activate = function() {
 			console.log('ExploreController activated.');
-			// look to the display to see what the current mode is
-			if (listIcon.is(":visible")) {
-				viewState.active = viewState.list;
-			}
-			else if (mapIcon.is(":visible")) {
-				viewState.active = viewState.map;
-			}
-			else {
-				viewState.active = null;
-			}
 
-			// jQM handles everything else
+			// draw menu
+			views.menu.render();
+
+			// attach event handlers
+			// TODO: make nav items href and router based?
+			views.menu.on('click:navItem', function(label) {
+				this.setContent(label);
+				this.refreshDisplay();
+			}, this);
+			views.menu.on('click:displayMode', this.toggleDisplayMode, this);
+			views.menu.on('click:searchOn', this.activateSearch, this);
 		};
 
 		controller.deactivate = function() {
 			console.log('ExploreController deactivated.');
-			// no-op: jQM handles this during the page change
+			views.menu.off();
 		};
 
-		// big mother function that display content and hooks up event handlers
+		// sets the current feed collection and creates views to display it
 		controller.setContent = function(resourceType) {
+			console.log('controller.setContent: ' + resourceType);
 			// no work to be done here, just return
 			var changed = contentState.update(resourceType);
 			if(!changed) {
@@ -107,24 +111,26 @@ $(function(){
 			}
 
 			// create both feed views (and remove any handlers from old ones if they exist)
-			if (viewState.list.view) {
-				viewState.list.view.off();
+			if (views.feeds.list) {
+				views.feeds.list.off();
 			}
-			viewState.list.view = new Scenable.views.ListFeedView({
+			var newList = new Scenable.views.ListFeedView({
 				collection: contentState.collection,
 				template: templates[resourceType].listfeed
 			});
-			viewState.list.view.on('filterRequested', this.activateFilterForm, this);
+			newList.on('filterRequested', this.activateFilterForm, this);
 
-			if (viewState.map.view) {
-				viewState.map.view.off();
+			if (views.feeds.map) {
+				views.feeds.map.off();
 			}
-			viewState.map.view = new Scenable.views.MapFeedView({
+			var newMap = new Scenable.views.MapFeedView({
 				collection: contentState.collection,
 				template: templates.map
 				//infoTemplate: templates[resourceType].infobox
 			});
-			viewState.map.view.on('filterRequested', this.activateFilterForm, this);
+			newMap.on('filterRequested', this.activateFilterForm, this);
+
+			views.feeds.setViews(newList, newMap);
 
 			// temp debug
 			contentState.collection.categories = [
@@ -150,69 +156,69 @@ $(function(){
 					timeout: 2000
 				});
 			})(contentState.awaitingData);
+
+			views.menu.setActiveNav(resourceType);
 		};
 
-		controller.displayData = function() {
-			console.log('controller.displayData');
-			// if awaitngData is null, we never got any data
+		controller.setDisplayMode = function(mode) {
+			console.log('controller.setDisplayMode');
+			views.feeds.setActive(mode);
+			views.menu.setActiveDisplayMode(mode);
+		};
+
+		controller.refreshDisplay = function() {
+			console.log('controller.refreshDisplay');
+
+			views.menu.render();
+
+			// if awaitngData is null, we don't have data, and never got it
 			if (contentState.awaitingData === null) {
 				contentEl.html("No data to display.");
 				return;
 			}
 
-			if (!viewState.active) {
+			if (!views.feeds.activeView) {
 				console.log('Warning: invalid display mode');
 			}
 
 			// once data is retreived, we can display the active view
 			contentState.awaitingData.then(
 				function() {
-					contentEl.html(viewState.active.view.render().el);
+					contentEl.html(views.feeds.activeView.render().el);
 				},
 				function() {
 					contentEl.html("Error retreiving data.");
 				}
 			);
-			
-			contentState.awaitingData.always(function() {
-				contentEl.trigger("create");
-			});
 		};
 
 		controller.toggleDisplayMode = function() {
-			if (viewState.active === viewState.list) {
-				listIcon.hide();
-				mapIcon.show();
-				viewState.active = viewState.map;
-			}
-			else if (viewState.active === viewState.map) {
-				mapIcon.hide();
-				listIcon.show();
-				viewState.active = viewState.list;
-			}
-			else {
+			var newActive = views.feeds.toggleActive();
+			if (!newActive) {
 				console.log('Warning: display mode error.');
+				return;
 			}
-			this.displayData();
-		},
+			views.menu.setActiveDisplayMode(newActive);
+			this.refreshDisplay();
+		};
 
 		controller.activateSearch = function() {
 			console.log('controller.activateSearch');
-			var dialogEl = $('#search-form');
+			// var dialogEl = $('#search-form');
 			
-			// shortcut using a fill Backbone view. unncessary for static dialog
-			dialogEl.on('click', '.ok-button', $.proxy(function(e){
-				var input = dialogEl.find('[name="query"]');
-				var query = input.val();
-				input.val('');
+			// // shortcut using a fill Backbone view. unncessary for static dialog
+			// dialogEl.on('click', '.ok-button', $.proxy(function(e){
+			//	var input = dialogEl.find('[name="query"]');
+			//	var query = input.val();
+			//	input.val('');
 
-				dialogEl.off('click', '.ok-button');
-				dialogEl.dialog('close');
+			//	dialogEl.off('click', '.ok-button');
+			//	dialogEl.dialog('close');
 				
-				this.runSearch(query);
-			}, this));
+			//	this.runSearch(query);
+			// }, this));
 
-			$.mobile.changePage(dialogEl);
+			// $.mobile.changePage(dialogEl);
 		};
 
 		controller.runSearch = function(query) {
@@ -221,19 +227,19 @@ $(function(){
 
 		controller.activateFilterForm = function() {
 			console.log('controller.activateFilterForm');
-			var dialogEl = $('#category-form');
-			var catForm = new Scenable.views.CategoryForm({
-				categories: contentState.collection.categories
-			});
-			dialogEl.html(catForm.render().el);
-			dialogEl.trigger("create");
-			catForm.on('submit', function(categories) {
-				catForm.off();
-				dialogEl.dialog('close');
-				this.runFilter(categories);
-			}, this);
-			// dialogEl should have data-role="dialog"
-			$.mobile.changePage(dialogEl);
+			// var dialogEl = $('#category-form');
+			// var catForm = new Scenable.views.CategoryForm({
+			//	categories: contentState.collection.categories
+			// });
+			// dialogEl.html(catForm.render().el);
+			// dialogEl.trigger("create");
+			// catForm.on('submit', function(categories) {
+			//	catForm.off();
+			//	dialogEl.dialog('close');
+			//	this.runFilter(categories);
+			// }, this);
+			// // dialogEl should have data-role="dialog"
+			// $.mobile.changePage(dialogEl);
 		};
 
 		controller.runFilter = function(categories) {
@@ -278,12 +284,4 @@ $(function(){
 
 	// add observer pattern pub capabilities
 	_.extend(controller, Backbone.Events);
-
-	// random DOM-binding as a consequence of header section being tied up in jQM
-	$('#explore .icon-search').on('click',
-		$.proxy(controller.activateSearch, controller));
-
-	$('#explore .icon-display').on('click',
-		$.proxy(controller.toggleDisplayMode, controller));
-
 });

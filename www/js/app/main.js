@@ -48,7 +48,8 @@ $(function(){
 				ctrl.on('ready',function(){console.log('sub ready');});
 			}
 			ctrl.setContent(args.type);
-			ctrl.displayData('list');
+			ctrl.setDisplayMode('list');
+			ctrl.refreshDisplay();
 		};
 
 		var handleRouteDetail = function(args) {
@@ -61,9 +62,8 @@ $(function(){
 		};
 
 		return {
-			handleRoute: function(urlString) {
-				var urlObj = $.mobile.path.parseUrl(urlString);
-				var match = /^\#(.+)\?(.*)/.exec(urlObj.hash);
+			handleRoute: function(hashString) {
+				var match = /^\#(.+)\?(.*)/.exec(hashString);
 				if (match) {
 					var page = match[1];
 					var args = parseArgs(match[2]);
@@ -86,9 +86,6 @@ $(function(){
 
 	})();
 
-	$(document).bind( "pagebeforechange", function(e, data) {
-		if (typeof data.toPage === "string") {
-			Scenable.appController.handleRoute(data.toPage);
-		}
-	});
+	Scenable.appController.handleRoute("#explore?type=places");
+
 });

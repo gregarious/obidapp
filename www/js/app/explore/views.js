@@ -1,4 +1,95 @@
 $(function(){
+	// Static view that shows explore state and handles DOM events
+	// Events thrown:
+	//	'click:navItem' (with resource type label as argument)
+	//  'click:displayMode'
+	//  'click:searchOn'
+	Scenable.views.MenuView = Backbone.View.extend({
+		activeSection: null,
+		activeDisplayMode: null,
+		
+		// cached DOM elements
+		navElements: {},
+		listIcon: null,
+		mapIcon: null,
+
+		// events are all DOM-based
+		events: {
+			'click nav li': 'navClicked',
+			'click #icon-search': 'searchClicked',
+			'click .icon-display': 'displayModeClicked'
+		},
+
+		initialize: function(options) {
+			_.bindAll(this, 'render', 'navClicked', 'searchClicked', 'displayModeClicked');
+			this.navElements = {
+				'now': this.$("#nav-now"),
+				'place': this.$("#nav-places"),
+				'event': this.$("#nav-events"),
+				'special': this.$("#nav-specials"),
+				'news': this.$("#nav-news")
+			};
+			this.listIcon = this.$(".icon-display-list");
+			this.mapIcon = this.$(".icon-display-map");
+		},
+
+		setActiveNav: function(navLabel, renderChange) {
+			renderChange = _.isUndefined(renderChange) ? true : renderChange;
+			
+			this.activeSection = navLabel;
+			if (renderChange === true) {
+				this.render();
+			}
+		},
+
+		setActiveDisplayMode: function(mode, renderChange) {
+			console.log('MenuView.setActiveDisplayMode: ' + mode);
+			renderChange = _.isUndefined(renderChange) ? true : renderChange;
+
+			this.activeDisplayMode = mode;
+			if (renderChange === true) {
+				this.render();
+			}
+		},
+
+		render: function() {
+			// ensure correct nav section is active
+			_.each(this.navElements, function(el, label) {
+				el.toggleClass('active', (this.activeSection === label));
+			}, this);
+
+			// ensure opposite display mode is selected
+			if (this.activeDisplayMode === 'list') {
+				this.listIcon.hide();
+				this.mapIcon.show();
+			}
+			else if (this.activeDisplayMode === 'map') {
+				this.mapIcon.hide();
+				this.listIcon.show();
+			}
+			else {
+				console.log('Warning: display mode error.');
+			}
+
+			return this;
+		},
+
+		navClicked: function(e) {
+			// get the label of the nav element by stripping off the "nav-" part of the id
+			var substrs = e.target.id.split('-');
+			var label = substrs[substrs.length-1];
+			this.trigger('click:navItem', label);
+		},
+
+		displayModeClicked: function() {
+			this.trigger('click:displayMode');
+		},
+
+		searchClicked: function() {
+			this.trigger('click:searchOn');
+		}
+	});
+
 	Scenable.views.BaseFeedView = Backbone.View.extend({
 		events: {
 			'click .category-button': 'filterRequested'
