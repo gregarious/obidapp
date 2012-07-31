@@ -118,29 +118,48 @@
       </nav>
     </div>
 
-  </script>
+  </script> <!-- Places feed -->
 
   <script type="text/html" id="tpl-single-place">
     <h1>{{name}}</h1>
-  </script>
+  </script> <!-- Single Place -->
 
   <script type="text/html" id="tpl-listfeed-event">
     <ul class="feed">
+
       {{#models}}
         <li>
           <a href="#single?type=event&id={{uriEncode resource_uri}}">
-            {{#if image}}
-              <img src="{{domainUri image}}" />
-            {{else}}
-              <img src="img/defaults/default-event.png" />
-            {{/if}}
-            <h3 class="ul-li-heading">{{name}}</h3>
-            <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
-            <p class="ui-li-desc">Mike &amp; Tonys</p>
+            
+            <div class="item-thumb">
+              {{#if image}}
+                <img src="{{domainUri image}}" />
+              {{else}}
+                <img src="img/defaults/default-event.png" />
+              {{/if}}
+            </div>
+
+            <section class="item-content">
+              <h1 class="item-title">{{name}}</h1>
+              <ul class="item-details">
+                <li>{{dtstart}} - {{dtend}}</li>
+                <li>{{place.name}}</li>
+                <li>
+                  <ul class="category">
+                    <li>Festival</li>
+                    <li>Lectures</li>
+                    <li>General Fun</li>
+                  </ul>
+                </li>
+              </ul> <!-- .item-details -->
+            </section> <!-- .item-content -->
+
           </a>
-        </li>
+        </li> <!-- feed item -->
       {{/models}}
+
     </ul>
+
     <div class="sorting">
       <nav>
         <ul>
@@ -148,7 +167,7 @@
         </ul>
       </nav>
     </div>
-  </script>
+  </script> <!-- Event feed -->
 
   <script type="text/html" id="tpl-single-event">
     <div class="single-header">
@@ -165,20 +184,37 @@
     <div class="single-content">
       <p>{{description}}</p>
     </div>
-  </script>
+  </script> <!-- Single Event -->
 
   <script type="text/html" id="tpl-listfeed-special">
     <ul class="feed">
+
     {{#models}}
       <li>
         <a href="#single?type=special&id={{uriEncode resource_uri}}">
-          <h3 class="ul-li-heading">{{title}}</h3>
-          <p class="ul-li-desc">{{place}}</p>
-          <p class="ul-li-desc">Until {{dexpires}}</p>
+          <div class="item-thumb">
+              <img src="img/defaults/default-special.png" />
+          </div>
+
+          <section class="item-content">
+            <h1 class="item-title">{{title}}</h1>
+            <ul class="item-details">
+              <li>{{place}}</li>
+              <li>Until {{dexpires}}</li>
+              <li>
+                <ul class="category">
+                  <li>Food</li>
+                  <li>Services</li>
+                </ul>
+            </ul> <!-- .item-details -->
+          </section> <!-- .item-content -->
+
         </a>
       </li>
     {{/models}}
+
     </ul>
+
     <div class="sorting">
       <nav>
         <ul>
@@ -186,13 +222,14 @@
         </ul>
       </nav>
     </div>
-  </script>
+
+  </script> <!-- Special feed -->
 
   <script type="text/html" id="tpl-single-special">
     <h1 class="ul-li-heading">{{title}}</h1>
     <p>Expires on {{dexpires}}</p>
     <div>Grab it!</div>
-  </script>
+  </script> <!-- Single Special -->
 
   <script type="text/html" id="tpl-mapfeed">
     <div id="map_canvas">
