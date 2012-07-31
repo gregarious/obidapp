@@ -3,6 +3,7 @@
 body {
 	width: 100%;
 	font-family: Helvetica, Arial, sans-serif;
+	overflow: auto;
 }
 
 #panel-explore {
@@ -47,8 +48,9 @@ body {
 		img {
 			height: 20px;
 			float: right;
+			cursor: pointer;
 
-			&:first-child {
+			&.icon-display {
 				margin-left: 10px;
 			}
 		}
