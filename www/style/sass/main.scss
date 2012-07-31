@@ -77,60 +77,58 @@ body {
 
 /* NAVIGATION ---------- */
 
-#feed-nav, #top-bar-single, .single-place-nav, .category, .sorting {
+.explore-nav, #top-bar-single, .single-place-nav, .category, .sorting {
 	@extend .horiz-ul;
 }
 
-#feed-nav {
+.explore-nav {
 	margin-top: 40px;
 	
 	ul {
 		@include clearfix;
 	}
 
-	.menu-item-wrap {
+	li {
 		@include column(2.4);
 		@include unstyled-link;
+		cursor: pointer;
+		//width: 100%;
+		border-left: 1px solid #333;
+		padding: 0;
+		margin: 0;
+		height: 60px;			
+		background-color: $light-grey !important;
 
-		li {
-			width: 100%;
-			border-left: 1px solid #333;
-			padding: 0;
-			margin: 0;
-			height: 60px;			
-			background-color: $light-grey !important;
-
-			div {
-				font-size: 0.7em;
-				text-align: center;
-				display: block;
-				margin: 45px auto auto;
-			}
-
-			&.selected {
-				background-color: $light-green !important;
-			}
-
-			&#nav-now {
-				@include icon('feed-nav/now');
-			}
-
-			&#nav-places {
-				@include icon('feed-nav/places');
-			}
-
-			&#nav-events {
-				@include icon('feed-nav/events');
-			}
-
-			&#nav-news {
-				@include icon('feed-nav/news');
-			}
-
-			&#nav-specials {
-				@include icon('feed-nav/specials');
-			}			
+		div {
+			font-size: 0.7em;
+			text-align: center;
+			display: block;
+			margin: 45px auto auto;
 		}
+
+		&.active {
+			background-color: $light-green !important;
+		}
+
+		&#nav-now {
+			@include icon('feed-nav/now');
+		}
+
+		&#nav-places {
+			@include icon('feed-nav/places');
+		}
+
+		&#nav-events {
+			@include icon('feed-nav/events');
+		}
+
+		&#nav-news {
+			@include icon('feed-nav/news');
+		}
+
+		&#nav-specials {
+			@include icon('feed-nav/specials');
+		}			
 	}
 }
 
@@ -151,7 +149,7 @@ body {
 
 /* FEED ITEMS --------- */
 
-.item-list {
+.feed {
 	margin-bottom: 1.5em;
 	&>li {
 		@include clearfix();
@@ -357,7 +355,7 @@ body {
 		font-size: 0.9em;
 	}
 
-	.item-list {
+	.feed {
 		&>li {
 			@include box-shadow(0 0 0 transparent);
 			//@include clearfix();

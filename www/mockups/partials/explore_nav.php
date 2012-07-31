@@ -19,7 +19,7 @@
   		} ?>      
 
 
-      	<?php 
+    <?php 
 
       	if($current == 'events') {
 			echo '<span class="menu-item-wrap"><li id="nav-events" class="selected"><div>Events</div></li></span>';

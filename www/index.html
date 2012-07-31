@@ -1,50 +1,36 @@
-<!doctype html>
-<!-- Conditional comment for mobile ie7 blogs.msdn.com/b/iemobile/ -->
-<!--[if IEMobile 7 ]>    <html class="no-js iem7" lang="en"> <![endif]-->
-<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-
-<head>
-  <meta charset="utf-8">
-
-  <title></title>
-  <meta name="description" content="">
-
-  <!-- Mobile viewport optimization h5bp.com/ad -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width">
+<!DOCTYPE html> 
+<html> 
+  <head> 
+  <title>Page Title</title> 
   
-  <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
-  <meta http-equiv="cleartype" content="on">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-  <!-- more tags for your 'head' to consider h5bp.com/d/head-Tips -->
-
-  <!-- Main Stylesheet -->
-
-  <link rel="stylesheet" href="css/style.css">
-
-  <!-- All scripts in head: no need to worry about page load -->
-  <script src="js/libs/modernizr-2.0.6.min.js"></script>
+  <!-- Load dependencies directly: don't worry about Require.js for these -->
   <script src="js/libs/jquery-1.7.2.js"></script>
+
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
   <script src="js/html5bp-helper.js"></script>
   <script src="js/libs/underscore-1.3.3.js"></script>
   <script src="js/libs/backbone-0.9.2.js"></script>
+  <script src="js/libs/backbone-tastypie.js"></script>
   <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
 
-  <script src="app/init.js"></script>
-  <script src="app/explore/models.js"></script>
-  <script src="app/explore/views.js"></script>
-  <script src="app/explore/router.js"></script>
-  <script>
-  $(function(){
-    Backbone.history.start();
-  });
-  </script>
+  <!-- Maps API -->
+   <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBs7pwJR2UazpCXdmAdcCnl0jjn1ML9Du0&sensor=false"></script>
+
+  <!-- Main app entry point (restore the require.js hook if I get the chance -->
+  <!-- <script data-main="js/app/main.js" src="js/libs/require-2.0.2.js"></script> -->
+  <script src="js/app/env.js"></script>
+  <script src="js/app/explore/models.js"></script>
+  <script src="js/app/explore/views.js"></script>
+  <script src="js/app/typesettings.js"></script>
+  <script src="js/app/explore/controller.js"></script>
+  <script src="js/app/detail/controller.js"></script>
+  <script src="js/app/main.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="style/stylesheets/main.css">
   
-  <!-- temporary styles for testing -->
-  <style type="text/css">
-    .active {color:#f00;}
-  </style>
 </head>
 
 <body>
@@ -52,8 +38,8 @@
     <div class="header">
       <!-- Top bar appears on all pages -->
       <div id="top-bar">
-        <a href="/" data-ajax="false">
-          <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png" />
+        <a href="/">
+          <!-- <img id="top-logo" src="img/logos/oakland-white-betatag-100w.png" /> -->
         </a>
         <div id="view-options">
           <!-- Map icon to be switched to list depending on template -->
@@ -66,88 +52,189 @@
       </div> <!-- #top-bar -->
 
       <!-- Site nav not shown on single pages -->
-      <nav class="explore-nav" data-role="navbar" data-iconpos="top">
+      <nav class="explore-nav">
         <ul>
-          <li style="display: inline"><button id="nav-now">NOW</button></li>
-          <li style="display: inline"><button id="nav-places">Places</button></li>
-          <li style="display: inline"><button id="nav-events">Events</button></li>
-          <li style="display: inline"><button id="nav-specials">Specials</button></li>
-          <li style="display: inline"><button id="nav-news">News</button></li>
+          <li id="nav-now"><div>Now</div></li>
+          <li id="nav-places"><div>Places</div></li>
+          <li id="nav-events"><div>Events</div></li>
+          <li id="nav-specials"><div>Specials</div></li>
+          <li id="nav-news"><div>News</div></li>
         </ul>
       </nav> <!-- #site-nav -->
 
     </div><!-- /header -->
 
-    <div class="content" data-theme="a">
+    <div class="content">
 
     </div><!-- /content -->
     
-    <div data-role="footer" style="display:none">
+    <div style="display:none">
       Settings
     </div><!-- /footer -->
   </div>
 
   <!-- Inline templates -->
   <script type="text/html" id="tpl-listfeed-place">
-    <ul class="feed" data-role="listview">
+
+    <ul class="feed">
+
       {{#models}}
         <li>
           <a href="#single?type=place&id={{uriEncode resource_uri}}">
+            
+            <div class="item-thumb">
+              {{#if image}}
+                <img src="{{domainUri image}}" />
+              {{else}}
+                <img src="img/defaults/default-place.png" />
+              {{/if}}
+            </div>
+            
+            <section class="item-content">
+              <h1 class="item-title">{{name}}</h1>
+              <ul class="item-details">
+                <li>{{location.address}}</li>
+                <li>
+                  <!-- Obviously this is static content and wont be -->
+                  <ul class="category">
+                    <li>Food</li>
+                    <li>Retail</li>
+                  </ul> <!-- .category -->
+                </li>
+              </ul> <!-- .item-details -->
+            </section> <!-- .item-content -->
+
+          </a>
+        </li> <!-- feed list item -->
+      {{/models}}
+
+    </ul> <!-- .feed -->
+
+    <div class="sorting">
+      <nav>
+        <ul>
+          <li><a class="category-button">Category</a></li>
+        </ul>
+      </nav>
+    </div>
+
+  </script>
+
+  <script type="text/html" id="tpl-single-place">
+    <h1>{{name}}</h1>
+  </script>
+
+  <script type="text/html" id="tpl-listfeed-event">
+    <ul class="feed">
+      {{#models}}
+        <li>
+          <a href="#single?type=event&id={{uriEncode resource_uri}}">
             {{#if image}}
               <img src="{{domainUri image}}" />
             {{else}}
-              <img src="img/defaults/default-place.png" />
+              <img src="img/defaults/default-event.png" />
             {{/if}}
             <h3 class="ul-li-heading">{{name}}</h3>
-            <p class="ul-li-desc">{{location.address}}</p>
+            <p class="ui-li-desc">{{dtstart}} - {{dtend}}</p>
+            <p class="ui-li-desc">Mike &amp; Tonys</p>
           </a>
         </li>
       {{/models}}
     </ul>
     <div class="sorting">
-      <nav data-role="navbar">
+      <nav>
         <ul>
-          <li><a class="category-button" data-theme="d">Category</a></li>
+          <li><a class="category-button">Category</a></li>
         </ul>
       </nav>
-      <div class="content">
-        <div class="feed-container">
-        Feed Container
-        </div>
-        <div class="fs-container">
-        FS Container
-        </div>
-      </div>
     </div>
-  </div>
-
-  <!-- Currently inlined templates. This will most certainly change. Maybe use 
-       require.js. Maybe roll own preprocessor that puts template html files
-       into a global TPL variable like pipeline does. -->
-  
-  <!--  Template variables:
-        filters: array of simple objects with "label" value
-        sorters: array of simple objects with "label" value
-  -->
-  <script type="text/html" id="tpl-fs-basic">
-  Sorters:
-  <ul>
-    {{#each sorters}}
-      <li>{{this.label}}</li>
-    {{/each}}
-  </ul>
-  Filters:
-  <ul>
-    <select>
-    {{#each filters}}
-      <option value="{{this.label}}">{{this.label}}</option>
-    {{/each}}
-  </ul>
-  </script>  
-
-  <script type="text/html" id="tpl-place-list-item">
-  {{name}}
   </script>
 
+  <script type="text/html" id="tpl-single-event">
+    <div class="single-header">
+      <div class="single-thumb">
+        <img src="{{domainUri image}}" />
+      </div>
+      <div class="single-head-content">
+        <h1 class="ui-li-heading">{{name}}</h1>
+        <p><strong>{{dtstart}} - {{dtend}}</strong></p>
+        <p>Mike &amp; Tonys</p>
+        <p>123 Craig St</p>
+      </div>
+    </div>
+    <div class="single-content">
+      <p>{{description}}</p>
+    </div>
+  </script>
+
+  <script type="text/html" id="tpl-listfeed-special">
+    <ul class="feed">
+    {{#models}}
+      <li>
+        <a href="#single?type=special&id={{uriEncode resource_uri}}">
+          <h3 class="ul-li-heading">{{title}}</h3>
+          <p class="ul-li-desc">{{place}}</p>
+          <p class="ul-li-desc">Until {{dexpires}}</p>
+        </a>
+      </li>
+    {{/models}}
+    </ul>
+    <div class="sorting">
+      <nav>
+        <ul>
+          <li><a class="category-button">Category</a></li>
+        </ul>
+      </nav>
+    </div>
+  </script>
+
+  <script type="text/html" id="tpl-single-special">
+    <h1 class="ul-li-heading">{{title}}</h1>
+    <p>Expires on {{dexpires}}</p>
+    <div>Grab it!</div>
+  </script>
+
+  <script type="text/html" id="tpl-mapfeed">
+    <div id="map_canvas">
+      I am a map!
+    </div>
+
+    <div class="custom-infowindow">
+      <div class="prev">
+        <img src="img/assets/arrow-left.png" />
+      </div>
+      <div class="infowindow-info">
+        <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/161484_14205248_278738875_n.jpg" />
+        <h1>Item title</h1>
+        <p>Item address</p>
+        <p>Category1, Category2</p>
+      </div>
+      <div class="next">
+        <img src="img/assets/arrow-right.png">
+      </div>
+    </div>
+
+    <div class="load-more">
+      Load more...
+    </div>
+
+    <div class="sorting">
+      <nav>
+        <ul>
+          <li><a class="category-button">Category</a></li>
+        </ul>
+      </nav>
+    </div>
+  </script>
+
+  <script type="text/html" id="tpl-category-form">
+    <fieldset>
+    {{#categories}}
+      <input type="checkbox" name="{{value}}" id="checkbox-{{value}}"/>
+      <label for="checkbox-{{value}}">{{label}}</label>
+    {{/categories}}
+    </fieldset>
+    <a class="ok-button">OK</a>
+  </script>
 </body>
 </html>
