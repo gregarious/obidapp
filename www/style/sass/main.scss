@@ -14,6 +14,10 @@ body {
 
 #header-view {
 	@include clearfix();
+	height: 100px;
+	position: fixed;
+	width: 100%;
+	z-index: 999;
 }
 
 #login-view { 
@@ -28,9 +32,6 @@ body {
 #top-bar {
 	background: $dark-grey;
 	height: 40px;
-	position: fixed;
-	width: 100%;
-	z-index: 999;
 
 	&>* {
 		@include column(4);
@@ -40,6 +41,8 @@ body {
 		
 		img {
 			width: auto;
+			position: relative;
+			z-index: 99999;
 			height: 50px;
 		}
 	}
@@ -67,7 +70,9 @@ body {
 }
 
 #content-view {
+	
 	&>div:first-child {
+		margin-top: 90px;
 		height: 100%;
 	}
 
@@ -89,10 +94,15 @@ body {
 }
 
 .explore-nav {
-	margin-top: 40px;
-	
+	//margin-top: 40px;
+	position: relative;
+	bottom: 13px;
+	@include box-shadow(1px 1px 3px #000);
+	z-index: 999;
 	ul {
 		@include clearfix;
+		
+		
 	}
 
 	li {
@@ -103,14 +113,14 @@ body {
 		border-left: 1px solid #333;
 		padding: 0;
 		margin: 0;
-		height: 60px;			
+		height: 50px;			
 		background-color: $light-grey !important;
 
-		a {
+		div {
 			font-size: 0.7em;
 			text-align: center;
 			display: block;
-			margin: 45px auto auto;
+			margin: 35px auto auto;
 		}
 
 		&.active {
@@ -304,23 +314,25 @@ body {
 	width: 100%;
 	position: fixed;
 	bottom: 0;
+	background: $dark-grey;
+	padding: 0.5em;
 
-	ul li {
-		font-size: 0.8em;
-		@include box-shadow(#777 0 -1px 3px);
-		@include column(4);
-		padding: 0.5em;
-		border: 1px solid #999;
-		background: $dark-grey;
-		color: #fff;
+	// ul li {
+	// 	font-size: 0.8em;
+	// 	@include box-shadow(#777 0 -1px 3px);
+	// 	@include column(4);
+	// 	padding: 0.5em;
+	// 	border: 1px solid #999;
+	// 	background: $dark-grey;
+	// 	color: #fff;
 
-		&.selected {
-			background: $yellow;
-			@include box-shadow(#fff 0 0 0);
-			font-weight: bold;
-			color: #000;
-		}
-	}
+	// 	&.selected {
+	// 		background: $yellow;
+	// 		@include box-shadow(#fff 0 0 0);
+	// 		font-weight: bold;
+	// 		color: #000;
+	// 	}
+	// }
 }
 
 #settings-drawer {
