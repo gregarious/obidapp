@@ -727,30 +727,51 @@ body {
 }
 /* line 452, ../sass/main.scss */
 .action-list ul li {
-  width: 49%;
+  width: 24%;
   float: left;
+  height: 40px;
   text-align: center;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e5e5e5), color-stop(100%, #cccccc));
-  background-image: -webkit-linear-gradient(#e5e5e5, #cccccc);
-  background-image: -moz-linear-gradient(#e5e5e5, #cccccc);
-  background-image: -o-linear-gradient(#e5e5e5, #cccccc);
-  background-image: linear-gradient(#e5e5e5, #cccccc);
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #aad49a), color-stop(100%, #54b948));
+  background-image: -webkit-linear-gradient(#aad49a, #54b948);
+  background-image: -moz-linear-gradient(#aad49a, #54b948);
+  background-image: -o-linear-gradient(#aad49a, #54b948);
+  background-image: linear-gradient(#aad49a, #54b948);
   padding: 0.7em;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-box-shadow: 1px 1px 1px #333333;
+  -moz-box-shadow: 1px 1px 1px #333333;
+  box-shadow: 1px 1px 1px #333333;
   margin-right: 0.2em;
 }
-/* line 460, ../sass/main.scss */
+/* line 464, ../sass/main.scss */
+.action-list ul li:active {
+  background: #54b948;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/* line 469, ../sass/main.scss */
 .action-list ul li:last-child {
   margin-right: 0;
 }
+/* line 473, ../sass/main.scss */
+.action-list ul li a {
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 1px #333333;
+  text-decoration: none;
+}
 
-/* line 467, ../sass/main.scss */
+/* line 484, ../sass/main.scss */
 .single-place-nav {
   color: #fff;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #333333;
 }
-/* line 473, ../sass/main.scss */
+/* line 489, ../sass/main.scss */
 .single-place-nav li {
   background: #444444;
   border-bottom: 2px solid #aaaaaa;
@@ -765,25 +786,31 @@ body {
   font-size: 0.9em;
   margin: 0 0.5%;
 }
-/* line 483, ../sass/main.scss */
+/* line 499, ../sass/main.scss */
 .single-place-nav li:last-child {
   margin: 0;
 }
-/* line 487, ../sass/main.scss */
+/* line 503, ../sass/main.scss */
 .single-place-nav li:hover {
   background: #aad49a;
 }
-/* line 491, ../sass/main.scss */
-.single-place-nav li.selected {
-  background: #ded57f;
+/* line 507, ../sass/main.scss */
+.single-place-nav li.active {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #fff;
+  border: 2px solid #aaaaaa;
+  border-bottom: none;
+  text-shadow: 1px 1px 1px white;
   color: #000;
 }
 
-/* line 500, ../sass/main.scss */
+/* line 519, ../sass/main.scss */
 .place-info p {
   display: inline;
 }
-/* line 504, ../sass/main.scss */
+/* line 523, ../sass/main.scss */
 .place-info > .item-details {
   display: inline;
   float: left;
@@ -795,16 +822,16 @@ body {
   float: right;
   font-size: 0.9em;
 }
-/* line 509, ../sass/main.scss */
+/* line 528, ../sass/main.scss */
 .place-info > .item-details li {
   margin-bottom: 0.5em;
 }
-/* line 512, ../sass/main.scss */
+/* line 531, ../sass/main.scss */
 .place-info > .item-details li .detail-title {
   font-weight: bold;
 }
 
-/* line 519, ../sass/main.scss */
+/* line 538, ../sass/main.scss */
 #singleMapCanvas {
   height: 100px;
   display: inline;
@@ -814,13 +841,14 @@ body {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  float: right;
   overflow: hidden;
   position: relative;
   margin: 0 0.5em 0 0.5em;
 }
 
 /* SPECIALS ---------- */
-/* line 530, ../sass/main.scss */
+/* line 550, ../sass/main.scss */
 .specials .item-thumb {
   background: green;
   -webkit-border-radius: 10px;
@@ -833,7 +861,7 @@ body {
   box-shadow: red;
 }
 
-/* line 537, ../sass/main.scss */
+/* line 557, ../sass/main.scss */
 .special-status {
   background: #999;
   width: 100%;
@@ -842,7 +870,7 @@ body {
   bottom: 0;
   height: 40px;
 }
-/* line 544, ../sass/main.scss */
+/* line 564, ../sass/main.scss */
 .special-status button {
   font-size: 1.5em;
   width: 90%;
@@ -850,25 +878,25 @@ body {
   margin: auto;
 }
 
-/* line 553, ../sass/main.scss */
+/* line 573, ../sass/main.scss */
 #special-single-content {
   margin-bottom: 40px;
 }
 
-/* line 557, ../sass/main.scss */
+/* line 577, ../sass/main.scss */
 .push {
   height: 40px;
 }
 
 /* MAP ---------- */
-/* line 563, ../sass/main.scss */
+/* line 583, ../sass/main.scss */
 #map_mode {
   height: 100%;
   position: relative;
   overflow: hidden;
 }
 
-/* line 569, ../sass/main.scss */
+/* line 589, ../sass/main.scss */
 #map_canvas {
   width: 100%;
   background-color: green;
@@ -887,7 +915,7 @@ body {
   clear: both;
 }
 
-/* line 577, ../sass/main.scss */
+/* line 597, ../sass/main.scss */
 .load-more {
   width: 30%;
   position: absolute;
@@ -897,7 +925,7 @@ body {
   padding: 0.5em;
 }
 
-/* line 586, ../sass/main.scss */
+/* line 606, ../sass/main.scss */
 .custom-infowindow {
   padding: 5px;
   -webkit-box-sizing: border-box;
@@ -922,7 +950,7 @@ body {
 .custom-infowindow:after {
   clear: both;
 }
-/* line 598, ../sass/main.scss */
+/* line 618, ../sass/main.scss */
 .custom-infowindow .infowindow-info {
   float: left;
   width: 86%;
@@ -933,19 +961,19 @@ body {
   font-size: 0.9em;
   text-shadow: 1px 1px 1px black;
 }
-/* line 606, ../sass/main.scss */
+/* line 626, ../sass/main.scss */
 .custom-infowindow .infowindow-info .category li {
   text-shadow: none;
   color: #000;
 }
-/* line 612, ../sass/main.scss */
+/* line 632, ../sass/main.scss */
 .custom-infowindow img {
   width: 40px;
   height: 40px;
   display: block;
   margin: 0 auto;
 }
-/* line 620, ../sass/main.scss */
+/* line 640, ../sass/main.scss */
 .custom-infowindow .next, .custom-infowindow .prev {
   width: 7%;
   padding: 0.4em 0;
@@ -953,16 +981,16 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 624, ../sass/main.scss */
+/* line 644, ../sass/main.scss */
 .custom-infowindow .next img, .custom-infowindow .prev img {
   width: 100%;
   height: auto;
 }
-/* line 632, ../sass/main.scss */
+/* line 652, ../sass/main.scss */
 .custom-infowindow .next {
   float: right;
 }
-/* line 637, ../sass/main.scss */
+/* line 657, ../sass/main.scss */
 .custom-infowindow .prev {
   float: left;
 }

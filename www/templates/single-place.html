@@ -26,7 +26,7 @@
 
     <nav class="single-place-nav">
         <ul>
-            <li>Info</li>
+            <li class="active">Info</li>
             <li>Events</li>
             <li>Specials</li>
         </ul>
@@ -45,22 +45,26 @@
 
             <nav class="action-list">
                 <ul>
-                    <li>Call</li>
-                    <li>Directions</li>
+                    {{#if phone}}
+                    <li><a href="tel:{{phone}}">Call</a></li>
+                    {{/if}}
+                    {{#if is_geolocated}}
+                    <li><a href="">Directions</a></li>
+                    {{/if}}
+                    {{#if fb_id}}
+                    <li><a href="http://facebook.com/{{fb_id}}"><img src="../img/icons/facebook.png" alt="facebook" /></a></li>
+                    {{/if}}
+                    {{#if twitter_id}}
+                    <li><a href=""><img src="../img/icons/twitter.png" alt="twitter" /></a></li>
+                    {{/if}}
                 </ul>
             </nav>
 
             <div id="singleMapCanvas">
                 <img src="http://2d-code.co.uk/images/qr-map.jpg" />
-                <h1 class="single-title">Directions</h1>
             </div>
 
             <p>{{description}}</p>
-
-            <div class="social">
-                <img src="../img/icons/facebook.png" />
-                <img src="../img/icons/twitter.png" />
-            </div>
 
         </article> <!-- .place-info -->
 
