@@ -6,16 +6,31 @@
   <div class="prev">
     <img src="img/assets/arrow-left.png" />
   </div>
+  
   <div class="infowindow-info">
-    <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/161484_14205248_278738875_n.jpg" />
-    <h1>Item title</h1>
-    <p>Item address</p>
-    <p>Category1, Category2</p>
-  </div>
+    
+    <div class="item-thumb">
+      <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/161484_14205248_278738875_n.jpg" />
+    </div>
+
+    <div class="item-content">
+      <h1>Name</h1>
+      <!-- If its an event 
+      <p>Date</p> -->
+      <ul class="category">
+        <li>Category1</li>
+        <li>Category2</li>
+      </ul>
+
+    </div> <!-- .item-content -->
+
+  </div> <!-- .infowindow-info -->
+
   <div class="next">
     <img src="img/assets/arrow-right.png">
   </div>
-</div>
+
+</div> <!-- .custom-infowindow -->
 
 <div class="load-more">
   Load more...
@@ -23,7 +38,7 @@
 
 <div class="sorting">
     <select>
-        <option default="default">Category</option>
+        <option>Category</option>
         <option>Retail</option>
         <option>Food</option>
         <option>Services</option>
