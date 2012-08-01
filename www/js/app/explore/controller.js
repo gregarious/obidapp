@@ -30,11 +30,15 @@ define(["explore/models", "explore/views"], function(models, views) {
 			}
 		}))({el: el});
 		// just create the skeleton with code
-		view.$el.append('<div data-region="menu" id="header-view"></div>');
-		view.$el.append('<div data-region="content"></div>');
-		view.$el.append('<div data-region="filter"></div>');
+		view.$el.html(
+			'<div data-region="menu" id="header-view"></div>' +
+			'<div id="content-view">' +
+			'	<div data-region="feed"></div>' +
+			'	<div class="push"></div>' +
+			'</div>' +
+			'<div data-region="filter" class="sorting"></div>');
 		return view;
-	}
+	};
 
 	var subviews = {
 		menu: new views.MenuView(),
@@ -56,7 +60,8 @@ define(["explore/models", "explore/views"], function(models, views) {
 			getActiveView: function() {
 				return this[this.activeLabel];
 			}
-		}
+		},
+		filter: new views.CategoryFilterView()
 	};
 
 	var contentState = {
@@ -278,7 +283,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 
 			containerView.findRegion('menu').html(subviews.menu.render().el);
 
-			var contentEl = containerView.findRegion('content');
+			var contentEl = containerView.findRegion('feed');
 			// if awaitngData is null, we don't have data, and never got it
 			if (contentState.awaitingData === null) {
 				contentEl.html("No data to display.");
@@ -300,6 +305,8 @@ define(["explore/models", "explore/views"], function(models, views) {
 					contentEl.html("Error retreiving data.");
 				}
 			);
+
+			containerView.findRegion('filter').html(subviews.filter.render().el);
 		}
 	};
 

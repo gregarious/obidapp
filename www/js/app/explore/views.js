@@ -1,9 +1,10 @@
 define(["text!templates/explore-menu.html",
+		"text!templates/explore-filter.html",
 		"text!templates/listfeed-places.html",
 		"text!templates/listfeed-events.html",
 		"text!templates/listfeed-specials.html",
 		"text!templates/mapfeed.html"],
-	function(menuTpl, placesListTpl, eventsListTpl, specialsListTpl, mapTpl){
+	function(menuTpl, filterTpl, placesListTpl, eventsListTpl, specialsListTpl, mapTpl){
 
 	var exports = {};
 
@@ -136,6 +137,19 @@ define(["text!templates/explore-menu.html",
 	});
 	exports.SpecialsList = ListFeedView.extend({
 		template: Handlebars.compile(specialsListTpl)
+	});
+
+	exports.CategoryFilterView = Backbone.View.extend({
+		template: Handlebars.compile(filterTpl),
+		
+		initialize: function(options) {
+			_.bindAll(this, 'render');
+		},
+		
+		render: function() {
+			this.$el.html(this.template());
+			return this;
+		}
 	});
 
 	return exports;
