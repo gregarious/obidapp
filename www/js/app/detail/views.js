@@ -1,4 +1,4 @@
-define(["text!/templates/single-place.html", "text!/templates/single-event.html", "text!/templates/single-special.html"],
+define(["text!templates/single-place.html", "text!templates/single-event.html", "text!templates/single-special.html"],
 	function(placeTpl, eventTpl, specialTpl){
 		var BaseDetailView = Backbone.View.extend({
 			template: null,

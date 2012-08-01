@@ -1,3 +1,10 @@
+// create a paths alias for the templates dir
+requirejs.config({
+	paths: {
+		'templates': '../../../templates'
+	}
+});
+
 requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, detailCtrl) {
 	
 	// global overrides for Backbone sync functions

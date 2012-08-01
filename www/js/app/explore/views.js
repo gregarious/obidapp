@@ -1,7 +1,7 @@
-define(["text!/templates/listfeed-places.html",
-		"text!/templates/listfeed-events.html",
-		"text!/templates/listfeed-specials.html",
-		"text!/templates/mapfeed.html"],
+define(["text!templates/listfeed-places.html",
+		"text!templates/listfeed-events.html",
+		"text!templates/listfeed-specials.html",
+		"text!templates/mapfeed.html"],
 	function(placesListTpl, eventsListTpl, specialsListTpl, mapTpl){
 
 	var exports = {};
