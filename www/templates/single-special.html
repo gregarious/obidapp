@@ -1,0 +1,33 @@
+<header class="single-header">
+    <div class="item-thumb">
+        {{#if image}}
+            <img src="{{domainUri image}}" />
+        {{else}}
+            <img src="img/defaults/default-event.png" />
+        {{/if}}
+    </div>
+    <div class="item-content">
+        <h1 class="item-title">{{title}}</h1>
+        <ul class="item-details">
+            <li>at {{place.name}}</li>
+            <li>{{place.location.address}}</li> 
+            <li>expires {{dexpires}}</li>
+            <li>
+                <ul class="category">
+                    <li>Food</li>
+                    <li>Retail</li>
+                </ul>
+            </li>
+        </ul> <!-- .item-details -->
+    </div>
+</header>
+
+<article class="single-content">
+    <div id="mapCanvas">
+    </div>
+    <p>{{description}}</p>
+</article>
+
+<footer class="special-status">
+    <button class="grab-it">Grab it!</button>
+</footer>

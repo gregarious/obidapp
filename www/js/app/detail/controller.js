@@ -1,24 +1,23 @@
-$(function() {
-	var compileTpl = Scenable.helpers.compileTpl;
+define(['explore/models', 'detail/views'], function(models, views) {
 	var typeSettings = {
 		places: {
-			Model: Scenable.models.Place,
-			template: compileTpl('#tpl-single-place')
+			Model: models.Place,
+			View: views.PlaceDetail
 		},
 		events: {
-			Model: Scenable.models.Event,
-			template: compileTpl('#tpl-single-event')
+			Model: models.Event,
+			View: views.EventDetail
 		},
 		specials: {
-			Model: Scenable.models.Special,
-			template: compileTpl('#tpl-single-special')
+			Model: models.Special,
+			View: views.SpecialDetail
 		}
 	};
 
 	var rootElement = $('#panel-detail');
 	rootElement.hide();
 
-	Scenable.controllers.detailController = {
+	var detailController = {
 		activate: function() {
 			rootElement.show();
 			console.log('+ DetailController.activate');
@@ -36,11 +35,7 @@ $(function() {
 			}
 
 			var model = new setup.Model({id: settings.objectId});
-
-			var view = new Scenable.views.DetailView({
-				model: model,
-				template: setup.template
-			});
+			var view = new setup.View({model: model});
 
 			rootElement.html('spinning...');
 
@@ -61,5 +56,7 @@ $(function() {
 	};
 
 	// add observer pattern pub capabilities
-	_.extend(Scenable.controllers.detailController, Backbone.Events);
+	_.extend(detailController, Backbone.Events);
+
+	return detailController;
 });

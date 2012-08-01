@@ -1,10 +1,17 @@
-$(function(){
+define(["text!/templates/listfeed-places.html",
+		"text!/templates/listfeed-events.html",
+		"text!/templates/listfeed-specials.html",
+		"text!/templates/mapfeed.html"],
+	function(placesListTpl, eventsListTpl, specialsListTpl, mapTpl){
+
+	var exports = {};
+
 	// Static view that shows explore state and handles DOM events
 	// Events thrown:
 	//	'click:navItem' (with resource type label as argument)
 	//  'click:displayMode'
 	//  'click:searchOn'
-	Scenable.views.MenuView = Backbone.View.extend({
+	exports.MenuView = Backbone.View.extend({
 		activeSection: null,
 		activeDisplayMode: null,
 		
@@ -90,14 +97,13 @@ $(function(){
 		}
 	});
 
-	Scenable.views.BaseFeedView = Backbone.View.extend({
+	var BaseFeedView = Backbone.View.extend({
 		events: {
 			'click .category-button': 'filterRequested'
 		},
 
 		initialize: function(options) {
 			_.bindAll(this, 'render', 'filterRequested');
-			this.template = options.template;
 		},
 
 		filterRequested: function() {
@@ -105,7 +111,8 @@ $(function(){
 		}
 	});
 
-	Scenable.views.ListFeedView = Scenable.views.BaseFeedView.extend({
+	var ListFeedView = BaseFeedView.extend({
+		template: null,
 		render: function() {
 			var context = {
 				'models': this.collection.map(function(m) {
@@ -117,7 +124,8 @@ $(function(){
 		}
 	});
 
-	Scenable.views.MapFeedView = Scenable.views.BaseFeedView.extend({
+	exports.MapFeedView = BaseFeedView.extend({
+		template: Handlebars.compile(mapTpl),
 		map: null,
 		mapOptions: {
 			center: new google.maps.LatLng(-34.397, 150.644),
@@ -132,39 +140,15 @@ $(function(){
 		}
 	});
 
-	// Might consider replacing this with just a simply jQuery widget for controller to listen to
-	Scenable.views.CategoryForm = Backbone.View.extend({
-		tagName: 'form',
-		template: Handlebars.compile($("#tpl-category-form").html()),
-
-		events: {
-			// when user "submits" form, trigger the submit event and close the parent dialog
-			// not using a true submit button/event because preventDefault won't work
-			'click .ok-button': 'submitted'
-		},
-
-		initialize: function(options) {
-			this.categories = options.categories;
-			_.bindAll(this, 'render', 'submitted');
-		},
-
-		render: function() {
-			this.$el.html(this.template({'categories': this.categories}));
-			return this;
-		},
-
-		// handles DOM submit event, triggers event that passes along object with {category: bool} entries
-		submitted: function(e) {
-			var inputs = this.$el.serializeArray();
-			
-			// fill the categories array with the chosen names
-			var categories = [];
-			inputs = _.each(inputs, function(obj) {
-				if(obj.name !== 'submit') {
-					categories.push(obj.name);
-				}
-			});
-			this.trigger('submit', categories);
-		}
+	exports.PlacesList = ListFeedView.extend({
+		template: Handlebars.compile(placesListTpl)
 	});
+	exports.EventsList = ListFeedView.extend({
+		template: Handlebars.compile(eventsListTpl)
+	});
+	exports.SpecialsList = ListFeedView.extend({
+		template: Handlebars.compile(specialsListTpl)
+	});
+
+	return exports;
 });

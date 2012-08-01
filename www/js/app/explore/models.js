@@ -1,24 +1,26 @@
-(function(){
+define(function(){
 	var toTastyPieRootUrl = function(resourceType) {
 		return Scenable.constants.SITEURL + '/api/v1/' + resourceType;
 	};
 
+	var exports = {};
+
 	/*** BACKBONE MODELS ***/
-	Scenable.models.Place = Backbone.Model.extend({
+	exports.Place = Backbone.Model.extend({
 		headerText: function() {
 			return this.get('name');
 		},
 		urlRoot: toTastyPieRootUrl('place')
 	});
 
-	Scenable.models.Event = Backbone.Model.extend({
+	exports.Event = Backbone.Model.extend({
 		headerText: function() {
 			return this.get('name');
 		},
 		urlRoot: toTastyPieRootUrl('event')
 	});
 
-	Scenable.models.Special = Backbone.Model.extend({
+	exports.Special = Backbone.Model.extend({
 		headerText: function() {
 			return this.get('title');
 		},
@@ -56,18 +58,20 @@
 		}
 	});
 
-	Scenable.models.Places = BaseCollection.extend({
-		model: Scenable.models.Place,
+	exports.Places = BaseCollection.extend({
+		model: exports.Place,
 		url: toTastyPieRootUrl('place')
 	});
 
-	Scenable.models.Events = BaseCollection.extend({
-		model: Scenable.models.Event,
+	exports.Events = BaseCollection.extend({
+		model: exports.Event,
 		url: toTastyPieRootUrl('event')
 	});
 
-	Scenable.models.Specials = BaseCollection.extend({
-		model: Scenable.models.Special,
+	exports.Specials = BaseCollection.extend({
+		model: exports.Special,
 		url: toTastyPieRootUrl('special')
 	});
-})();
+
+	return exports;
+});
