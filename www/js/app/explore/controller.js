@@ -14,15 +14,30 @@ define(["explore/models", "explore/views"], function(models, views) {
 		}
 	};
 
-	// DOM elements in initial page skeleton
+	// TODO: turn this into some kind of CompositeView
+	/* Notes on problems developing one of these off the cuff:
+	* - regions are a great way to organize things
+	* - feel strange injecting views directly in here, but not doing this puts a bit too much logic in the view
+	* - how about interacting with some of the inner views, like getting events, changing settings? keeping a lot
+	*		of this logic in the controller seems like it bloats the controller, but the alternative is to make
+	*		the view very stateful
+	*/
+
 	var rootElement = $('#panel-explore');
 	rootElement.hide();
-	
-	var headerEl = rootElement.find('#header-view');
-	var contentEl = rootElement.find('#content-view');
+	var containerView = new (Backbone.View.extend({
+		findRegion: function(regionLabel) {
+			var selector = '[data-region="' + regionLabel + '"]';
+			return this.$el.find(selector);
+		}
+	}))({el: rootElement});
+
+	containerView.$el.append('<div data-region="menu" id="header-view"></div>');
+	containerView.$el.append('<div data-region="content"></div>');
+	containerView.$el.append('<div data-region="filter"></div>');
 
 	var subviews = {
-		menu: new views.MenuView({el: headerEl}),
+		menu: new views.MenuView(),
 		feeds: {
 			list: null,
 			map: null,
@@ -253,8 +268,9 @@ define(["explore/models", "explore/views"], function(models, views) {
 		refreshDisplay: function() {
 			console.log('ExploreController.refreshDisplay');
 
-			subviews.menu.render();
+			containerView.findRegion('menu').html(subviews.menu.render().el);
 
+			var contentEl = containerView.findRegion('content');
 			// if awaitngData is null, we don't have data, and never got it
 			if (contentState.awaitingData === null) {
 				contentEl.html("No data to display.");
