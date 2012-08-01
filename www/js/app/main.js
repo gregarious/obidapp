@@ -1,7 +1,7 @@
 // create a paths alias for the templates dir
 requirejs.config({
 	paths: {
-		'templates': '../../../templates'
+		'templates': '../../templates'
 	}
 });
 
