@@ -14,7 +14,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 		}
 	};
 
-	// TODO: turn this into some kind of CompositeView
+	// TODO: turn this into some kind of actual CompositeView
 	/* Notes on problems developing one of these off the cuff:
 	* - regions are a great way to organize things
 	* - feel strange injecting views directly in here, but not doing this puts a bit too much logic in the view
@@ -22,19 +22,19 @@ define(["explore/models", "explore/views"], function(models, views) {
 	*		of this logic in the controller seems like it bloats the controller, but the alternative is to make
 	*		the view very stateful
 	*/
-
-	var rootElement = $('#panel-explore');
-	rootElement.hide();
-	var containerView = new (Backbone.View.extend({
-		findRegion: function(regionLabel) {
-			var selector = '[data-region="' + regionLabel + '"]';
-			return this.$el.find(selector);
-		}
-	}))({el: rootElement});
-
-	containerView.$el.append('<div data-region="menu" id="header-view"></div>');
-	containerView.$el.append('<div data-region="content"></div>');
-	containerView.$el.append('<div data-region="filter"></div>');
+	var initializeContainer = function(el){
+		var view = new (Backbone.View.extend({
+			findRegion: function(regionLabel) {
+				var selector = '[data-region="' + regionLabel + '"]';
+				return this.$el.find(selector);
+			}
+		}))({el: el});
+		// just create the skeleton with code
+		view.$el.append('<div data-region="menu" id="header-view"></div>');
+		view.$el.append('<div data-region="content"></div>');
+		view.$el.append('<div data-region="filter"></div>');
+		return view;
+	}
 
 	var subviews = {
 		menu: new views.MenuView(),
@@ -227,9 +227,17 @@ define(["explore/models", "explore/views"], function(models, views) {
 		// $.mobile.changePage(dialogEl);
 	};
 
+	var containerView = null,
+		rootElement;
+
 	var controller = {
 		activate: function() {
 			console.log('+ ExploreController.activate.');
+			rootElement = $('#panel-explore');
+
+			if (!containerView) {
+				containerView = initializeContainer(rootElement);
+			}
 
 			rootElement.show();
 

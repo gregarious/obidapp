@@ -14,11 +14,10 @@ define(['explore/models', 'detail/views'], function(models, views) {
 		}
 	};
 
-	var rootElement = $('#panel-detail');
-	rootElement.hide();
-
+	var rootElement;
 	var detailController = {
 		activate: function() {
+			rootElement = $('#panel-detail');
 			rootElement.show();
 			console.log('+ DetailController.activate');
 		},
