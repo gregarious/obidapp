@@ -1,78 +1,80 @@
-<header class="single-header">
+<div class="single-wrap">
+    <header class="single-header">
 
-<div class="item-thumb">
-    {{#if image}}
-        <img src="{{domainUri image}}" />
-    {{else}}
-        <img src="img/defaults/default-event.png" />
-    {{/if}}
-</div>
+        <div class="item-thumb">
+            {{#if image}}
+                <img src="{{domainUri image}}" />
+            {{else}}
+                <img src="img/defaults/default-event.png" />
+            {{/if}}
+        </div>
 
-<article class="item-content">
-    <h1 class="item-title">{{name}}</h1>
-    <ul class="item-details">
-        <li>{{location.address}}</li>
-        <li>
-            <ul class="category">
-                <li>Food</li>
-                <li>Retail</li>
+        <article class="item-content">
+            <h1 class="item-title">{{name}}</h1>
+            <ul class="item-details">
+                <li>{{location.address}}</li>
+                <li>
+                    <ul class="category">
+                        <li>Food</li>
+                        <li>Retail</li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-</article> <!-- .item-content -->
+        </article> <!-- .item-content -->
 
-</header> <!-- .single-header -->
+    </header> <!-- .single-header -->
 
-<nav class="single-place-nav">
-<ul>
-    <li>Info</li>
-    <li>Events</li>
-    <li>Specials</li>
-</ul>
-</nav>
-
-<section class="single-content">
-
-<article class="place-info">
-    <ul class="item-details">
-        <li>
-            <span class="detail-title">Hours:</span><br />
-            Mon-Fri 3pm-10pm &#149; Sat 5pm-7pm &#149; Sun Closed
-        </li>
-        <li><a href="http://coolwebsite.com">Website</a></li>
-    </ul>
-
-    <nav class="action-list">
+    <nav class="single-place-nav">
         <ul>
-            <li>Call</li>
-            <li>Directions</li>
+            <li>Info</li>
+            <li>Events</li>
+            <li>Specials</li>
         </ul>
     </nav>
 
-    <div id="placeMapCanvas">
-        <img src="http://2d-code.co.uk/images/qr-map.jpg" />
-        <h1 class="single-title">Directions</h1>
-    </div>
+    <section class="single-content">
 
-    <p>{{description}}</p>
+        <article class="place-info">
+            <ul class="item-details">
+                <li>
+                    <span class="detail-title">Hours:</span><br />
+                    Mon-Fri 3pm-10pm &#149; Sat 5pm-7pm &#149; Sun Closed
+                </li>
+                <li><a href="http://coolwebsite.com">Website</a></li>
+            </ul>
 
-    <div class="social">
-        <img src="../img/icons/facebook.png" />
-        <img src="../img/icons/twitter.png" />
-    </div>
+            <nav class="action-list">
+                <ul>
+                    <li>Call</li>
+                    <li>Directions</li>
+                </ul>
+            </nav>
 
-</article> <!-- .place-info -->
+            <div id="singleMapCanvas">
+                <img src="http://2d-code.co.uk/images/qr-map.jpg" />
+                <h1 class="single-title">Directions</h1>
+            </div>
 
-<article class="place-events">
-    <ul class="feed">
-        <!-- Event feed items here -->
-    </ul>
-</article>
+            <p>{{description}}</p>
 
-<article class="place-specials">
-    <ul class="feed">
-        <!-- Special feed items here -->    
-    </ul>
-</article>
+            <div class="social">
+                <img src="../img/icons/facebook.png" />
+                <img src="../img/icons/twitter.png" />
+            </div>
 
-</section>
+        </article> <!-- .place-info -->
+
+        <article class="place-events">
+            <ul class="feed">
+                <!-- Event feed items here -->
+            </ul>
+        </article>
+
+        <article class="place-specials">
+            <ul class="feed">
+                <!-- Special feed items here -->    
+            </ul>
+        </article>
+    </section>
+
+</div>

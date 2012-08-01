@@ -1,32 +1,38 @@
-<header class="single-header">
-    <div class="item-thumb">
-        {{#if image}}
-            <img src="{{domainUri image}}" />
-        {{else}}
-            <img src="img/defaults/default-event.png" />
-        {{/if}}
-    </div>
-    <div class="item-content">
-        <h1 class="item-title">{{title}}</h1>
-        <ul class="item-details">
-            <li>at {{place.name}}</li>
-            <li>{{place.location.address}}</li> 
-            <li>expires {{dexpires}}</li>
-            <li>
-                <ul class="category">
-                    <li>Food</li>
-                    <li>Retail</li>
-                </ul>
-            </li>
-        </ul> <!-- .item-details -->
-    </div>
-</header>
+<div class="single-wrap">
+    <header class="single-header">
+        <div class="item-thumb">
+            {{#if image}}
+                <img src="{{domainUri image}}" />
+            {{else}}
+                <img src="img/defaults/default-special.png" />
+            {{/if}}
+        </div>
+        <div class="item-content">
+            <h1 class="item-title">{{title}}</h1>
+            <ul class="item-details">
+                <li>at {{place.name}}</li>
+                <li>{{place.location.address}}</li> 
+                <li>expires {{dexpires}}</li>
+                <li>
+                    <ul class="category">
+                        <li>Food</li>
+                        <li>Retail</li>
+                    </ul>
+                </li>
+            </ul> <!-- .item-details -->
+        </div>
+    </header>
 
-<article class="single-content">
-    <div id="mapCanvas">
-    </div>
-    <p>{{description}}</p>
-</article>
+    <article class="single-content" id="special-single-content">
+        <div id="singleMapCanvas">
+            <img src="http://2d-code.co.uk/images/qr-map.jpg" />
+            <h1 class="single-title">Directions</h1>
+        </div>
+
+        <p>{{description}}</p>
+        <div class="push"></div>
+    </article>
+</div> <!-- .single-wrap -->
 
 <footer class="special-status">
     <button class="grab-it">Grab it!</button>

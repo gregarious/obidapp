@@ -5,11 +5,13 @@ body {
 	height: 100%;
 	font-family: Helvetica, Arial, sans-serif;
 	overflow: auto;
+	background: $light-green;
 }
 
-#panel-explore {
-	background: $light-green;
+#panel-explore, #panel-detail {
+	background: url('../../img/assets/light-green-tex.png');
 	height: 100%;
+	@include clearfix();
 }
 
 #header-view {
@@ -31,7 +33,7 @@ body {
 
 #top-bar {
 	background: $dark-grey;
-	height: 44px;
+	height: 38px;
 
 	&>* {
 		@include column(4);
@@ -43,7 +45,8 @@ body {
 			width: auto;
 			position: relative;
 			z-index: 99999;
-			height: 50px;
+			height: 38px;
+			margin: 2px;
 		}
 	}
 
@@ -51,7 +54,7 @@ body {
 		padding: 0.5em;
 
 		img {
-			height: 20px;
+			height: 15px;
 			float: right;
 			cursor: pointer;
 
@@ -72,7 +75,7 @@ body {
 #content-view {
 	
 	&>div:first-child {
-		margin-top: 90px;
+		margin-top: 85px;
 		height: 100%;
 	}
 
@@ -102,52 +105,70 @@ body {
 	
 	ul {
 		@include clearfix;
-	}
-
-	li {
-		@include column(2.4);
-		cursor: pointer;
-		//width: 100%;
-		border-left: 1px solid #333;
-		padding: 0;
-		margin: 0;
-		height: 50px;			
-		//@include background-image(linear-gradient(left top, #fff, #dddddd));
-		background-color: $light-grey !important;
 
 		a {
-			font-size: 0.7em;
-			text-align: center;
-			display: block;
-			margin: 35px auto auto;
-			@include unstyled-link();
-		}
+			text-decoration: none;
 
-		&.active {
-			background-color: $light-green !important;
-		}
 
-		&#nav-now {
-			@include icon('feed-nav/now');
-		}
+			li {
 
-		&#nav-places {
-			@include icon('feed-nav/places');
-		}
 
-		&#nav-events {
-			@include icon('feed-nav/events');
-		}
 
-		&#nav-news {
-			@include icon('feed-nav/news');
-		}
+				@include column(2.4);
+				cursor: pointer;
+				//width: 100%;
+				border-left: 1px solid #333;
+				padding: 0;
+				margin: 0;
+				height: 50px;			
+				
 
-		&#nav-specials {
-			@include icon('feed-nav/specials');
-		}			
-	}
-}
+				&:hover {
+					background-color: #ddd !important;
+				}
+
+
+				&:active {
+					background-color: #ccc !important;
+				}
+
+				div {
+					color: #000;
+					text-decoration: none !important;
+					font-size: 0.7em;
+					text-align: center;
+					display: block;
+					margin: 35px auto auto;
+				}
+
+				&.active {
+					background-color: $light-green !important;
+				}
+
+				&#nav-now {
+					@include icon('feed-nav/now');
+				}
+
+				&#nav-places {
+					@include icon('feed-nav/places');
+				}
+
+				&#nav-events {
+					@include icon('feed-nav/events');
+				}
+
+				&#nav-news {
+					@include icon('feed-nav/news');
+				}
+
+				&#nav-specials {
+					@include icon('feed-nav/specials');
+				}			
+			}
+
+		} // -- a
+	} // -- ul
+} // -- .feed
 
 
 /* COMPONENTS --------- */
@@ -170,7 +191,7 @@ body {
 
 .feed {
 	//@include clearfix();
-	margin-bottom: 1.5em;
+	margin-bottom: 40px;
 	&>li {
 		@include clearfix();
 		font-size: 0.9em;
@@ -252,11 +273,11 @@ body {
 }
 
 .single-header {
-	margin: 40px 0 0;
-	padding: 10px;
-	@include clearfix;	background: #fff;
-	@include box-shadow(#666 0 0 2px);
+	margin: 40px 5px 0;
+	padding-bottom: 0.3em;
 	margin-bottom: 0.5em;
+	border-bottom: 1px solid $light-green;
+	@include clearfix();
 
 	.item-title {
 		//font-size: 1.1em;
@@ -269,12 +290,18 @@ body {
 		
 }
 
+.single-wrap {
+	background: #fff;
+	margin: 5px;
+	@include clearfix;
+}
+
 .single-content {
 	padding: 0.5em;
 	@include column(12);
 	position: relative;
-	background: #fff;
-	@include box-shadow(#666 0 0 2px);
+	//background: #fff;
+	//@include box-shadow(#666 0 0 2px);
 
 	p {
 		font-size: 0.8em;
@@ -285,6 +312,7 @@ body {
 		@include column(12);
 		//@include background-image(linear-gradient(#fff, #e1e1e1));
 		@include box-shadow(#666 0 0 2px);
+		margin-top: 0;
 		margin-bottom: 10px;
 		height: 100px;
 		overflow: hidden;
@@ -449,7 +477,7 @@ body {
 		//border-right: 2px solid $dark-grey;
 		@include border-top-radius(5px);
   		width: 30%;
-  		padding: 0.3em;
+  		padding: 0.5em 0.3em;
   		font-size: 0.9em;
   		margin: 0 0.5%;
 
@@ -473,6 +501,7 @@ body {
 	p {
 		display: inline;
 	}
+
 	&>.item-details {
 		@include column(12);
 		float: right;
@@ -488,7 +517,7 @@ body {
 	}
 }
 
-#placeMapCanvas {
+#singleMapCanvas {
 	height: 100px;
 	@include column(5);
 	overflow: hidden;
@@ -512,6 +541,7 @@ body {
 	padding: 10px 0;
 	position: fixed;
 	bottom: 0;
+	height: 40px;
 	button {
 		//height: 30px;
 		font-size: 1.5em;
@@ -519,6 +549,18 @@ body {
 		display: block;
 		margin: auto;
 	}
+}
+
+#special-single-content,  {
+	margin-bottom: 40px;
+}
+
+#panel-explore #content-view {
+
+}
+
+.push {
+	height: 40px;
 }
 
 /* MAP ---------- */

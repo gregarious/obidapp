@@ -63,7 +63,7 @@ $default-text-shadow-blur: 0.08em;
 ////////////
 
 @mixin icon($path) {
-  background: url('../../img/icons/'+$path+'.png') center 10px no-repeat;
+  background: $light-grey url('../../img/icons/'+$path+'.png') center 10px no-repeat;
 }
 
 @mixin unstyled-link {
