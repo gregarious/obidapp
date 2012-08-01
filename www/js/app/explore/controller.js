@@ -14,15 +14,34 @@ define(["explore/models", "explore/views"], function(models, views) {
 		}
 	};
 
-	// DOM elements in initial page skeleton
-	var rootElement = $('#panel-explore');
-	rootElement.hide();
-	
-	var headerEl = rootElement.find('#header-view');
-	var contentEl = rootElement.find('#content-view');
+	// TODO: turn this into some kind of actual CompositeView
+	/* Notes on problems developing one of these off the cuff:
+	* - regions are a great way to organize things
+	* - feel strange injecting views directly in here, but not doing this puts a bit too much logic in the view
+	* - how about interacting with some of the inner views, like getting events, changing settings? keeping a lot
+	*		of this logic in the controller seems like it bloats the controller, but the alternative is to make
+	*		the view very stateful
+	*/
+	var initializeContainer = function(el){
+		var view = new (Backbone.View.extend({
+			findRegion: function(regionLabel) {
+				var selector = '[data-region="' + regionLabel + '"]';
+				return this.$el.find(selector);
+			}
+		}))({el: el});
+		// just create the skeleton with code
+		view.$el.html(
+			'<div data-region="menu" id="header-view"></div>' +
+			'<div id="content-view">' +
+			'	<div data-region="feed"></div>' +
+			'	<div class="push"></div>' +
+			'</div>' +
+			'<div data-region="filter" class="sorting"></div>');
+		return view;
+	};
 
 	var subviews = {
-		menu: new views.MenuView({el: headerEl}),
+		menu: new views.MenuView(),
 		feeds: {
 			list: null,
 			map: null,
@@ -41,7 +60,8 @@ define(["explore/models", "explore/views"], function(models, views) {
 			getActiveView: function() {
 				return this[this.activeLabel];
 			}
-		}
+		},
+		filter: new views.CategoryFilterView()
 	};
 
 	var contentState = {
@@ -212,9 +232,17 @@ define(["explore/models", "explore/views"], function(models, views) {
 		// $.mobile.changePage(dialogEl);
 	};
 
+	var containerView = null,
+		rootElement;
+
 	var controller = {
 		activate: function() {
 			console.log('+ ExploreController.activate.');
+			rootElement = $('#panel-explore');
+
+			if (!containerView) {
+				containerView = initializeContainer(rootElement);
+			}
 
 			rootElement.show();
 
@@ -253,8 +281,9 @@ define(["explore/models", "explore/views"], function(models, views) {
 		refreshDisplay: function() {
 			console.log('ExploreController.refreshDisplay');
 
-			subviews.menu.render();
+			containerView.findRegion('menu').html(subviews.menu.render().el);
 
+			var contentEl = containerView.findRegion('feed');
 			// if awaitngData is null, we don't have data, and never got it
 			if (contentState.awaitingData === null) {
 				contentEl.html("No data to display.");
@@ -276,6 +305,8 @@ define(["explore/models", "explore/views"], function(models, views) {
 					contentEl.html("Error retreiving data.");
 				}
 			);
+
+			containerView.findRegion('filter').html(subviews.filter.render().el);
 		}
 	};
 

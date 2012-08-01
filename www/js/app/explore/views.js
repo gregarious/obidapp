@@ -1,8 +1,10 @@
-define(["text!templates/listfeed-places.html",
+define(["text!templates/explore-menu.html",
+		"text!templates/explore-filter.html",
+		"text!templates/listfeed-places.html",
 		"text!templates/listfeed-events.html",
 		"text!templates/listfeed-specials.html",
 		"text!templates/mapfeed.html"],
-	function(placesListTpl, eventsListTpl, specialsListTpl, mapTpl){
+	function(menuTpl, filterTpl, placesListTpl, eventsListTpl, specialsListTpl, mapTpl){
 
 	var exports = {};
 
@@ -12,32 +14,12 @@ define(["text!templates/listfeed-places.html",
 	//  'click:displayMode'
 	//  'click:searchOn'
 	exports.MenuView = Backbone.View.extend({
+		template: Handlebars.compile(menuTpl),
 		activeSection: null,
 		activeDisplayMode: null,
 		
-		// cached DOM elements
-		navElements: {},
-		listIcon: null,
-		mapIcon: null,
-
-		// events are all DOM-based
-		events: {
-			'click nav li': 'navClicked',
-			'click #icon-search': 'searchClicked',
-			'click .icon-display': 'displayModeClicked'
-		},
-
 		initialize: function(options) {
 			_.bindAll(this, 'render', 'navClicked', 'searchClicked', 'displayModeClicked');
-			this.navElements = {
-				'now': this.$("#nav-now"),
-				'place': this.$("#nav-places"),
-				'event': this.$("#nav-events"),
-				'special': this.$("#nav-specials"),
-				'news': this.$("#nav-news")
-			};
-			this.listIcon = this.$(".icon-display-list");
-			this.mapIcon = this.$(".icon-display-map");
 		},
 
 		setActiveNav: function(navLabel, renderChange) {
@@ -60,23 +42,30 @@ define(["text!templates/listfeed-places.html",
 		},
 
 		render: function() {
-			// ensure correct nav section is active
-			_.each(this.navElements, function(el, label) {
-				el.toggleClass('active', (this.activeSection === label));
-			}, this);
+			this.$el.html(this.template());
+
+			var listIcon = this.$(".icon-display-list"),
+				mapIcon = this.$(".icon-display-map");
 
 			// ensure opposite display mode is selected
 			if (this.activeDisplayMode === 'list') {
-				this.listIcon.hide();
-				this.mapIcon.show();
+				listIcon.hide();
+				mapIcon.show();
 			}
 			else if (this.activeDisplayMode === 'map') {
-				this.mapIcon.hide();
-				this.listIcon.show();
+				mapIcon.hide();
+				listIcon.show();
 			}
 			else {
 				console.log('Warning: display mode error.');
 			}
+
+			// cycle throug nav li's and ensure correct one has 'active' class
+			this.$('nav li').each(function(idx, listEl) {
+				listEl = $(listEl);
+				// we use the custom attribute "data-type" as a hook for this
+				listEl.toggleClass('active', (listEl.data('type') === this.activeSection));
+			});
 
 			return this;
 		},
@@ -148,6 +137,19 @@ define(["text!templates/listfeed-places.html",
 	});
 	exports.SpecialsList = ListFeedView.extend({
 		template: Handlebars.compile(specialsListTpl)
+	});
+
+	exports.CategoryFilterView = Backbone.View.extend({
+		template: Handlebars.compile(filterTpl),
+		
+		initialize: function(options) {
+			_.bindAll(this, 'render');
+		},
+		
+		render: function() {
+			this.$el.html(this.template());
+			return this;
+		}
 	});
 
 	return exports;

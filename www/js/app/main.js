@@ -17,58 +17,56 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 	Backbone.Model.prototype.sync = jsonpSync;
 	Backbone.Collection.prototype.sync = jsonpSync;
 
-	// Define controller after app load
-	// (note this isn't strictly necessary, but more complicated to maintain
-	//  otherwise. Keep this way unless we need performance gains.)
-	$(function(){
-		window.app = new (Backbone.Router.extend({
-			states: {
-				explore: exploreCtrl,
-				detail: detailCtrl
-			},
-			currentState: null,
+	window.app = new (Backbone.Router.extend({
+		states: {
+			explore: exploreCtrl,
+			detail: detailCtrl
+		},
+		currentState: null,
 
-			routes: {
-				"": 'index',
-				"app/:resource/:id": 'detailPage',
-				"app/:resource": 'exploreFeed'
-			},
+		routes: {
+			"": 'index',
+			"app/:resource/:id": 'detailPage',
+			"app/:resource": 'exploreFeed'
+		},
 
-			index: function() {
-				this.navigate("app/now", {trigger: true});
-			},
+		index: function() {
+			this.navigate("app/now", {trigger: true});
+		},
 
-			pageTransition: function(toState) {
-				if (this.currentState === toState) {
-					return;
-				}
-				if (this.currentState) {
-					this.currentState.deactivate();
-				}
-				this.currentState = toState;
-				toState.activate();
-				// no rules restricting transition
-
-			},
-
-			exploreFeed: function(resourceType) {
-				console.log('+ appController.exploreFeed: ' + resourceType);
-				this.pageTransition(this.states.explore);
-				this.states.explore.setState({
-					resourceType: resourceType
-				});
-			},
-
-			detailPage: function(resourceType, objectId) {
-				console.log('+ appController.detailPage: ' + resourceType + ',' + objectId);
-				this.pageTransition(this.states.detail);
-				this.states.detail.setState({
-					resourceType: resourceType,
-					objectId: objectId
-				});
+		pageTransition: function(toState) {
+			if (this.currentState === toState) {
+				return;
 			}
-		}))();
+			if (this.currentState) {
+				this.currentState.deactivate();
+			}
+			this.currentState = toState;
+			toState.activate();
+			// no rules restricting transition
 
+		},
+
+		exploreFeed: function(resourceType) {
+			console.log('+ appController.exploreFeed: ' + resourceType);
+			this.pageTransition(this.states.explore);
+			this.states.explore.setState({
+				resourceType: resourceType
+			});
+		},
+
+		detailPage: function(resourceType, objectId) {
+			console.log('+ appController.detailPage: ' + resourceType + ',' + objectId);
+			this.pageTransition(this.states.detail);
+			this.states.detail.setState({
+				resourceType: resourceType,
+				objectId: objectId
+			});
+		}
+	}))();
+
+	// after DOM load, initialze and run the app
+	$(function(){
 		window.app.states.explore.setState({
 			displayMode: 'list'
 		}, false);
