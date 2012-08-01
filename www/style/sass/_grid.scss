@@ -21,8 +21,15 @@ $total-width: 100%;
 
 // The micro clearfix http://nicolasgallagher.com/micro-clearfix-hack/
 @mixin clearfix {
-  overflow: hidden;
-  @include has-layout; 
+  	&:before,
+	&:after {
+    	content: " "; /* 1 */
+    	display: table; /* 2 */
+    }
+
+    &:after {
+    	clear: both;
+	}
 }
 
 
