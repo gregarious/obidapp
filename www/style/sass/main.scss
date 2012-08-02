@@ -450,25 +450,41 @@ body {
 		@include clearfix;
 
 		li {
-			width: 49%;
+			width: 24%;
 			float: left;
+			height: 40px;
 			text-align: center;
-			@include background-image(linear-gradient(#e5e5e5, #ccc));
+			//@include border-radius(5px);
+			@include background-image(linear-gradient($light-green, $green));
 			padding: 0.7em;
 			@include box-sizing(border-box);
+			@include box-shadow(1px 1px 1px #333);
 			margin-right: 0.2em;
+
+			&:active {
+				background: $green;
+				@include box-shadow(none);
+			}
+
 			&:last-child {
 				margin-right: 0;
+			}
+
+			a {
+				font-size: 0.9em;
+				font-weight: bold;
+				color: #fff;
+				@include text-shadow(1px 1px 1px #333);
+				text-decoration: none;
 			}
 		}
 	}
 }
 
 .single-place-nav {
-	//background: $dark-grey;
 	color: #fff;
-	//border-top: 1px solid $red;
-	//margin-bottom: 0.5em;
+	font-weight: bold;
+	@include text-shadow(1px 1px 1px #333);
 
 	li {
 		background: $dark-grey;
@@ -488,9 +504,12 @@ body {
   			background: $light-green;
   		}
 
-  		&.selected {
-  			background: $yellow;
-  			//border-color: #fff;
+  		&.active {
+  			@include box-sizing(border-box);
+  			background: #fff;
+  			border: 2px solid $med-grey;
+  			border-bottom: none;
+  			@include text-shadow(1px 1px 1px #fff);
   			color: #000;
   		}
 	}
@@ -519,6 +538,7 @@ body {
 #singleMapCanvas {
 	height: 100px;
 	@include column(5);
+	float: right;
 	overflow: hidden;
 	position: relative;
 	margin: 0 0.5em 0 0.5em;
