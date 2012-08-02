@@ -3,18 +3,27 @@ define(["text!templates/single-place.html", "text!templates/single-event.html", 
 		var BaseDetailView = Backbone.View.extend({
 			template: null,
 
+			events: {
+				'click .topbar button': 'backClicked'
+			},
+
 			initialize: function(options) {
 				_.bindAll(this, 'render');
 			},
 
 			render: function() {
+				// TODO: bad inline, bad
+				var topbar = '<div class="topbar"><button>&larr; Back</button></div>';
+				this.$el.html(topbar);
 				if (this.template) {
-					this.$el.html(this.template(this.model.attributes));
-				}
-				else {
-					this.$el.html('no template provided');
+					this.$el.append(this.template(this.model.attributes));
 				}
 				return this;
+			},
+
+			backClicked: function() {
+				console.log('backClicked');
+				this.trigger('back');
 			}
 		});
 

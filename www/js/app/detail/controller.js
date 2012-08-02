@@ -35,6 +35,9 @@ define(['explore/models', 'detail/views'], function(models, views) {
 
 			var model = new setup.Model({id: settings.objectId});
 			var view = new setup.View({model: model});
+			view.on('back', function() {
+				window.history.back();
+			});
 
 			rootElement.html('spinning...');
 
