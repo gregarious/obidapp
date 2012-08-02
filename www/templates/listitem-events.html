@@ -1,0 +1,28 @@
+<li>
+  <a href="#app/events/{{id}}">
+    <div class="item-thumb">
+      {{#if image}}
+        <img src="{{domainUri image}}" />
+      {{else}}
+        <img src="img/defaults/default-event.png" />
+      {{/if}}
+    </div>
+
+    <section class="item-content">
+      <h1 class="item-title">{{name}}</h1>
+      <ul class="item-details">
+        <li>{{dtstart}} - {{dtend}}</li>
+        <li>{{place.name}}</li>
+
+        <li>
+          <ul class="category">
+            <li>Festival</li>
+            <li>Lectures</li>
+            <li>General Fun</li>
+          </ul>
+        </li>
+      </ul> <!-- .item-details -->
+    </section> <!-- .item-content -->
+
+  </a>
+</li> <!-- feed item -->

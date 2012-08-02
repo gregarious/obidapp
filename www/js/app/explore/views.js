@@ -1,10 +1,10 @@
 define(["text!templates/explore-menu.html",
 		"text!templates/explore-filter.html",
-		"text!templates/listfeed-places.html",
-		"text!templates/listfeed-events.html",
-		"text!templates/listfeed-specials.html",
+		"text!templates/listitem-places.html",
+		"text!templates/listitem-events.html",
+		"text!templates/listitem-specials.html",
 		"text!templates/mapfeed.html"],
-	function(menuTpl, filterTpl, placesListTpl, eventsListTpl, specialsListTpl, mapTpl){
+	function(menuTpl, filterTpl, placeListItemTpl, eventListItemTpl, specialListItemTpl, mapTpl){
 
 	var exports = {};
 
@@ -101,14 +101,14 @@ define(["text!templates/explore-menu.html",
 	});
 
 	var ListFeedView = BaseFeedView.extend({
-		template: null,
+		itemTemplate: null,
+		className: 'feed',
+		tagName: 'ul',
 		render: function() {
-			var context = {
-				'models': this.collection.map(function(m) {
-					return m.attributes;
-				})
-			};
-			this.$el.html(this.template(context));
+			this.$el.empty();
+			this.collection.each(function(model){
+				this.$el.append(this.itemTemplate(model.attributes));
+			}, this);
 			return this;
 		}
 	});
@@ -130,13 +130,13 @@ define(["text!templates/explore-menu.html",
 	});
 
 	exports.PlacesList = ListFeedView.extend({
-		template: Handlebars.compile(placesListTpl)
+		itemTemplate: Handlebars.compile(placeListItemTpl)
 	});
 	exports.EventsList = ListFeedView.extend({
-		template: Handlebars.compile(eventsListTpl)
+		itemTemplate: Handlebars.compile(eventListItemTpl)
 	});
 	exports.SpecialsList = ListFeedView.extend({
-		template: Handlebars.compile(specialsListTpl)
+		itemTemplate: Handlebars.compile(specialListItemTpl)
 	});
 
 	exports.CategoryFilterView = Backbone.View.extend({
