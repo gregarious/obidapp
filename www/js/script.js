@@ -1,4 +1,3 @@
-
 // Copypasta alert: 
 function initialize() {
 	var myOptions = {
@@ -12,4 +11,16 @@ function initialize() {
 
 $(document).ready(function(){
 	$('.place-specials, .place-events').hide();
+	console.log('adsaasdasdasd');
+	// Hide/show single place sections
+	var pages = ['.place-info', '.place-events', '.place-specials'];
+	$.each(pages, function(i, id) {
+		$('li.'+id).click(function() {
+			$('.detail-nav').delay(200).hide();
+			$(id+'.detail-nav li').fadeIn(200);
+			$('.detail-nav li').removeClass('active');
+			$(this).addClass('active');
+		});
+	});
+
 });

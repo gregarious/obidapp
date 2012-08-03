@@ -41,7 +41,7 @@ require('partials/single_head.php');
 
       <footer id="special-status">
         <!-- Displays Grab it, Use it, or Used. Button's class is changed accordingly -->
-        <button class="grab-it">Grab it!</button>
+        <div class="grab-it action-btn"><a>Grab it!</a></div>
       </footer>
       
 <?php require('partials/footer.php'); ?>

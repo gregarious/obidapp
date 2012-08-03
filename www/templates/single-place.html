@@ -1,3 +1,11 @@
+<script>
+
+$(document).ready(function(){
+   $('.place-info').css('background','green');
+   console.log('working');
+});
+</script>
+
 <div class="single-wrap">
     <header class="single-header">
 
@@ -26,9 +34,9 @@
 
     <nav class="single-place-nav">
         <ul>
-            <li class="active">Info</li>
-            <li>Events</li>
-            <li>Specials</li>
+            <li class="active" id="place-nav-info">Info</li>
+            <li id="place-nav-events">Events</li>
+            <li id="place-nav-specials">Specials</li>
         </ul>
     </nav>
 
@@ -46,16 +54,16 @@
             <nav class="action-list">
                 <ul>
                     {{#if phone}}
-                    <li><a href="tel:{{phone}}">Call</a></li>
+                    <li class="action-btn"><a href="tel:{{phone}}">Call</a></li>
                     {{/if}}
                     {{#if is_geolocated}}
-                    <li><a href="">Directions</a></li>
+                    <li class="action-btn"><a href="">Directions</a></li>
                     {{/if}}
                     {{#if fb_id}}
-                    <li><a href="http://facebook.com/{{fb_id}}"><img src="../img/icons/facebook.png" alt="facebook" /></a></li>
+                    <li class="action-btn"><a href="http://facebook.com/{{fb_id}}"><img src="../img/icons/facebook.png" alt="facebook" /></a></li>
                     {{/if}}
                     {{#if twitter_id}}
-                    <li><a href=""><img src="../img/icons/twitter.png" alt="twitter" /></a></li>
+                    <li class="action-btn"><a href=""><img src="../img/icons/twitter.png" alt="twitter" /></a></li>
                     {{/if}}
                 </ul>
             </nav>
@@ -71,12 +79,14 @@
         <article class="place-events">
             <ul class="feed">
                 <!-- Event feed items here -->
+                kjlkjlkj
             </ul>
         </article>
 
         <article class="place-specials">
             <ul class="feed">
                 <!-- Special feed items here -->    
+                asdas
             </ul>
         </article>
     </section>
