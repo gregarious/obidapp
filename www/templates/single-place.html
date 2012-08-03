@@ -54,16 +54,16 @@ $(document).ready(function(){
             <nav class="action-list">
                 <ul>
                     {{#if phone}}
-                    <li class="action-btn"><a href="tel:{{phone}}">Call</a></li>
+                    <a href="tel:{{phone}}"><li class="action-btn">Call</li></a>
                     {{/if}}
                     {{#if is_geolocated}}
-                    <li class="action-btn"><a href="">Directions</a></li>
+                    <a href=""><li class="action-btn">Directions</li></a>
                     {{/if}}
                     {{#if fb_id}}
-                    <li class="action-btn"><a href="http://facebook.com/{{fb_id}}"><img src="../img/icons/facebook.png" alt="facebook" /></a></li>
+                    <a href="http://facebook.com/{{fb_id}}"><li class="action-btn"><img src="../img/icons/facebook.png" alt="facebook" /></li></a>
                     {{/if}}
                     {{#if twitter_id}}
-                    <li class="action-btn"><a href=""><img src="../img/icons/twitter.png" alt="twitter" /></a></li>
+                    <a href=""><li class="action-btn"><img src="../img/icons/twitter.png" alt="twitter" /></li></a>
                     {{/if}}
                 </ul>
             </nav>

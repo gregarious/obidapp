@@ -237,13 +237,11 @@ body {
 		margin-right: 0;
 	}
 
-	a {
 		font-size: 0.9em;
 		font-weight: bold;
 		color: #fff;
 		@include text-shadow(1px 1px 1px #333);
 		text-decoration: none;
-	}
 }
 
 /* FEED ITEMS --------- */
@@ -405,22 +403,6 @@ body {
 	background: $dark-grey;
 	padding: 0.5em;
 
-	// ul li {
-	// 	font-size: 0.8em;
-	// 	@include box-shadow(#777 0 -1px 3px);
-	// 	@include column(4);
-	// 	padding: 0.5em;
-	// 	border: 1px solid #999;
-	// 	background: $dark-grey;
-	// 	color: #fff;
-
-	// 	&.selected {
-	// 		background: $yellow;
-	// 		@include box-shadow(#fff 0 0 0);
-	// 		font-weight: bold;
-	// 		color: #000;
-	// 	}
-	// }
 }
 
 
