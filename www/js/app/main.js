@@ -67,6 +67,10 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 
 	// after DOM load, initialze and run the app
 	$(function(){
+		// hide all DOM to begin with
+		$('#panel-explore').hide();
+		$('#panel-detail').hide();
+
 		window.app.states.explore.setState({
 			displayMode: 'list'
 		}, false);
