@@ -46,7 +46,9 @@ $(document).ready(function(){
             <ul class="item-details">
                 <li>
                     <span class="detail-title">Hours:</span><br />
-                    Mon-Fri 3pm-10pm &#149; Sat 5pm-7pm &#149; Sun Closed
+                    Mon-Fri: 3pm-10pm <br />
+                    Sat: 5pm-7pm<br /> 
+                    Sun: Closed<br />
                 </li>
                 <li><a href="http://coolwebsite.com">Website</a></li>
             </ul>
@@ -54,16 +56,13 @@ $(document).ready(function(){
             <nav class="action-list">
                 <ul>
                     {{#if phone}}
-                    <a href="tel:{{phone}}"><li class="action-btn">Call</li></a>
+                    <a href="tel:{{phone}}" target="blank"><li>Call</li></a>
                     {{/if}}
                     {{#if is_geolocated}}
-                    <a href=""><li class="action-btn">Directions</li></a>
+                    <a href="" target="blank"><li>Directions</li></a>
                     {{/if}}
-                    {{#if fb_id}}
-                    <a href="http://facebook.com/{{fb_id}}"><li class="action-btn"><img src="../img/icons/facebook.png" alt="facebook" /></li></a>
-                    {{/if}}
-                    {{#if twitter_id}}
-                    <a href=""><li class="action-btn"><img src="../img/icons/twitter.png" alt="twitter" /></li></a>
+                    {{#if url}}
+                    <a href="{{url}}" target="blank"><li>Website</li></a>
                     {{/if}}
                 </ul>
             </nav>
@@ -73,6 +72,25 @@ $(document).ready(function(){
             </div>
 
             <p>{{description}}</p>
+
+            <div class="social">
+                {{#if fb_id}}
+                <a href="http://facebook.com/{{fb_id}}" target="blank" class="action-btn">
+                    <div class="facebook">
+                        Facebook
+                    </div>
+                </a>
+                {{/if}}
+
+                </div>
+                {{#if twitter_username}}
+                <a href="http://twitter.com/{{twitter_username}}" target="blank" class="action-btn">
+                    <div class="twitter">
+                        {{twitter_username}}
+                    </div>
+                </a>
+                {{/if}}
+            </div> <!-- .social -->
 
         </article> <!-- .place-info -->
 

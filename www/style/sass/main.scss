@@ -11,6 +11,10 @@ body {
 	overflow: auto;
 	background: $light-green;
 }
+a {
+	text-decoration: none;	
+}
+
 
 #panel-explore, #panel-detail {
 	background: url('../../img/assets/light-green-tex.png');
@@ -85,8 +89,6 @@ body {
 
 	#view-options {
 		padding: 0.5em;
-
-
 
 		img {
 			height: 15px;
@@ -205,6 +207,7 @@ body {
 
 .category {
 	margin: 0.5em 0;
+
 	li {
 		background-color: #f9f9f9;
 		border: 1px solid #e1e1e1;
@@ -216,20 +219,25 @@ body {
 	}
 }
 
-.action-btn {
+.action-list li, .grab-it, .action-btn {
 	float: left;
 	height: 40px;
+	@include clearfix();
 	color: #fff;
 	text-align: center;
 	//@include border-radius(5px);
-	@include background-image(linear-gradient($dark-blue, $med-blue));
+	@include background-image(linear-gradient(#999, #666));
 	padding: 0.7em;
 	@include box-sizing(border-box);
-	@include box-shadow(1px 1px 1px #333);
-	margin-right: 0.2em;
+//	@include box-shadow(1px 1px 2px #555);
+	border-right: 2px solid #fff !important;	
+
+	a {
+		color: #fff;
+	}
 
 	&:active {
-		background: $dark-blue;
+		background: $dark-grey;
 		@include box-shadow(none);
 	}
 
@@ -237,16 +245,16 @@ body {
 		margin-right: 0;
 	}
 
-		font-size: 0.9em;
-		font-weight: bold;
-		color: #fff;
-		@include text-shadow(1px 1px 1px #333);
-		text-decoration: none;
+	font-size: 0.9em;
+	font-weight: bold;
+	color: #fff;
+	@include text-shadow(1px 1px 1px #333);
 }
 
 /* FEED ITEMS --------- */
 
 .feed {
+
 	&>li {
 		@include clearfix();
 		font-size: 0.9em;
@@ -331,7 +339,7 @@ body {
 }
 
 .single-header {
-	margin: 40px 5px 0;
+	margin: 10px 5px 0;
 	padding-bottom: 0.3em;
 	margin-bottom: 0.5em;
 	border-bottom: 1px solid $light-green;
@@ -390,7 +398,7 @@ body {
 }
 
 .description {
-	font-size: 1.1em;
+	//font-size: 1.1em;
 	@include text-shadow(1px 1px 1px #eee);
 }
 
@@ -484,9 +492,8 @@ body {
 	li {
 		background: $dark-grey;
 		border-bottom: 2px solid $med-grey;
-		//border-right: 2px solid $dark-grey;
 		@include border-top-radius(5px);
-  		width: 30%;
+  		width: 31%;
   		padding: 0.5em 0.3em;
   		font-size: 0.9em;
   		margin: 0 0.5%;
@@ -516,7 +523,11 @@ body {
 
 	ul {
 		@include clearfix;
-
+		
+		a {
+			text-decoration: none !important;
+		}
+		
 		li {
 			width: 24%;
 			float: left;
@@ -573,7 +584,7 @@ body {
 	height: 50px;
 
 	.grab-it {
-		@include background-image(linear-gradient($green, $dark-green));
+		@include background-image(linear-gradient($med-blue, $dark-blue));
 		font-size: 1.1em;
 		@include text-shadow(1px 1px 1px #000);
 		@include box-shadow(1px 1px 1px #000);
