@@ -15,7 +15,6 @@ a {
 	text-decoration: none;	
 }
 
-
 #panel-explore, #panel-detail {
 	background: url('../../img/assets/light-green-tex.png');
 	height: 100%;
@@ -339,35 +338,41 @@ a {
 }
 
 .single-header {
-	margin: 10px 5px 0;
+	margin: 60px 5px 0;
 	padding-bottom: 0.3em;
 	margin-bottom: 0.5em;
 	border-bottom: 1px solid $light-green;
 	@include clearfix();
+	//background: #fff;
 
 	.item-title {
 		//font-size: 1.1em;
+		@include text-shadow(0 0 1px #fff);
 		
 	}
 
 	.item-details {
 		line-height: 1.1em;
 	}
+
+	img {
+		border: 1px solid #666;
+	}
 		
 }
 
 .single-wrap {
-	background: #fff;
-	margin: 5px;
+	
+	//margin: 0 5px 5px;
 	@include clearfix;
+	//background: $med-blue;
 }
 
 .single-content {
-	padding: 0.5em;
+	padding: 0.8em;
 	@include column(12);
 	position: relative;
-	//background: #fff;
-	//@include box-shadow(#666 0 0 2px);
+	background: #fff;
 
 	p {
 		font-size: 0.9em;
@@ -376,13 +381,11 @@ a {
 
 	#mapCanvas {
 		@include column(12);
-		//@include background-image(linear-gradient(#fff, #e1e1e1));
 		@include box-shadow(#666 0 0 2px);
 		margin-top: 0;
 		margin-bottom: 10px;
 		height: 100px;
 		overflow: hidden;
-		//margin: 0 0 10px 10px;
 	}
 }
 
@@ -402,6 +405,7 @@ a {
 	@include text-shadow(1px 1px 1px #eee);
 }
 
+
 /* FOOTER ------------ */
 
 .sorting {
@@ -409,26 +413,39 @@ a {
 	position: fixed;
 	bottom: 0;
 	background: $dark-grey;
-	padding: 0.5em;
+	padding: 0.5em 0;
+
+	h1 {
+		color: #fff;
+		@include text-shadow(1px 1px 1px #000);
+		text-align: center;
+		padding-right: 0.3em;
+		@include column(3.5);
+		@include box-sizing(border-box);
+	}
+
+	.select-container {
+		@include column(8.5);
+	}
+
+	select {
+		width: 90%;
+		margin-right: 10%;
+		font-size: 0.8em;
+	}
 
 }
 
 
 /* NOW ----------- */
 .page-now {
-	//font-size: 0.9em;
 	line-height: 1.3em;
-	//margin: 1% 0;
 	padding: 2%;
 	margin: 1%;
 	border-bottom: 1px solid #aaa;
-	//@include single-box-shadow;
 	@include background-image(linear-gradient($dark-grey, $light-grey));
-	//color: #fff;
 
 	img {
-		//width: 100%;
-		//height: auto;
 		display: block;
 		margin: 0 auto;
 	}
@@ -436,7 +453,6 @@ a {
 	.welcome-msg {
 		font-size: 1.2em;
 		font-weight: bold;
-		//text-align: center;
 		margin: 0.5em 0 1em;
 	}
 
@@ -449,10 +465,8 @@ a {
 	.feed {
 		&>li {
 			@include box-shadow(0 0 0 transparent);
-			//@include clearfix();
 			font-size: 0.9em;
 			line-height: 1.3em;
-			//margin: 1% 0;
 			padding: 2%;
 			margin: 0%;
 			border-bottom: none;
@@ -493,26 +507,31 @@ a {
 		background: $dark-grey;
 		border-bottom: 2px solid $med-grey;
 		@include border-top-radius(5px);
-  		width: 31%;
+		@include box-shadow(1px 1px 1px #fff);
+		@include text-shadow(1px 1px 2px #000);
+  		//width: 30%;
+  		@include column(3.9);
   		padding: 0.5em 0.3em;
   		font-size: 0.9em;
   		margin: 0 0.5%;
-
-  		&:last-child {
-  			margin: 0;
-  		}
+  		cursor: pointer;
 
   		&:hover {
-  			background: $light-green;
+  			background: #777;
+  		}
+
+  		&:active {
+  			background: #222;
   		}
 
   		&.active {
   			@include box-sizing(border-box);
+  			@include box-shadow(1px 1px 1px #fff);
   			background: #fff;
   			border: 2px solid $med-grey;
   			border-bottom: none;
-  			@include text-shadow(1px 1px 1px #fff);
-  			color: #000;
+  			@include text-shadow(0 0 1px #999);
+  			color: #222;
   		}
 	}
 }
@@ -540,17 +559,22 @@ a {
 		display: inline;
 	}
 
-	&>.item-details {
+	.detail-title {
+		font-weight: bold;
+		margin-bottom: 0.5em;
+		font-size: 0.9em;
+	}
+
+	.hours {
 		@include column(12);
 		float: right;
 		font-size: 0.9em;
-
-	li {
+		
+		li {
+			font-size: 0.9em;
 			margin-bottom: 0.5em;
-
-			.detail-title {
-				font-weight: bold;
-			}
+			//line-height: 1em;
+			
 		}
 	}
 }
@@ -664,7 +688,6 @@ a {
 		height: 40px;
 		display: block;
 		margin: 0 auto;
-		//margin-right: 15px;
 	}
 
 	.next, .prev {
