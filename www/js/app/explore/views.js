@@ -61,10 +61,11 @@ define(["text!templates/explore-menu.html",
 			}
 
 			// cycle throug nav li's and ensure correct one has 'active' class
+			var activeType = this.activeSection;
 			this.$('nav li').each(function(idx, listEl) {
 				listEl = $(listEl);
 				// we use the custom attribute "data-type" as a hook for this
-				listEl.toggleClass('active', (listEl.data('type') === this.activeSection));
+				listEl.toggleClass('active', (listEl.data('type') === activeType));
 			});
 
 			return this;
