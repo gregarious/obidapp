@@ -28,44 +28,69 @@ define(function(){
 	});
 
 	var BaseCollection = Backbone.Collection.extend({
-		offset: null,
-		limit: null,
-		filters: null,
+		prev: null,
+		next: null,
+		category_id: null,
 		query: null,
 
+		// TO ADD SUPPORT FOR GET ARGS: JUST ADD A "data" object to the fetch calls -- passthru to jQuey.ajax afterall
 		// availble options: offset, limit, filters, query
-		setQueryOptions: function(options) {
-			this.offset = options.offset || null;
-			this.limit = options.limit || null;
-			this.filters = options.filters || null;
-			this.query = options.query || null;
+		setQuery: function(query) {
+			this.query = query;
 		},
 
-		toQueryString: function() {
-			var keys = ['offset', 'limit', 'filters', 'query'],
-				key;
-			var clauses = [];
-			for (key in keys) {
-				if (this[key] === null) {
-					clauses.push(key + "=" + this[key]);
-				}
+		setCategory: function(id) {
+			this.category_id = id;
+		},
+
+		fetch: function(options) {
+			options.data = options.data || {};
+			if (this.category_id !== null) {
+				options.data['catpk'] = this.category_id;
 			}
-			return clauses.join("&");
+			if (this.query !== null) {
+				options.data['q'] = this.query;
+			}
+
+			return Backbone.Collection.prototype.fetch.call(this, options);
+		},
+
+		// returns a new Collection of this type, with url set
+		getNextCollection: function() {
+			// either need to fid a way to make a new obejct of this type,
+			// or need to parse the prev/next url from backbone.
+		},
+
+		// returns a new Collection of this type, with url set
+		getPrevious: function() {
+
 		},
 
 		parse: function(response) {
+			this.prev = response.meta && response.meta.previous;
+			this.next = response.meta && response.meta.next;
 			return response.objects;
 		}
 	});
 
 	exports.Places = BaseCollection.extend({
 		model: exports.Place,
-		url: toTastyPieRootUrl('place')
+		url: toTastyPieRootUrl('place'),
+		fetch: function(options) {
+			options.data = options.data || {};
+			options.data.listed = true;
+			return BaseCollection.prototype.fetch.call(this, options);
+		}
 	});
 
 	exports.Events = BaseCollection.extend({
 		model: exports.Event,
-		url: toTastyPieRootUrl('event')
+		url: toTastyPieRootUrl('event'),
+		fetch: function(options) {
+			options.data = options.data || {};
+			options.data.listed = true;
+			return BaseCollection.prototype.fetch.call(this, options);
+		}
 	});
 
 	exports.Specials = BaseCollection.extend({

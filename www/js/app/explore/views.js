@@ -1,12 +1,21 @@
 define(["text!templates/explore-menu.html",
 		"text!templates/explore-filter.html",
+		"text!templates/explore-loading.html",
 		"text!templates/listitem-places.html",
 		"text!templates/listitem-events.html",
 		"text!templates/listitem-specials.html",
 		"text!templates/mapfeed.html"],
-	function(menuTpl, filterTpl, placeListItemTpl, eventListItemTpl, specialListItemTpl, mapTpl){
+	function(menuTpl, filterTpl, loadingTpl, placeListItemTpl,
+				eventListItemTpl, specialListItemTpl, mapTpl) {
 
 	var exports = {};
+
+	exports.LoadingView = Backbone.View.extend({
+		template: Handlebars.compile(loadingTpl),
+		render: function() {
+			this.$el.html(this.template());
+		}
+	});
 
 	// Static view that shows explore state and handles DOM events
 	// Events thrown:
@@ -61,10 +70,11 @@ define(["text!templates/explore-menu.html",
 			}
 
 			// cycle throug nav li's and ensure correct one has 'active' class
+			var activeType = this.activeSection;
 			this.$('nav li').each(function(idx, listEl) {
 				listEl = $(listEl);
 				// we use the custom attribute "data-type" as a hook for this
-				listEl.toggleClass('active', (listEl.data('type') === this.activeSection));
+				listEl.toggleClass('active', (listEl.data('type') === activeType));
 			});
 
 			return this;
