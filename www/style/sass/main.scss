@@ -137,9 +137,10 @@ a {
 .explore-nav {
 	@extend .menus;
 	bottom: 13px;
-	@include box-shadow(0 1px 4px #666);
+	
 
 	ul {
+		@include box-shadow(0 1px 4px #666);
 		a {
 
 			li {
@@ -167,7 +168,9 @@ a {
 
 				&#nav-specials {
 					@include icon('feed-nav/specials');
-				}			
+				}		
+
+
 			} // -- li
 		} // -- a
 	} // -- ul
@@ -265,7 +268,7 @@ a {
 /* FEED ITEMS --------- */
 
 .feed {
-
+	margin-bottom: 40px;
 	&>li {
 		@include clearfix();
 		font-size: 0.9em;
@@ -455,11 +458,12 @@ a {
 	padding: 2%;
 	margin: 1%;
 	border-bottom: 1px solid #aaa;
-	@include background-image(linear-gradient($dark-grey, $light-grey));
+	@include background-image(linear-gradient($med-grey, $light-grey));
 
 	img {
 		display: block;
 		margin: 0 auto;
+		with: 100%;
 	}
 
 	.welcome-msg {
@@ -469,9 +473,10 @@ a {
 	}
 
 	h2 {
-		margin-top: 1em;
+		margin: 1em 0;
 		font-size: 1em;
 		font-weight: bold;
+		font-style: italic;
 	}
 
 	.feed {
@@ -480,7 +485,7 @@ a {
 			font-size: 0.9em;
 			line-height: 1.3em;
 			padding: 2%;
-			margin: 0%;
+			margin: 1em 0 0;
 			border-bottom: none;
 
 			.item-thumb {
