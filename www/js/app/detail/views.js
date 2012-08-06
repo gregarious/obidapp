@@ -4,7 +4,7 @@ define(["text!templates/single-place.html", "text!templates/single-event.html", 
 			template: null,
 
 			events: {
-				'click .topbar button': 'backClicked'
+				'click .button-back': 'backClicked'
 			},
 
 			initialize: function(options) {
@@ -15,8 +15,7 @@ define(["text!templates/single-place.html", "text!templates/single-event.html", 
 				// TODO: bad inline, bad
 				var topbar = '<div class="topbar">'+
 				'<nav id="top-bar-single">'+
-				// DANGER! Absolute link by Lara
-				'<a href=""><img src="http://localhost/obidapp/www/img/assets/back-btn.png"></a>'+
+				'<a class="button-back" href="#"><img src="http://localhost/obidapp/www/img/assets/back-btn.png"></a>'+
 				'<h1>{{name}}</h1></nav></div>';
 				this.$el.html(topbar);
 				if (this.template) {
@@ -25,8 +24,9 @@ define(["text!templates/single-place.html", "text!templates/single-event.html", 
 				return this;
 			},
 
-			backClicked: function() {
+			backClicked: function(e) {
 				console.log('backClicked');
+				e.preventDefault();
 				this.trigger('back');
 			}
 		});
