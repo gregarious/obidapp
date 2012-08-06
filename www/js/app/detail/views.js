@@ -13,7 +13,11 @@ define(["text!templates/single-place.html", "text!templates/single-event.html", 
 
 			render: function() {
 				// TODO: bad inline, bad
-				var topbar = '<div class="topbar"><button>&larr; Back</button></div>';
+				var topbar = '<div class="topbar">'+
+				'<nav id="top-bar-single">'+
+				// DANGER! Absolute link by Lara
+				'<a href=""><img src="http://localhost/obidapp/www/img/assets/back-btn.png"></a>'+
+				'<h1>{{name}}</h1></nav></div>';
 				this.$el.html(topbar);
 				if (this.template) {
 					this.$el.append(this.template(this.model.attributes));

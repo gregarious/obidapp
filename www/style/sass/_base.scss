@@ -97,3 +97,47 @@ $default-text-shadow-blur: 0.08em;
 		}
 	}
 }
+
+.menus {
+	@include column(12);
+	position: relative;
+	z-index: 999;
+	
+	ul {
+		@include clearfix;
+
+		a {
+			text-decoration: none;
+
+			li {
+				@include column(2.4);
+				cursor: pointer;
+				padding: 0;
+				margin: 0;
+				height: 50px;			
+
+				&:hover {
+					background-color: #ddd !important;
+				}
+
+				&:active {
+					background-color: #ccc !important;
+				}
+
+				div {
+					color: #000;
+					text-decoration: none !important;
+					font-size: 0.7em;
+					text-align: center;
+					display: block;
+					margin: 35px auto auto;
+				}
+
+				&.active {
+					background-color: $light-green !important;
+				}
+
+			} // li
+		} // a	
+	} // ul
+} // .menus
