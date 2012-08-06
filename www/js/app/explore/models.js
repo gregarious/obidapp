@@ -89,6 +89,7 @@ define(function(){
 		fetch: function(options) {
 			options.data = options.data || {};
 			options.data.listed = true;
+			options.data.dtend__gt = moment().format('YYYY-MM-DD');
 			return BaseCollection.prototype.fetch.call(this, options);
 		}
 	});

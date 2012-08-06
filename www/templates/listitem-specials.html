@@ -7,8 +7,10 @@
     <section class="item-content">
       <h1 class="item-title">{{title}}</h1>
       <ul class="item-details">
-        <li>{{place}}</li>
-        <li>Until {{dexpires}}</li>
+        <li>at {{place.name}}</li>
+        {{#if dexpires}}
+          <li>{{formatExpires dexpires}}</li>
+        {{/if}}
         <li>{{total_available}} Available</li>
         <li>
           <ul class="category">

@@ -10,7 +10,9 @@
         <div class="item-content">
             <h1 class="item-title">{{name}}</h1>
             <ul class="item-details">
-                <li><strong>{{dtstart}} - {{dtend}}</strong></li>
+                <li>Starts: <strong>{{formatLongDate dtstart}}</strong>
+                    <br/>
+                    Ends: <strong>{{formatLongDate dtend}}</strong></li>
                 <li>{{place.name}}</li> 
                 <li>{{place.location.address}}</li>
                 <li>

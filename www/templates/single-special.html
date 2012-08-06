@@ -10,9 +10,11 @@
         <div class="item-content">
             <h1 class="item-title">{{title}}</h1>
             <ul class="item-details">
-                <li>at {{place.name}}</li>
-                <li>{{place.location.address}}</li> 
-                <li>expires {{dexpires}}</li>
+                <li>at <a href="#app/places/{{place.id}}">{{place.name}}</a></li>
+                <li>{{place.location.address}}</li>
+                {{#if dexpires}}
+                    <li>{{formatExpires dexpires}}</li>
+                {{/if}}
                 <li>
                     <ul class="category">
                         <li>Food</li>

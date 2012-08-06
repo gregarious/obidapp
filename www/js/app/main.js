@@ -1,3 +1,30 @@
+Scenable = {
+	constants: {
+		MODE: 'DEBUG',
+		SITEURL: 'http://127.0.0.1:8000'
+	}
+};
+
+moment.fn.formatRange = function(start, end) {
+	var now = moment();
+	if (now.year() < start.year()) {
+		start = start.format('MMM D, YYYY, H:mm');
+	}
+	else {
+		start = start.format('MMM D, H:mm');
+	}
+	if (end.diff(start, 'days') < 1) {
+		end = end.format('H:mm');
+	}
+	else {
+		end = end.format('MMM D');
+	}
+};
+
+// custome date formatting overrides
+moment.calendar.sameElse = "M/DD/YYYY";
+moment.longDateFormat.LLL = "MMMM D YYYY, LT";
+
 // create a paths alias for the templates dir
 requirejs.config({
 	paths: {
@@ -16,6 +43,46 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 
 	Backbone.Model.prototype.sync = jsonpSync;
 	Backbone.Collection.prototype.sync = jsonpSync;
+
+	// helper to create domain-absolute urls
+	Handlebars.registerHelper('domainUri', function(string) {
+		return Scenable.constants.SITEURL + string;
+	});
+
+	// various date-formatting helpers for Handlebars
+	Handlebars.registerHelper('formatExpires', function(isoDate) {
+		var expires = moment(isoDate);
+		var human = expires.calendar().split(' at')[0];
+
+		// get the tense correct
+		if (expires < moment()) {
+			return 'Expired ' + human;
+		}
+		else {
+			return 'Expires ' + human;
+		}
+	});
+
+	Handlebars.registerHelper('formatDateRange', function(isoStart, isoEnd) {
+		var start = moment(isoStart),
+			end = moment(isoEnd),
+			now = moment();
+
+		if (start < now && now < end) {
+			return 'ends ' + end.calendar(false);
+		}
+
+		if (end.diff(start,'days') < 1) {
+			return start.calendar(false) + ' - ' + end.format('LT');
+		}
+		else {
+			return start.calendar(false) + ' - ' + end.calendar(false);
+		}
+	});
+
+	Handlebars.registerHelper('formatLongDate', function(isoDate) {
+		return moment(isoDate).format('LLL');
+	});
 
 	window.app = new (Backbone.Router.extend({
 		states: {
@@ -74,12 +141,6 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		window.app.states.explore.setState({
 			displayMode: 'list'
 		}, false);
-
-		// helper function to be used in template to encode resource uri's embedded in links
-		// TODO: find better place for this?
-		Handlebars.registerHelper('domainUri', function(string) {
-			return Scenable.constants.SITEURL + string;
-		});
 
 		Backbone.history.start();
 	});
