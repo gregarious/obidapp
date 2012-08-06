@@ -53,13 +53,16 @@ $(document).ready(function(){
             <nav class="action-list">
                 <ul>
                     {{#if phone}}
-                    <a href="tel:{{phone}}" target="blank"><li>Call</li></a>
+                    <a href="tel:{{phone}}"><li class="action-call"><div>Call</div></li></a>
                     {{/if}}
-                    {{#if is_geolocated}}
-                    <a href="" target="blank"><li>Directions</li></a>
+                    {{#if fb_id}}
+                    <a href=""><li class="action-facebook"><div>Facebook</div></li></a>
+                    {{/if}}
+                    {{#if twitter_username}}
+                    <a href=""><li class="action-twitter"><div>Twitter</div></li></a>
                     {{/if}}
                     {{#if url}}
-                    <a href="{{url}}" target="blank"><li>Website</li></a>
+                    <a href="{{url}}"><li class="action-website"><div>Website</div></li></a>
                     {{/if}}
                 </ul>
             </nav>
@@ -69,25 +72,6 @@ $(document).ready(function(){
             </div>
 
             <p>{{description}}</p>
-
-            <div class="social">
-                {{#if fb_id}}
-                <a href="http://facebook.com/{{fb_id}}" target="blank" class="action-btn">
-                    <div class="facebook">
-                        Facebook
-                    </div>
-                </a>
-                {{/if}}
-
-                </div>
-                {{#if twitter_username}}
-                <a href="http://twitter.com/{{twitter_username}}" target="blank" class="action-btn">
-                    <div class="twitter">
-                        {{twitter_username}}
-                    </div>
-                </a>
-                {{/if}}
-            </div> <!-- .social -->
 
         </article> <!-- .place-info -->
 

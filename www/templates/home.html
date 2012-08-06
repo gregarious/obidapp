@@ -56,38 +56,23 @@
 	</nav> <!-- #site-nav -->
 </div>
 
-<section class="page-now">
+<section class="page-home">
 	<img src="../img/logos/oakland-white-betatag-100w.png" />    
     <article class="about">
         <p>Oakland has it's own app! Wha whaaaa>? Yep, Oakland is the first Pennsylvania neighborhood to have its own app. How crazy that its us! We are always open to feedback, so if you spot any bugs or have ideas for improvements, tweet at us or find us on facebook. Thnx n luv alwayz!</p>
     </article>
 
-    <!-- Where 'Event' is whatever kind of feed item it is -->
-    <h2 class="featured">Featured Event:</h2>
+    <!-- Where 'Alert' is either that or 'Notice' -->
+    <h2 class="featured">Alert:</h2>
     <ul class="feed">
-        <li>
-		  <a href="#app/events/{{id}}">
-		    <div class="item-thumb">
-		      <!-- {{#if image}}
-		        <img src="{{domainUri image}}" />
-		      {{else}}
-		        <img src="img/defaults/default-event.png" />
-		      {{/if}} -->
-		      <img src="img/defaults/default-event.png" />
-		    </div>
+        <li> 
+		  <div class="item-thumb">
+	<img src="../img/icons/alert.png" />
+</div>
 
-		    <section class="item-content">
-		      <h1 class="item-title">{{name}}</h1>
-		      <ul class="item-details">
-		        <li>{{dtstart}} - {{dtend}}</li>
-		        <li>{{place.name}}</li>
-
-		        <li>
-		          <ul class="category">
-		            <li>Festival</li>
-		            <li>Lectures</li>
-		            <li>General Fun</li>
-		          </ul>
+<section class="item-content">
+	<h1 class="item-title">A crazy think is happening in Oakland! Woah woah watch out for the traffic, also greasy sandwiches!</h1>
+</section>
 		        </li>
 		      </ul> <!-- .item-details -->
 		    </section> <!-- .item-content -->
