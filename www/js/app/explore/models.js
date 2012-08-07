@@ -5,26 +5,41 @@ define(function(){
 
 	var exports = {};
 
+	var isLocationGeocoded = function(loc) {
+		return _.isObject(loc) && _.isNumber(loc.latitude) && _.isNumber(loc.longitude);
+	};
+
 	/*** BACKBONE MODELS ***/
 	exports.Place = Backbone.Model.extend({
+		urlRoot: toTastyPieRootUrl('place'),
+		isGeocoded: function() {
+			return isLocationGeocoded(this.get('location'));
+		},
 		headerText: function() {
 			return this.get('name');
-		},
-		urlRoot: toTastyPieRootUrl('place')
+		}
 	});
 
 	exports.Event = Backbone.Model.extend({
+		urlRoot: toTastyPieRootUrl('event'),
+		isGeocoded: function() {
+			var place = this.get('place');
+			return isLocationGeocoded(place.location);
+		},
 		headerText: function() {
 			return this.get('name');
-		},
-		urlRoot: toTastyPieRootUrl('event')
+		}
 	});
 
 	exports.Special = Backbone.Model.extend({
+		urlRoot: toTastyPieRootUrl('special'),
+		isGeocoded: function() {
+			var place = this.get('place');
+			return isLocationGeocoded(place.location);
+		},
 		headerText: function() {
 			return this.get('title');
-		},
-		urlRoot: toTastyPieRootUrl('special')
+		}
 	});
 
 	var BaseCollection = Backbone.Collection.extend({
