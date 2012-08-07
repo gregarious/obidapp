@@ -23,10 +23,6 @@ define(function(){
 		}
 	};
 
-	var isLocationGeocoded = function(loc) {
-		return _.isObject(loc) && _.isNumber(loc.latitude) && _.isNumber(loc.longitude);
-	};
-
 	/*** BACKBONE MODELS ***/
 	exports.Place = Backbone.Model.extend({
 		urlRoot: toTastyPieRootUrl('place'),
