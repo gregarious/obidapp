@@ -5,26 +5,63 @@ define(function(){
 
 	var exports = {};
 
+	// given a location hash, tuck latitude and longitude elements inside a 'geocoding' hash
+	// operates in place on location hash
+	var setGeocoding = function(location) {
+		if (_.isObject(location)) {
+			if (_.isNumber(location.latitude) && _.isNumber(location.longitude)) {
+				location.geocoding = {
+					latitude: location.latitude,
+					longitude: location.longitude
+				};
+			}
+			else {
+				location.geocoding = null;
+			}
+			delete location.latitude;
+			delete location.longitude;
+		}
+	};
+
+	var isLocationGeocoded = function(loc) {
+		return _.isObject(loc) && _.isNumber(loc.latitude) && _.isNumber(loc.longitude);
+	};
+
 	/*** BACKBONE MODELS ***/
 	exports.Place = Backbone.Model.extend({
+		urlRoot: toTastyPieRootUrl('place'),
+		parse: function(response) {
+			var attrs = Backbone.Model.prototype.parse.call(this, response);
+			setGeocoding(attrs.location);
+			return attrs;
+		},
 		headerText: function() {
 			return this.get('name');
-		},
-		urlRoot: toTastyPieRootUrl('place')
+		}
 	});
 
 	exports.Event = Backbone.Model.extend({
+		urlRoot: toTastyPieRootUrl('event'),
+		parse: function(response) {
+			var attrs = Backbone.Model.prototype.parse.call(this, response);
+			setGeocoding(attrs.place && attrs.place.location);
+			return attrs;
+		},
 		headerText: function() {
 			return this.get('name');
-		},
-		urlRoot: toTastyPieRootUrl('event')
+		}
 	});
 
 	exports.Special = Backbone.Model.extend({
+		urlRoot: toTastyPieRootUrl('special'),
+		parse: function(response) {
+			var attrs = Backbone.Model.prototype.parse.call(response);
+			setGeocoding(attrs.place && attrs.place.location);
+			return attrs;
+		},
 		headerText: function() {
 			return this.get('title');
-		},
-		urlRoot: toTastyPieRootUrl('special')
+		}
 	});
 
 	var BaseCollection = Backbone.Collection.extend({
