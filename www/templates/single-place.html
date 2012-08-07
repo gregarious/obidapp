@@ -43,13 +43,6 @@ $(document).ready(function(){
     <section class="single-content">
 
         <article class="place-info">
-            <div class="detail-title">Hours:</div>
-            <ul class="hours">
-                <li>Mon-Fri: 3pm-10pm</li>
-                <li>Sat: 5pm-7pm</li>
-                <li>Sun: Closed</li>
-            </ul>
-
             <nav class="action-list">
                 <ul>
                     {{#if phone}}
@@ -67,11 +60,20 @@ $(document).ready(function(){
                 </ul>
             </nav>
 
+            <div class="hours">
+                <div class="detail-title">Hours:</div>
+                <ul class="hours">
+                    <li>Mon-Fri: 3pm-10pm</li>
+                    <li>Sat: 5pm-7pm</li>
+                    <li>Sun: Closed</li>
+                </ul>
+            </div>
+
             <div id="singleMapCanvas">
                 <img src="http://2d-code.co.uk/images/qr-map.jpg" />
             </div>
 
-            <p>{{description}}</p>
+            <p class="description">{{description}}</p>
 
         </article> <!-- .place-info -->
 

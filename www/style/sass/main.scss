@@ -360,16 +360,13 @@ a {
 .single-header {
 	padding: 60px 0.8em 0.3em;
 	@include clearfix();
-	@include background-image(linear-gradient(#fff, $light-grey));
 
 	.item-title {
 		@include text-shadow(0 0 1px #fff);
-		
 	}
 
 	.item-details {
 		line-height: 1.1em;
-
 
 		a {
 			color: $red;
@@ -417,6 +414,7 @@ a {
 
 .description {
 	@include text-shadow(1px 1px 1px #eee);
+	font-size: 0.8em !important;
 	color: #222;
 }
 
@@ -576,9 +574,13 @@ a {
 			li {
 				width: 24%;
 				float: left;
-
+				height: 55px;
 				&#action-call {
 					@include icon('actions/phone');
+				}
+
+				div {
+					margin-top: 32px;
 				}
 			}
 		}
@@ -594,28 +596,39 @@ a {
 
 	.detail-title {
 		font-weight: bold;
-		margin-bottom: 0.5em;
+		//margin-bottom: 0.2em;
 		font-size: 0.9em;
 	}
 
 	.hours {
-		@include column(12);
+		@extend .horiz-ul;
 		font-size: 0.9em;
+		//margin-bottom: 0.5em;		
 		
 		li {
+			border-right: 1px solid $red;
+			padding: 0.2em 0.4em;
 			font-size: 0.9em;
-			margin-bottom: 0.5em;
+
+			&:first-child {
+				padding-left: 0;
+			}
+
+			&:last-child {
+				border-right: none;
+			}
 		}
 	}
 }
 
 #singleMapCanvas {
-	height: 100px;
-	@include column(5);
-	float: right;
+	height: 90px;
+	@include column(12);
 	overflow: hidden;
 	position: relative;
-	margin: 0 0.5em 0 0.5em;
+	margin: 0.5em 0 0.7em;
+
+	@include box-shadow(1px 1px 2px #777);
 }
 
 /* SPECIALS ---------- */
