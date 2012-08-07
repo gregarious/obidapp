@@ -55,7 +55,7 @@ define(function(){
 	exports.Special = Backbone.Model.extend({
 		urlRoot: toTastyPieRootUrl('special'),
 		parse: function(response) {
-			var attrs = Backbone.Model.prototype.parse.call(response);
+			var attrs = Backbone.Model.prototype.parse.call(this, response);
 			setGeocoding(attrs.place && attrs.place.location);
 			return attrs;
 		},
