@@ -5,6 +5,24 @@ define(function(){
 
 	var exports = {};
 
+	// given a location hash, tuck latitude and longitude elements inside a 'geocoding' hash
+	// operates in place on location hash
+	var setGeocoding = function(location) {
+		if (_.isObject(location)) {
+			if (_.isNumber(location.latitude) && _.isNumber(location.longitude)) {
+				location.geocoding = {
+					latitude: location.latitude,
+					longitude: location.longitude
+				};
+			}
+			else {
+				location.geocoding = null;
+			}
+			delete location.latitude;
+			delete location.longitude;
+		}
+	};
+
 	var isLocationGeocoded = function(loc) {
 		return _.isObject(loc) && _.isNumber(loc.latitude) && _.isNumber(loc.longitude);
 	};
@@ -12,8 +30,10 @@ define(function(){
 	/*** BACKBONE MODELS ***/
 	exports.Place = Backbone.Model.extend({
 		urlRoot: toTastyPieRootUrl('place'),
-		isGeocoded: function() {
-			return isLocationGeocoded(this.get('location'));
+		parse: function(response) {
+			var attrs = Backbone.Model.prototype.parse.call(this, response);
+			setGeocoding(attrs.location);
+			return attrs;
 		},
 		headerText: function() {
 			return this.get('name');
@@ -22,9 +42,10 @@ define(function(){
 
 	exports.Event = Backbone.Model.extend({
 		urlRoot: toTastyPieRootUrl('event'),
-		isGeocoded: function() {
-			var place = this.get('place');
-			return isLocationGeocoded(place.location);
+		parse: function(response) {
+			var attrs = Backbone.Model.prototype.parse.call(this, response);
+			setGeocoding(attrs.place && attrs.place.location);
+			return attrs;
 		},
 		headerText: function() {
 			return this.get('name');
@@ -33,9 +54,10 @@ define(function(){
 
 	exports.Special = Backbone.Model.extend({
 		urlRoot: toTastyPieRootUrl('special'),
-		isGeocoded: function() {
-			var place = this.get('place');
-			return isLocationGeocoded(place.location);
+		parse: function(response) {
+			var attrs = Backbone.Model.prototype.parse.call(response);
+			setGeocoding(attrs.place && attrs.place.location);
+			return attrs;
 		},
 		headerText: function() {
 			return this.get('title');
