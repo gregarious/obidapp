@@ -71,8 +71,7 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		if (start < now && now < end) {
 			return 'ends ' + end.calendar(false);
 		}
-
-		if (end.diff(start,'days') < 1) {
+		else if (end.diff(start,'days') < 1) {
 			return start.calendar(false) + ' - ' + end.format('LT');
 		}
 		else {
