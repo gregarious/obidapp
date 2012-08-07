@@ -13,8 +13,7 @@
                 <li>Starts: <strong>{{formatLongDate dtstart}}</strong>
                     <br/>
                     Ends: <strong>{{formatLongDate dtend}}</strong></li>
-                <li>{{place.name}}</li> 
-                <li>{{place.location.address}}</li>
+                <li>at <a href="">{{place}}</a></li> 
                 <li>
                     <ul class="category">
                         <li>Food</li>
@@ -26,7 +25,7 @@
         </div>
     </header> <!-- .single-header -->
 
-    <article class="single-content">
+    <article class="single-content" id="event-single-content">
         <div id="mapCanvas">
             <img src="http://telecom-it.net/images/uploads/images/GMap.gif" />
         </div>

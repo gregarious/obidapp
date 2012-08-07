@@ -1,9 +1,12 @@
 <li>
   <a href="#app/specials/{{id}}">
     <div class="item-thumb">
+      {{#if place.image}}
+        <img src="{{place.image}}" />
+      {{else}}
         <img src="img/defaults/default-special.png" />
+      {{/if}}
     </div>
-
     <section class="item-content">
       <h1 class="item-title">{{title}}</h1>
       <ul class="item-details">
@@ -11,7 +14,6 @@
         {{#if dexpires}}
           <li>{{formatExpires dexpires}}</li>
         {{/if}}
-        <li>{{total_available}} Available</li>
         <li>
           <ul class="category">
             <li>Food</li>

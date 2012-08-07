@@ -322,6 +322,11 @@ a {
 
 /* SINGLE ---------- */
 
+.single-wrap {
+	background: #fff;
+	@include clearfix;
+}
+
 #top-bar-single {
 	@include background(linear-gradient(#222, $dark-grey));
 	@include column(12);
@@ -353,21 +358,23 @@ a {
 }
 
 .single-header {
-	margin: 60px 5px 0;
-	padding-bottom: 0.3em;
-	margin-bottom: 0.5em;
-	border-bottom: 1px solid $light-green;
+	padding: 60px 0.8em 0.3em;
 	@include clearfix();
-	//background: #fff;
+	@include background-image(linear-gradient(#fff, $light-grey));
 
 	.item-title {
-		//font-size: 1.1em;
 		@include text-shadow(0 0 1px #fff);
 		
 	}
 
 	.item-details {
 		line-height: 1.1em;
+
+
+		a {
+			color: $red;
+			font-weight: bold;
+		}
 	}
 
 	img {
@@ -376,18 +383,11 @@ a {
 		
 }
 
-.single-wrap {
-	
-	//margin: 0 5px 5px;
-	@include clearfix;
-	//background: $med-blue;
-}
-
 .single-content {
 	padding: 0.8em;
 	@include column(12);
 	position: relative;
-	background: #fff;
+	//background: #fff;
 
 	p {
 		font-size: 0.9em;
@@ -416,8 +416,8 @@ a {
 }
 
 .description {
-	//font-size: 1.1em;
 	@include text-shadow(1px 1px 1px #eee);
+	color: #222;
 }
 
 
@@ -654,8 +654,9 @@ a {
 	}
 }
 
-#special-single-content,  {
+#special-single-content, #event-single-content {
 	margin-bottom: 40px;
+	border-top: 1px solid $light-green;
 }
 
 .push {
