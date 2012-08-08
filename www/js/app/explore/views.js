@@ -14,6 +14,20 @@ define(["text!templates/explore-menu.html",
 		template: Handlebars.compile(loadingTpl),
 		render: function() {
 			this.$el.html(this.template());
+			return this;
+		}
+	});
+
+	exports.ErrorView = Backbone.View.extend({
+		message: '',
+		setMesssage: function(msg) {
+			this.message = msg;
+			return this;
+		},
+
+		render: function() {
+			this.$el.html(this.message);
+			return this;
 		}
 	});
 
