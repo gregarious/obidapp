@@ -174,6 +174,14 @@ define(["explore/models", "explore/views"], function(models, views) {
 		now: null
 	};
 
+	var typeFilterViewMap = {
+		places: new views.CategoryFilterView({collection: new models.PlaceCategories()}),
+		events: new views.CategoryFilterView({collection: new models.EventCategories()}),
+		specials: new views.CategoryFilterView({collection: new models.PlaceCategories()}),
+		news: null,
+		now: null
+	};
+
 	// TODO: turn this into some kind of actual CompositeView
 	/* Notes on problems developing one of these off the cuff:
 	* - regions are a great way to organize things
@@ -202,7 +210,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 
 	var menuView = new views.MenuView();
 	var contentController = null;
-	var filterView = new views.CategoryFilterView();
+	var filterView = null;
 
 	var activeContentType = null,
 		activeDisplayMode = 'list';
@@ -226,15 +234,47 @@ define(["explore/models", "explore/views"], function(models, views) {
 			if (!contentController) {
 				console.error('Warning: Unknown type arg "' + resourceType +
 					'" for ExploreController to act on.');
+				return;
 			}
 
 			var feedEl = containerView.findRegion('feed');
 			contentController.activate(feedEl, activeDisplayMode);
 			contentController.showDefaultFeed();
 
-			// now set the manu and filter areas
-			menuView.setActiveDisplayMode(activeDisplayMode);
-			// TODO: set filter stuff
+			// set the current nav icon
+			menuView.setActiveNav(activeContentType);
+			
+			// now set the filter areas
+			// TODO: maybe separate function, better documentation
+			if (filterView) {
+				//filterView.off();
+				filterView.collection.off();
+			}
+			filterView = typeFilterViewMap[resourceType];
+
+			var filterEl = containerView.findRegion('filter');
+			
+			// put callabck functions inside closure to ensure this filterView is used
+			(function(view){
+				// when collection changes, render it
+				view.collection.on('reset', function() {
+					console.log('category collection reset. new size: ' + view.collection.length);
+					filterEl.html(view.render().el);
+
+					// TODO: no idea why event binding in view (or delegation in general) doesn't work. hacking it here now.
+					filterEl.find('select').on('change', function(e){
+						view.categorySelected(e);
+					});
+				});
+				glob = view;
+			})(filterView);
+
+
+			filterView.collection.reset();
+			filterView.collection.fetch();
+			filterView.on('selected', function(id) {
+				runFilter(id);
+			});
 		}
 	};
 
@@ -257,7 +297,12 @@ define(["explore/models", "explore/views"], function(models, views) {
 
 	var runFilter = function(categoryId) {
 		if (contentController) {
-			contentController.showCategoryFiltered(categoryId);
+			if (categoryId < 1) {
+				contentController.showDefaultFeed();
+			}
+			else {
+				contentController.showCategoryFiltered(categoryId);
+			}
 		}
 		console.log('- ExploreController.runFilter | categoryId: ' + categoryId);
 	};
@@ -336,7 +381,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 	var containerView = null,
 		rootElement;
 
-	var controller = glob = {
+	var controller = {
 		activate: function() {
 			console.log('+ ExploreController.activate.');
 			rootElement = $('#panel-explore');
@@ -384,18 +429,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 		refreshStaticRegions: function() {
 			console.log('ExploreController.refreshDisplay');
 			containerView.findRegion('menu').html(menuView.render().el);
-
-			if (!contentController) {
-				containerView.findRegion('feed').contentEl.html("No data to display.");
-				console.warn("contentController is not set");
-			}
-
-			containerView.findRegion('filter').html(filterView.render().el);
-		},
-		runSearch: runSearch,
-		runFilter: runFilter,
-		showNextPage: showNextPage,
-		showPrevPage: showPrevPage
+		}
 	};
 
 	// add observer pattern pub capabilities

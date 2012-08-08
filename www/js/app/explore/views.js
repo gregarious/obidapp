@@ -152,13 +152,28 @@ define(["text!templates/explore-menu.html",
 	exports.CategoryFilterView = Backbone.View.extend({
 		template: Handlebars.compile(filterTpl),
 		
+		// TODO: doesn't delegate. no idea why
+		// events: {
+		// 	'change select': 'categorySelected'
+		// },
+
 		initialize: function(options) {
-			_.bindAll(this, 'render');
+			_.bindAll(this, 'render', 'categorySelected');
 		},
-		
+
 		render: function() {
-			this.$el.html(this.template());
+			var list = this.collection.map(function(model) {
+				return model.attributes;
+			});
+			var content = this.template({categories: list});
+			this.$el.html(content);
 			return this;
+		},
+
+		categorySelected: function(e) {
+			var selectedEl = $(e.target).find("option:selected");
+			var idSelected = selectedEl.val();
+			this.trigger('selected', idSelected);
 		}
 	});
 

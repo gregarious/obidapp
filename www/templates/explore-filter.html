@@ -1,11 +1,11 @@
 <div class="sorting">
-	<h1>Category: </h1>
+	<h1>Showing </h1>
 	<div class="select-container">
 		<select>
-			<option>All</option>
-			<option>Retail</option>
-			<option>Food</option>
-			<option>Services</option>
+			<option value="0">All</option>
+			{{#categories}}
+			<option value="{{id}}">{{label}}</option>
+			{{/categories}}
 		</select>
 	</div>
 </div>

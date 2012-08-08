@@ -100,7 +100,6 @@ define(function(){
 		},
 
 		parse: function(response) {
-			// TODO: pull out the offset and limit from response
 			this.meta = response.meta;
 			return response.objects;
 		},
@@ -139,6 +138,12 @@ define(function(){
 			options.data = options.data || {};
 			options.data.listed = true;
 			return BaseCollection.prototype.fetch.call(this, options);
+		},
+
+		categories: {
+			'Food & Drink': 301,
+			'Retail': 302,
+			'Services': 303
 		}
 	});
 
@@ -165,6 +170,20 @@ define(function(){
 			options.data.listed = true;
 			options.data.dexpires__gte = moment().format('YYYY-MM-DD');
 			return BaseCollection.prototype.fetch.call(this, options);
+		}
+	});
+
+	exports.PlaceCategories = Backbone.Collection.extend({
+		url: toTastyPieRootUrl('place_category'),
+		parse: function(response) {
+			return response.objects;
+		}
+	});
+
+	exports.EventCategories = Backbone.Collection.extend({
+		url: toTastyPieRootUrl('event_category'),
+		parse: function(response) {
+			return response.objects;
 		}
 	});
 
