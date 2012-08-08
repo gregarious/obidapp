@@ -2,11 +2,12 @@ define(["text!templates/explore-menu.html",
 		"text!templates/explore-filter.html",
 		"text!templates/explore-loading.html",
 		"text!templates/explore-error.html",
+		"text!templates/list-paging.html",
 		"text!templates/listitem-places.html",
 		"text!templates/listitem-events.html",
 		"text!templates/listitem-specials.html",
 		"text!templates/mapfeed.html"],
-	function(menuTpl, filterTpl, loadingTpl, errorTpl,
+	function(menuTpl, filterTpl, loadingTpl, errorTpl, pagingTpl,
 				placeListItemTpl, eventListItemTpl,
 				specialListItemTpl, mapTpl) {
 
@@ -114,27 +115,48 @@ define(["text!templates/explore-menu.html",
 
 	var BaseFeedView = Backbone.View.extend({
 		events: {
-			'click .category-button': 'filterRequested'
+			'click .page-previous': 'pagePrevious',
+			'click .page-next': 'pageNext'
 		},
 
 		initialize: function(options) {
-			_.bindAll(this, 'render', 'filterRequested');
+			_.bindAll(this, 'render', 'pagePrevious', 'pageNext');
 		},
 
-		filterRequested: function() {
-			this.trigger('filterRequested');
+		pagePrevious: function() {
+			this.trigger('page:prev');
+		},
+
+		pageNext: function() {
+			this.trigger('page:next');
 		}
 	});
 
 	var ListFeedView = BaseFeedView.extend({
 		itemTemplate: null,
-		className: 'feed',
-		tagName: 'ul',
+		pagingTemplate: Handlebars.compile(pagingTpl),
 		render: function() {
 			this.$el.empty();
+
+			// handle pagination buttons at button
+			// TODO: move this below once styling is figured out
+			var pagingOpts = {
+				previous: this.collection.meta && this.collection.meta.previous,
+				next: this.collection.meta && this.collection.meta.next
+			};
+			var pagingHtml = '<div>' +
+							this.pagingTemplate(pagingOpts) +
+							'</div>';
+			this.$el.append(pagingHtml);
+
+			// TODO: need to do better than this with composite views
+			var listHtml = '<ul class="feed">';
 			this.collection.each(function(model){
-				this.$el.append(this.itemTemplate(model.attributes));
+				listHtml += this.itemTemplate(model.attributes);
 			}, this);
+			listHtml += '</ul>';
+			this.$el.append(listHtml);
+
 			return this;
 		}
 	});

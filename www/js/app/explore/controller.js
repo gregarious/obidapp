@@ -25,6 +25,10 @@ define(["explore/models", "explore/views"], function(models, views) {
 					console.log(arguments);
 					stored[label] = view;
 				},
+
+				retrieve: function(label) {
+					return stored[label];
+				},
 				
 				setActive: function(viewOrLabel) {
 					console.log('viewManager:setActive. argument follows.');
@@ -57,41 +61,6 @@ define(["explore/models", "explore/views"], function(models, views) {
 			viewManager.displayActive(contentEl);
 		};
 
-		// creates new feed views, binds the current collection to them, and fetches data from server
-		var updateViews = function() {
-			console.log('feedController.updateViews');
-			// display loader view while we wait. note this takes over the active display!
-			showLoader();
-
-			// create new views with the current collection
-			var listView = ListViewClass ? new ListViewClass({collection: collection}) : null;
-			viewManager.store('list', listView);
-
-			var mapView = MapViewClass ? new MapViewClass({collection: collection}) : null;
-			viewManager.store('map', mapView);
-
-			console.log('fetching!');
-			// fetch from the server
-			collection.fetch({
-				// on failure, we manually set the current view to be an error
-				error: function() {
-					console.log('error!');
-					var msg = 'Problem contacting server. Try again.';
-					viewManager.setActive(new views.ErrorView({message: msg}));
-				},
-
-				// active view is correctly configured to show server result now
-				complete: function() {
-					console.log('complete!');
-					viewManager.displayActive(contentEl);
-				}
-			});
-			console.log('fetching off!');
-
-			// set the active view to a feed one, fetch's complete callback will use it (assuming success)
-			viewManager.setActive(displayMode);
-		};
-
 		var controller = {
 			activate: function(el, mode) {
 				console.log('feedController.activate' + arguments);
@@ -115,18 +84,18 @@ define(["explore/models", "explore/views"], function(models, views) {
 			showDefaultFeed: function() {
 				console.log('feedController.showDefaultFeed');
 				collection = new CollectionClass();
-				updateViews();
+				this.updateViews();
 			},
 
 			showCategoryFiltered: function(categoryId) {
 				collection = new CollectionClass({categoryId: categoryId});
-				updateViews();
+				this.updateViews();
 				console.log('- feedController.showCategoryFiltered: ' + categoryId);
 			},
 
 			showSearchFiltered: function(query) {
 				collection = new CollectionClass({query: query});
-				updateViews();
+				this.updateViews();
 				console.log('- feedController.showSearchFiltered: ' + query);
 			},
 
@@ -134,7 +103,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 				var opts = collection && collection.getNextPageOptions();
 				if (opts !== null) {
 					collection = new CollectionClass(opts);
-					updateViews();
+					this.updateViews();
 				}
 				console.log('- feedController.showNextPage. opts to follow');
 				console.log(opts);
@@ -144,7 +113,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 				var opts = collection && collection.getPrevPageOptions();
 				if (opts !== null) {
 					collection = new CollectionClass(opts);
-					updateViews();
+					this.updateViews();
 				}
 				console.log('- feedController.showPrevPage. opts to follow');
 				console.log(opts);
@@ -160,6 +129,52 @@ define(["explore/models", "explore/views"], function(models, views) {
 
 			itemClicked: function(itemId) {
 				console.log('- feedController.itemClicked');
+			},
+
+			// creates new feed views, binds the current collection to them, and fetches data from server
+			updateViews: function() {
+				console.log('feedController.updateViews');
+				// display loader view while we wait. note this takes over the active display!
+				showLoader();
+
+				// create new views with the current collection (and unbind old ones, if they exist)
+				var oldList = viewManager.retrieve('list');
+				if (oldList) {
+					oldList.off();
+				}
+				var listView = ListViewClass ? new ListViewClass({collection: collection}) : null;
+				listView.on('page:prev', this.showPrevPage, this);
+				listView.on('page:next', this.showNextPage, this);
+				viewManager.store('list', listView);
+
+
+				var oldMap = viewManager.retrieve('map');
+				if (oldMap) {
+					oldMap.off();
+				}
+				var mapView = MapViewClass ? new MapViewClass({collection: collection}) : null;
+				viewManager.store('map', mapView);
+
+				console.log('fetching!');
+				// fetch from the server
+				collection.fetch({
+					// on failure, we manually set the current view to be an error
+					error: function() {
+						console.log('error!');
+						var msg = 'Problem contacting server. Try again.';
+						viewManager.setActive(new views.ErrorView({message: msg}));
+					},
+
+					// active view is correctly configured to show server result now
+					complete: function() {
+						console.log('complete!');
+						viewManager.displayActive(contentEl);
+					}
+				});
+				console.log('fetching off!');
+
+				// set the active view to a feed one, fetch's complete callback will use it (assuming success)
+				viewManager.setActive(displayMode);
 			}
 		};
 		_.extend(controller, Backbone.Events);
