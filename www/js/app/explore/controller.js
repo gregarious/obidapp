@@ -245,37 +245,41 @@ define(["explore/models", "explore/views"], function(models, views) {
 			menuView.setActiveNav(activeContentType);
 			
 			// now set the filter areas
-			// TODO: maybe separate function, better documentation
-			if (filterView) {
-				//filterView.off();
-				filterView.collection.off();
-			}
-			filterView = typeFilterViewMap[resourceType];
-
-			var filterEl = containerView.findRegion('filter');
-			
-			// put callabck functions inside closure to ensure this filterView is used
-			(function(view){
-				// when collection changes, render it
-				view.collection.on('reset', function() {
-					console.log('category collection reset. new size: ' + view.collection.length);
-					filterEl.html(view.render().el);
-
-					// TODO: no idea why event binding in view (or delegation in general) doesn't work. hacking it here now.
-					filterEl.find('select').on('change', function(e){
-						view.categorySelected(e);
-					});
-				});
-				glob = view;
-			})(filterView);
-
-
-			filterView.collection.reset();
-			filterView.collection.fetch();
-			filterView.on('selected', function(id) {
-				runFilter(id);
-			});
+			configureFilterView(typeFilterViewMap[resourceType]);
 		}
+	};
+
+	var	configureFilterView = function(newView) {
+		if (!newView) {
+			console.error('Invalid filter view');
+			return false;
+		}
+
+		// tear down old view
+		if (filterView) {
+			filterView.off();
+			filterView.collection.off();
+		}
+		
+		var filterEl = containerView.findRegion('filter');
+			
+		// when collection changes, render it
+		newView.collection.on('reset', function() {
+			filterEl.html(newView.render().el);
+			// TODO: no idea why event binding in view (or delegation in general) doesn't work. hacking it here now.
+			filterEl.find('select').on('change', function(e){
+				console.log('asdadsa');
+				newView.categorySelected(e);
+			});
+		});
+
+		newView.collection.reset();	// will trigger event to clear select box
+		newView.collection.fetch();	// will later trigger repopulation of select box
+		newView.on('selected', function(id) {
+			runFilter(id);
+		});
+		
+		filterView = newView;
 	};
 
 	var setDisplayMode = function(mode) {
