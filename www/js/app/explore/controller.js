@@ -1,17 +1,179 @@
 define(["explore/models", "explore/views"], function(models, views) {
 	var typeSettings = {
 		places: {
+			Collection: models.Places,
 			ListView: views.PlacesList,
-			collection: new models.Places()
+			MapView: null
 		},
 		events: {
+			Collection: models.Events,
 			ListView: views.EventsList,
-			collection: new models.Events()
+			MapView: null
 		},
 		specials: {
+			Collection: models.Specials,
 			ListView: views.SpecialsList,
-			collection: new models.Specials()
+			MapView: null
 		}
+	};
+
+	// factory constructor for feed controller objects
+	// see "var controller" line for object interface
+
+	// TODO: speed this up by creating a prototype to inherit from
+	var createFeedController = function(CollectionClass, ListViewClass, MapViewClass) {
+		var rootEl,
+			contentEl,
+			
+			collection,
+			
+			categoryFilter = null,
+			query = null,
+
+			displayMode = null;
+
+
+		var viewManager = (function(){
+			var active = null,
+				stored = {
+					map: null,
+					list: null
+				};
+			
+			return {
+				store: function(label, view) {
+					this.stored.label = view;
+				},
+				
+				setActive: function(viewOrLabel) {
+					this.active = viewOrLabel;
+				},
+				
+				getActive: function() {
+					return _isString(this.active) ? this.stored[this.active] : this.active;
+				},
+
+				displayActive: function(el) {
+					if (el) {
+						var view = this.getActive();
+						if (view) {
+							el.html(view.render().el);
+						}
+					}
+				}
+			};
+		})();
+
+		var showLoader = function() {
+			viewManager.setActive(new views.LoadingView());
+			viewManager.displayActive(contentEl);
+		};
+
+		// creates new feed views, binds the current collectionInstance to them, and fetches data from server
+		var updateViews = function() {
+			// display loader view while we wait. note this takes over the active display!
+			showLoader();
+
+			// create new views with the current collection
+			var listView = ListViewClass ? ListViewClass({collection: collection}) : null;
+			viewManager.store('list', listView);
+
+			var mapView = MapViewClass ? MapViewClass({collection: collection}) : null;
+			viewManager.store('map', mapView);
+
+			// fetch from the server
+			collectionInstance.fetch({
+				// on failure, we manually set the current view to be an error
+				failure: function() {
+					var msg = 'Problem contacting server. Try again.';
+					viewManager.setActive(new views.ErrorView(msg));
+				},
+
+				// active view is correctly configured to show server result now
+				complete: function() {
+					viewManager.displayActive(contentEl);
+				}
+			});
+
+			// set the active view to a feed one, fetch's complete callback will use it (assuming success)
+			viewManager.setActive(displayMode);
+		};
+
+		var controller = {
+			activate: function(rootEl, activeViewType) {
+				rootEl = rootEl;
+				contentEl = rootEl;
+				setActiveView(activeViewType);
+			},
+
+			deactivate: function() {
+				// ensures it won't draw to display after deactivation
+				rootEl = contentEl = null;
+			},
+
+			setActiveDisplayMode: function(mode) {
+				displayMode = mode;
+				viewManager.setActive(displayMode);
+				viewManager.displayActive();
+			},
+
+			showDefaultFeed: function() {
+				collection = new CollectionClass();
+				updateViews();
+			},
+
+			showCategoryFiltered: function(categoryId) {
+				collection = new CollectionClass({categoryId: categoryId});
+				updateViews();
+				console.log('- feedController.showCategoryFiltered: ' + categoryId);
+			},
+
+			showSearchFiltered: function(query) {
+				collection = new CollectionClass({query: query});
+				updateViews();
+				console.log('- feedController.showSearchFiltered: ' + query);
+			},
+
+			showNextPage: function() {
+				var nextUrl = collection && collection.getNextPageUrl();
+				if (nextUrl) {
+					collection = new CollectionClass({url: nextUrl});
+					updateViews();
+				}
+				console.log('- feedController.shownextPage (url:'+nextUrl+')');
+			},
+
+			showPrevPage: function() {
+				var prevUrl = collection && collection.getNextPageUrl();
+				if (prevUrl) {
+					collection = new CollectionClass({url: prevUrl});
+					updateViews();
+				}
+				console.log('- feedController.showPrevPage (url:'+prevUrl+')');
+			},
+
+			mapNextItem: function() {
+				console.log('- feedController.mapNextItem');
+			},
+
+			mapPrevItem: function() {
+				console.log('- feedController.mapPrevItem');
+			},
+
+			itemClicked: function(itemId) {
+				console.log('- feedController.itemClicked');
+			}
+		};
+		_.extend(controller, Backbone.Events);
+		return controller;
+	};
+	
+	var typeControllerMap = {
+		places: createFeedController(models.Places, views.PlacesList, null),
+		events: createFeedController(models.Events, views.EventsList, null),
+		specials: createFeedController(models.Specials, views.SpecialsList, null),
+		news: null,
+		now: null
 	};
 
 	// TODO: turn this into some kind of actual CompositeView
@@ -40,140 +202,79 @@ define(["explore/models", "explore/views"], function(models, views) {
 		return view;
 	};
 
-	var subviews = {
-		menu: new views.MenuView(),
-		feeds: {
-			list: null,
-			map: null,
-			activeLabel: null,
-			toggleActive: function() {
-				if (this.activeLabel === 'list') this.activeLabel = 'map';
-				else if (this.activeLabel === 'map') this.activeLabel = 'list';
-				return this.activeLabel;
-			},
-			setActive: function(mode) {
-				this.activeLabel = mode;
-			},
-			getActiveLabel: function() {
-				return this.activeLabel;
-			},
-			getActiveView: function() {
-				return this[this.activeLabel];
-			}
-		},
-		filter: new views.CategoryFilterView()
-	};
+	var menuView = new views.MenuView();
+	var contentController = null;
+	var filterView = new views.CategoryFilterView();
 
-	var contentState = {
-		resourceType: null,
-		collection: null,
-		awaitingData: null,
-		valid: false,
-		// returns True the resource type is changed
-		update: function(resourceType) {
-			var changed = (this.resourceType !== resourceType);
-			var settings = typeSettings[resourceType];
-			this.resourceType = resourceType;
-			if (settings) {
-				this.collection = settings.collection;
-			}
-			else {
-				this.collection = null;
-			}
-			this.valid = !!this.collection;	// a bit hacky, but does exactly what we want
-			return changed;
-		}
-	};
+	var activeContentType = null,
+		activeDisplayMode = 'list';
 
 	// sets the current feed collection and creates views to display it
-	// returns false if content is unchanged, true otherwise
-	var setContent = function(resourceType) {
-		console.log('- controller.setContent: ' + resourceType);
+	var setContentType = function(resourceType) {
+		console.log('- controller.setContentType: ' + resourceType);
 		// no work to be done here, just return
-		var changed = contentState.update(resourceType);
-		if(!changed) {
+		if (resourceType === activeContentType) {
 			console.log('(unchanged content)');
-			return false;
-		}
-
-		var settings = typeSettings[resourceType];
-		if (!contentState.valid || !settings) {
-			console.log('Warning: Unknown type arg "' + resourceType +
-				'" for ExploreController to act on.');
-			contentState.awaitingData = null;
-			return true;
-		}
-
-		// create both feed views (and remove any handlers from old ones if they exist)
-		if (subviews.feeds.list) {
-			subviews.feeds.list.off();
-		}
-		subviews.feeds.list = new settings.ListView({
-			collection: contentState.collection
-		});
-
-		if (subviews.feeds.map) {
-			subviews.feeds.map.off();
-		}
-		subviews.feeds.map = new views.MapFeedView({
-			collection: contentState.collection
-		});
-
-		// temp debug
-		contentState.collection.categories = [
-			{label: 'Cat 1', value: 'cat1'},
-			{label: 'Cat 2', value: 'cat2'},
-			{label: 'Cat 3', value: 'cat3'},
-			{label: 'Cat 4', value: 'cat4'}
-		];
-
-		// we're going to fetch the collection now
-		contentState.awaitingData = $.Deferred();
-
-		// we wrap this up in a closure so the current instance of awaitingData is
-		// used inside the callbacks
-		(function(awaitingData) {
-			contentState.collection.fetch({
-				success: function(collection, response) {
-					awaitingData.resolve();
-				},
-				error: function(collection, response) {
-					awaitingData.reject();
-				},
-				timeout: 2000
-			});
-		})(contentState.awaitingData);
-
-		subviews.menu.setActiveNav(resourceType);
-		return true;
-	};
-
-	// returns true if display mode is changed
-	var setDisplayMode = function(mode) {
-		console.log('- controller.setDisplayMode: ' + mode);
-		if (mode === subviews.feeds.activeLabel) {
-			return false;
 		}
 		else {
-			subviews.feeds.setActive(mode);
-			subviews.menu.setActiveDisplayMode(mode);
-			return true;
+			activeContentType = resourceType;
+
+			if (contentController) {
+				contentController.deactivate();
+			}
+
+			// switch to new controller
+			contentController = typeControllerMap[resourceType];
+			if (!contentController) {
+				console.error('Warning: Unknown type arg "' + resourceType +
+					'" for ExploreController to act on.');
+			}
+
+			var feedEl = containerView.findRegion('feed');
+			contentController.activate(feedEl, activeDisplayMode);
+			contentController.showDefaultFeed();
+
+			// now set the manu and filter areas
+			menuView.setActiveDisplayMode(activeDisplayMode);
+			// TODO: set filter stuff
 		}
 	};
 
+	var setDisplayMode = function(mode) {
+		console.log('- controller.setDisplayMode: ' + mode);
+		activeDisplayMode = mode;
+		if (contentController) {
+			contentController.setActiveDisplayMode(mode);
+			menuView.setActiveDisplayMode(mode);
+		}
+	};
+
+	// TODO: could conceivably link these handlers directly to feed controllers
 	var runSearch = function(query) {
+		if (contentController) {
+			contentController.showSearchFiltered(query);
+		}
 		console.log('- ExploreController.runSearch | query: ' + query);
 	};
 
-	var runFilter = function(categories) {
-		console.log('- ExploreController.runFilter | categories: ' + categories);
+	var runFilter = function(categoryId) {
+		if (contentController) {
+			contentController.showCategoryFiltered(categoryId);
+		}
+		console.log('- ExploreController.runFilter | categoryId: ' + categoryId);
 	};
 
 	var showNextPage = function() {
+		if (contentController) {
+			contentController.showNextPage();
+		}
 		console.log('- ExploreController.showNextPage');
 	};
 
 	var showPrevPage = function() {
+		if (contentController) {
+			contentController.showPrevPage();
+		}
 		console.log('- ExploreController.showPrevPage');
 	};
 
@@ -204,13 +305,15 @@ define(["explore/models", "explore/views"], function(models, views) {
 
 	var toggleDisplayMode = function() {
 		console.log('- ExploreController.toggleDisplayMode');
-		var newActive = subviews.feeds.toggleActive();
-		if (!newActive) {
-			console.log('Warning: display mode error.');
-			return;
+		if (activeDisplayMode === 'map') {
+			this.setDisplayMode('list');
 		}
-		subviews.menu.setActiveDisplayMode(newActive);
-		this.refreshDisplay();
+		else if (activeDisplayMode === 'list') {
+			this.setDisplayMode('map');
+		}
+		else {
+			console.warning('Invalid activeDisplayMode: ' + activeDisplayMode);
+		}
 	};
 
 	var activateSearch = function() {
@@ -247,19 +350,21 @@ define(["explore/models", "explore/views"], function(models, views) {
 			rootElement.show();
 
 			// draw menu
-			subviews.menu.render();
+			menuView.render();
 
 			// attach event handlers
-			subviews.menu.on('click:displayMode', toggleDisplayMode, this);
-			subviews.menu.on('click:searchOn', activateSearch, this);
+			menuView.on('click:displayMode', toggleDisplayMode, this);
+			menuView.on('click:searchOn', activateSearch, this);
 		},
 
 		deactivate: function() {
 			console.log('ExploreController.deactivate.');
-			subviews.menu.off();
+			menuView.off();
 			rootElement.hide();
 		},
 
+		// called upon an explore tab clicked
+		// settings can include resourceType and displayMode
 		setState: function(settings, render) {
 			// render defaults to true
 			render = _.isUndefined(render) ? true : render;
@@ -268,43 +373,22 @@ define(["explore/models", "explore/views"], function(models, views) {
 							',' + settings.displayMode);
 			var changed = false;
 			if (!_.isUndefined(settings.resourceType)) {
-				changed |= setContent(settings.resourceType);
+				setContentType(settings.resourceType);
 			}
 			if (!_.isUndefined(settings.displayMode)) {
-				changed |= setDisplayMode(settings.displayMode);
+				setDisplayMode(settings.displayMode);
 			}
-			if (changed && render) {
-				this.refreshDisplay();
-			}
+			this.refreshStaticDisplays();
 		},
 
-		refreshDisplay: function() {
+		refreshStaticDisplays: function() {
 			console.log('ExploreController.refreshDisplay');
-
 			containerView.findRegion('menu').html(subviews.menu.render().el);
 
-			var contentEl = containerView.findRegion('feed');
-			// if awaitngData is null, we don't have data, and never got it
-			if (contentState.awaitingData === null) {
-				contentEl.html("No data to display.");
-				console.log(contentState.awaitingData);
-				return;
+			if (!contentController) {
+				containerView.findRegion('feed').contentEl.html("No data to display.");
+				console.warn("contentController is not set");
 			}
-
-			if (!subviews.feeds.getActiveView()) {
-				console.log('Warning: invalid display mode');
-				return;
-			}
-
-			// once data is retreived, we can display the active view
-			contentState.awaitingData.then(
-				function() {
-					contentEl.html(subviews.feeds.getActiveView().render().el);
-				},
-				function() {
-					contentEl.html("Error retreiving data.");
-				}
-			);
 
 			containerView.findRegion('filter').html(subviews.filter.render().el);
 		}

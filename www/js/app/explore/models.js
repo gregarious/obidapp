@@ -61,19 +61,19 @@ define(function(){
 	});
 
 	var BaseCollection = Backbone.Collection.extend({
-		prev: null,
-		next: null,
-		category_id: null,
-		query: null,
+		nextPageUrl: null,
+		prevPageUrl: null,
 
-		// TO ADD SUPPORT FOR GET ARGS: JUST ADD A "data" object to the fetch calls -- passthru to jQuey.ajax afterall
-		// availble options: offset, limit, filters, query
-		setQuery: function(query) {
-			this.query = query;
-		},
-
-		setCategory: function(id) {
-			this.category_id = id;
+		// options:
+		//	- url: direct override of the default url
+		//  - query: search query to add to request
+		//  - categoryId: category id to filter results by
+		initialize: function(options) {
+			if (options.url) {
+				this.url = options.url;
+				this.query = options.query;
+				this.categoryId = options.categoryId;
+			}
 		},
 
 		fetch: function(options) {
@@ -88,20 +88,9 @@ define(function(){
 			return Backbone.Collection.prototype.fetch.call(this, options);
 		},
 
-		// returns a new Collection of this type, with url set
-		getNextCollection: function() {
-			// either need to fid a way to make a new obejct of this type,
-			// or need to parse the prev/next url from backbone.
-		},
-
-		// returns a new Collection of this type, with url set
-		getPrevious: function() {
-
-		},
-
 		parse: function(response) {
-			this.prev = response.meta && response.meta.previous;
-			this.next = response.meta && response.meta.next;
+			this.nextPageUrl = response.meta && response.meta.previous;
+			this.prevPageUrl = response.meta && response.meta.next;
 			return response.objects;
 		}
 	});
