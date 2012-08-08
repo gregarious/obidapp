@@ -173,6 +173,11 @@ define(function(){
 		}
 	});
 
+	exports.NewsArticles = BaseCollection.extend({
+		// model unnecessary: no single page for news
+		url: toTastyPieRootUrl('news')
+	});
+
 	exports.PlaceCategories = Backbone.Collection.extend({
 		url: toTastyPieRootUrl('place_category'),
 		parse: function(response) {

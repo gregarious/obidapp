@@ -6,10 +6,11 @@ define(["text!templates/explore-menu.html",
 		"text!templates/listitem-places.html",
 		"text!templates/listitem-events.html",
 		"text!templates/listitem-specials.html",
+		"text!templates/listitem-news.html",
 		"text!templates/mapfeed.html"],
 	function(menuTpl, filterTpl, loadingTpl, errorTpl, pagingTpl,
 				placeListItemTpl, eventListItemTpl,
-				specialListItemTpl, mapTpl) {
+				specialListItemTpl, newsListItemTpl, mapTpl) {
 
 	var exports = {};
 
@@ -83,7 +84,7 @@ define(["text!templates/explore-menu.html",
 				listIcon.show();
 			}
 			else {
-				console.log('Warning: display mode error.');
+				console.warn('display mode error.');
 			}
 
 			// cycle throug nav li's and ensure correct one has 'active' class
@@ -155,6 +156,7 @@ define(["text!templates/explore-menu.html",
 				listHtml += this.itemTemplate(model.attributes);
 			}, this);
 			listHtml += '</ul>';
+
 			this.$el.append(listHtml);
 
 			return this;
@@ -169,6 +171,9 @@ define(["text!templates/explore-menu.html",
 	});
 	exports.SpecialsList = ListFeedView.extend({
 		itemTemplate: Handlebars.compile(specialListItemTpl)
+	});
+	exports.NewsArticleList = ListFeedView.extend({
+		itemTemplate: Handlebars.compile(newsListItemTpl)
 	});
 
 	exports.CategoryFilterView = Backbone.View.extend({

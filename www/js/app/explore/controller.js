@@ -185,7 +185,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 		places: createFeedController(models.Places, views.PlacesList, null),
 		events: createFeedController(models.Events, views.EventsList, null),
 		specials: createFeedController(models.Specials, views.SpecialsList, null),
-		news: null,
+		news: createFeedController(models.NewsArticles, views.NewsArticleList, null),
 		now: null
 	};
 
@@ -265,25 +265,23 @@ define(["explore/models", "explore/views"], function(models, views) {
 	};
 
 	var	configureFilterView = function(newView) {
-		if (!newView) {
-			console.error('Invalid filter view');
-			return false;
-		}
-
 		// tear down old view
 		if (filterView) {
 			filterView.off();
 			filterView.collection.off();
 		}
-		
+
 		var filterEl = containerView.findRegion('filter');
+		if (!newView) {
+			filterEl.empty();
+			return false;
+		}
 			
 		// when collection changes, render it
 		newView.collection.on('reset', function() {
 			filterEl.html(newView.render().el);
 			// TODO: no idea why event binding in view (or delegation in general) doesn't work. hacking it here now.
 			filterEl.find('select').on('change', function(e){
-				console.log('asdadsa');
 				newView.categorySelected(e);
 			});
 		});
@@ -374,7 +372,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 			this.setDisplayMode('map');
 		}
 		else {
-			console.warning('Invalid activeDisplayMode: ' + activeDisplayMode);
+			console.warn('Invalid activeDisplayMode: ' + activeDisplayMode);
 		}
 	};
 
