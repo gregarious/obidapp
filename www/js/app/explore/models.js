@@ -109,7 +109,9 @@ define(function(){
 	exports.Places = BaseCollection.extend({
 		model: exports.Place,
 		url: toTastyPieRootUrl('place'),
+
 		fetch: function(options) {
+			// restrict results to only listed places
 			options.data = options.data || {};
 			options.data.listed = true;
 			return BaseCollection.prototype.fetch.call(this, options);
@@ -119,7 +121,9 @@ define(function(){
 	exports.Events = BaseCollection.extend({
 		model: exports.Event,
 		url: toTastyPieRootUrl('event'),
+		
 		fetch: function(options) {
+			// restrict results to only listed events after this moment
 			options.data = options.data || {};
 			options.data.listed = true;
 			options.data.dtend__gt = moment().format();
@@ -130,10 +134,12 @@ define(function(){
 	exports.Specials = BaseCollection.extend({
 		model: exports.Special,
 		url: toTastyPieRootUrl('special'),
+		
 		fetch: function(options) {
+			// restrict results to only specials that expire today or later
 			options.data = options.data || {};
 			options.data.listed = true;
-			options.data.dexpires__gt = moment().format('YYYY-MM-DD');
+			options.data.dexpires__gte = moment().format('YYYY-MM-DD');
 			return BaseCollection.prototype.fetch.call(this, options);
 		}
 	});
