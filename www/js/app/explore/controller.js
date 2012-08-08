@@ -1,29 +1,9 @@
 define(["explore/models", "explore/views"], function(models, views) {
-	var typeSettings = {
-		places: {
-			Collection: models.Places,
-			ListView: views.PlacesList,
-			MapView: null
-		},
-		events: {
-			Collection: models.Events,
-			ListView: views.EventsList,
-			MapView: null
-		},
-		specials: {
-			Collection: models.Specials,
-			ListView: views.SpecialsList,
-			MapView: null
-		}
-	};
-
 	// factory constructor for feed controller objects
 	// see "var controller" line for object interface
-
 	// TODO: speed this up by creating a prototype to inherit from
 	var createFeedController = function(CollectionClass, ListViewClass, MapViewClass) {
-		var rootEl,
-			contentEl,
+		var contentEl,
 			
 			collection,
 			
@@ -42,23 +22,26 @@ define(["explore/models", "explore/views"], function(models, views) {
 			
 			return {
 				store: function(label, view) {
-					this.stored.label = view;
+					stored.label = view;
 				},
 				
 				setActive: function(viewOrLabel) {
-					this.active = viewOrLabel;
+					active = viewOrLabel;
 				},
 				
 				getActive: function() {
-					return _isString(this.active) ? this.stored[this.active] : this.active;
+					return _.isString(active) ? this.stored[active] : active;
 				},
 
 				displayActive: function(el) {
+					console.log('viewManager:displayActive. active view follows.');
 					if (el) {
 						var view = this.getActive();
+						console.log(view);
 						if (view) {
 							el.html(view.render().el);
 						}
+						debugger;
 					}
 				}
 			};
@@ -69,20 +52,20 @@ define(["explore/models", "explore/views"], function(models, views) {
 			viewManager.displayActive(contentEl);
 		};
 
-		// creates new feed views, binds the current collectionInstance to them, and fetches data from server
+		// creates new feed views, binds the current collection to them, and fetches data from server
 		var updateViews = function() {
 			// display loader view while we wait. note this takes over the active display!
 			showLoader();
 
 			// create new views with the current collection
-			var listView = ListViewClass ? ListViewClass({collection: collection}) : null;
+			var listView = ListViewClass ? new ListViewClass({collection: collection}) : null;
 			viewManager.store('list', listView);
 
-			var mapView = MapViewClass ? MapViewClass({collection: collection}) : null;
+			var mapView = MapViewClass ? new MapViewClass({collection: collection}) : null;
 			viewManager.store('map', mapView);
 
 			// fetch from the server
-			collectionInstance.fetch({
+			collection.fetch({
 				// on failure, we manually set the current view to be an error
 				failure: function() {
 					var msg = 'Problem contacting server. Try again.';
@@ -100,21 +83,20 @@ define(["explore/models", "explore/views"], function(models, views) {
 		};
 
 		var controller = {
-			activate: function(rootEl, activeViewType) {
-				rootEl = rootEl;
-				contentEl = rootEl;
-				setActiveView(activeViewType);
+			activate: function(contentEl, activeViewType) {
+				contentEl = contentEl;
+				viewManager.setActive(activeViewType);
 			},
 
 			deactivate: function() {
 				// ensures it won't draw to display after deactivation
-				rootEl = contentEl = null;
+				contentEl = null;
 			},
 
 			setActiveDisplayMode: function(mode) {
 				displayMode = mode;
 				viewManager.setActive(displayMode);
-				viewManager.displayActive();
+				viewManager.displayActive(contentEl);
 			},
 
 			showDefaultFeed: function() {
@@ -241,7 +223,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 	};
 
 	var setDisplayMode = function(mode) {
-		console.log('- controller.setDisplayMode: ' + mode);
+		console.log('- ExploreController.setDisplayMode: ' + mode);
 		activeDisplayMode = mode;
 		if (contentController) {
 			contentController.setActiveDisplayMode(mode);
@@ -378,19 +360,21 @@ define(["explore/models", "explore/views"], function(models, views) {
 			if (!_.isUndefined(settings.displayMode)) {
 				setDisplayMode(settings.displayMode);
 			}
-			this.refreshStaticDisplays();
+			if (render) {
+				this.refreshStaticRegions();
+			}
 		},
 
-		refreshStaticDisplays: function() {
+		refreshStaticRegions: function() {
 			console.log('ExploreController.refreshDisplay');
-			containerView.findRegion('menu').html(subviews.menu.render().el);
+			containerView.findRegion('menu').html(menuView.render().el);
 
 			if (!contentController) {
 				containerView.findRegion('feed').contentEl.html("No data to display.");
 				console.warn("contentController is not set");
 			}
 
-			containerView.findRegion('filter').html(subviews.filter.render().el);
+			containerView.findRegion('filter').html(filterView.render().el);
 		}
 	};
 

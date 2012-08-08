@@ -137,21 +137,21 @@ define(["text!templates/explore-menu.html",
 		}
 	});
 
-	exports.MapFeedView = BaseFeedView.extend({
-		template: Handlebars.compile(mapTpl),
-		map: null,
-		mapOptions: {
-			center: new google.maps.LatLng(-34.397, 150.644),
-			zoom: 8,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		},
+	// exports.MapFeedView = BaseFeedView.extend({
+	// 	template: Handlebars.compile(mapTpl),
+	// 	map: null,
+	// 	mapOptions: {
+	// 		center: new google.maps.LatLng(-34.397, 150.644),
+	// 		zoom: 8,
+	// 		mapTypeId: google.maps.MapTypeId.ROADMAP
+	// 	},
 
-		render: function() {
-			this.$el.html(this.template());
-			//this.map = new google.maps.Map(this.$('#map_canvas'), this.mapOptions);
-			return this;
-		}
-	});
+	// 	render: function() {
+	// 		this.$el.html(this.template());
+	// 		//this.map = new google.maps.Map(this.$('#map_canvas'), this.mapOptions);
+	// 		return this;
+	// 	}
+	// });
 
 	exports.PlacesList = ListFeedView.extend({
 		itemTemplate: Handlebars.compile(placeListItemTpl)

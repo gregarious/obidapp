@@ -69,7 +69,7 @@ define(function(){
 		//  - query: search query to add to request
 		//  - categoryId: category id to filter results by
 		initialize: function(options) {
-			if (options.url) {
+			if (options) {
 				this.url = options.url;
 				this.query = options.query;
 				this.categoryId = options.categoryId;
