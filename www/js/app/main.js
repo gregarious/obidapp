@@ -131,6 +131,10 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		}
 	}))();
 
+	$.ajaxSetup({
+		timeout: 3000
+	});
+
 	// after DOM load, initialze and run the app
 	$(function(){
 		// hide all DOM to begin with

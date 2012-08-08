@@ -1,12 +1,14 @@
 define(["text!templates/explore-menu.html",
 		"text!templates/explore-filter.html",
 		"text!templates/explore-loading.html",
+		"text!templates/explore-error.html",
 		"text!templates/listitem-places.html",
 		"text!templates/listitem-events.html",
 		"text!templates/listitem-specials.html",
 		"text!templates/mapfeed.html"],
-	function(menuTpl, filterTpl, loadingTpl, placeListItemTpl,
-				eventListItemTpl, specialListItemTpl, mapTpl) {
+	function(menuTpl, filterTpl, loadingTpl, errorTpl,
+				placeListItemTpl, eventListItemTpl,
+				specialListItemTpl, mapTpl) {
 
 	var exports = {};
 
@@ -19,14 +21,14 @@ define(["text!templates/explore-menu.html",
 	});
 
 	exports.ErrorView = Backbone.View.extend({
-		message: '',
-		setMesssage: function(msg) {
-			this.message = msg;
+		template: Handlebars.compile(errorTpl),
+		initialize: function(options) {
+			this.message = options.message;
 			return this;
 		},
 
 		render: function() {
-			this.$el.html(this.message);
+			this.$el.html(this.template({'message': this.message}));
 			return this;
 		}
 	});
@@ -136,22 +138,6 @@ define(["text!templates/explore-menu.html",
 			return this;
 		}
 	});
-
-	// exports.MapFeedView = BaseFeedView.extend({
-	// 	template: Handlebars.compile(mapTpl),
-	// 	map: null,
-	// 	mapOptions: {
-	// 		center: new google.maps.LatLng(-34.397, 150.644),
-	// 		zoom: 8,
-	// 		mapTypeId: google.maps.MapTypeId.ROADMAP
-	// 	},
-
-	// 	render: function() {
-	// 		this.$el.html(this.template());
-	// 		//this.map = new google.maps.Map(this.$('#map_canvas'), this.mapOptions);
-	// 		return this;
-	// 	}
-	// });
 
 	exports.PlacesList = ListFeedView.extend({
 		itemTemplate: Handlebars.compile(placeListItemTpl)

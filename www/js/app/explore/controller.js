@@ -12,7 +12,6 @@ define(["explore/models", "explore/views"], function(models, views) {
 
 			displayMode = null;
 
-
 		var viewManager = (function(){
 			var active = null,
 				stored = {
@@ -22,38 +21,45 @@ define(["explore/models", "explore/views"], function(models, views) {
 			
 			return {
 				store: function(label, view) {
-					stored.label = view;
+					console.log('viewManager:storeActive. arguments follow.');
+					console.log(arguments);
+					stored[label] = view;
 				},
 				
 				setActive: function(viewOrLabel) {
+					console.log('viewManager:setActive. argument follows.');
+					console.log(viewOrLabel);
 					active = viewOrLabel;
 				},
 				
 				getActive: function() {
-					return _.isString(active) ? this.stored[active] : active;
+					return _.isString(active) ? stored[active] : active;
 				},
 
 				displayActive: function(el) {
 					console.log('viewManager:displayActive. active view follows.');
 					if (el) {
 						var view = this.getActive();
-						console.log(view);
 						if (view) {
+							console.log(view);
 							el.html(view.render().el);
 						}
-						debugger;
+						else { console.log('<!view>'); }
 					}
+					else { console.log('<!el>'); }
 				}
 			};
 		})();
 
 		var showLoader = function() {
+			console.log('feedController.showLoader');
 			viewManager.setActive(new views.LoadingView());
 			viewManager.displayActive(contentEl);
 		};
 
 		// creates new feed views, binds the current collection to them, and fetches data from server
 		var updateViews = function() {
+			console.log('feedController.updateViews');
 			// display loader view while we wait. note this takes over the active display!
 			showLoader();
 
@@ -64,42 +70,50 @@ define(["explore/models", "explore/views"], function(models, views) {
 			var mapView = MapViewClass ? new MapViewClass({collection: collection}) : null;
 			viewManager.store('map', mapView);
 
+			console.log('fetching!');
 			// fetch from the server
 			collection.fetch({
 				// on failure, we manually set the current view to be an error
-				failure: function() {
+				error: function() {
+					console.log('error!');
 					var msg = 'Problem contacting server. Try again.';
-					viewManager.setActive(new views.ErrorView(msg));
+					viewManager.setActive(new views.ErrorView({message: msg}));
 				},
 
 				// active view is correctly configured to show server result now
 				complete: function() {
+					console.log('complete!');
 					viewManager.displayActive(contentEl);
 				}
 			});
+			console.log('fetching off!');
 
 			// set the active view to a feed one, fetch's complete callback will use it (assuming success)
 			viewManager.setActive(displayMode);
 		};
 
 		var controller = {
-			activate: function(contentEl, activeViewType) {
-				contentEl = contentEl;
-				viewManager.setActive(activeViewType);
+			activate: function(el, mode) {
+				console.log('feedController.activate' + arguments);
+				contentEl = el;
+				this.setActiveDisplayMode(mode);
 			},
 
 			deactivate: function() {
+				console.log('feedController.deactivate');
 				// ensures it won't draw to display after deactivation
 				contentEl = null;
 			},
 
 			setActiveDisplayMode: function(mode) {
+				console.log('feedController.setActiveDisplayMode ' + mode);
 				displayMode = mode;
 				viewManager.setActive(displayMode);
 				viewManager.displayActive(contentEl);
 			},
 
 			showDefaultFeed: function() {
+				console.log('feedController.showDefaultFeed');
 				collection = new CollectionClass();
 				updateViews();
 			},
@@ -117,21 +131,23 @@ define(["explore/models", "explore/views"], function(models, views) {
 			},
 
 			showNextPage: function() {
-				var nextUrl = collection && collection.getNextPageUrl();
-				if (nextUrl) {
-					collection = new CollectionClass({url: nextUrl});
+				var opts = collection && collection.getNextPageOptions();
+				if (opts !== null) {
+					collection = new CollectionClass(opts);
 					updateViews();
 				}
-				console.log('- feedController.shownextPage (url:'+nextUrl+')');
+				console.log('- feedController.showNextPage. opts to follow');
+				console.log(opts);
 			},
 
 			showPrevPage: function() {
-				var prevUrl = collection && collection.getNextPageUrl();
-				if (prevUrl) {
-					collection = new CollectionClass({url: prevUrl});
+				var opts = collection && collection.getPrevPageOptions();
+				if (opts !== null) {
+					collection = new CollectionClass(opts);
 					updateViews();
 				}
-				console.log('- feedController.showPrevPage (url:'+prevUrl+')');
+				console.log('- feedController.showPrevPage. opts to follow');
+				console.log(opts);
 			},
 
 			mapNextItem: function() {
@@ -320,7 +336,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 	var containerView = null,
 		rootElement;
 
-	var controller = {
+	var controller = glob = {
 		activate: function() {
 			console.log('+ ExploreController.activate.');
 			rootElement = $('#panel-explore');
@@ -375,7 +391,11 @@ define(["explore/models", "explore/views"], function(models, views) {
 			}
 
 			containerView.findRegion('filter').html(filterView.render().el);
-		}
+		},
+		runSearch: runSearch,
+		runFilter: runFilter,
+		showNextPage: showNextPage,
+		showPrevPage: showPrevPage
 	};
 
 	// add observer pattern pub capabilities

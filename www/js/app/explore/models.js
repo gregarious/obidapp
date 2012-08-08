@@ -61,8 +61,9 @@ define(function(){
 	});
 
 	var BaseCollection = Backbone.Collection.extend({
-		nextPageUrl: null,
-		prevPageUrl: null,
+		meta: null,
+		query: null,
+		categoryId: null,
 
 		// options:
 		//	- url: direct override of the default url
@@ -70,28 +71,62 @@ define(function(){
 		//  - categoryId: category id to filter results by
 		initialize: function(options) {
 			if (options) {
-				this.url = options.url;
-				this.query = options.query;
-				this.categoryId = options.categoryId;
+				this.query = options.query || null;
+				// TODO: allow categoryId = 0
+				this.categoryId = options.categoryId || null;
+				this.limit = options.limit || null;
+				this.offset = options.offset || null;
 			}
 		},
 
 		fetch: function(options) {
 			options.data = options.data || {};
-			if (this.category_id !== null) {
-				options.data['catpk'] = this.category_id;
+			if (this.categoryId !== null) {
+				options.data['catpk'] = this.categoryId;
 			}
 			if (this.query !== null) {
 				options.data['q'] = this.query;
 			}
+			if (this.offset !== null) {
+				options.data['offset'] = this.offset;
+			}
+			if (this.limit !== null) {
+				options.data['limit'] = this.limit;
+			}
+			console.log('fetching with options.data to follow');
+			console.log(options.data);
 
 			return Backbone.Collection.prototype.fetch.call(this, options);
 		},
 
 		parse: function(response) {
-			this.nextPageUrl = response.meta && response.meta.previous;
-			this.prevPageUrl = response.meta && response.meta.next;
+			// TODO: pull out the offset and limit from response
+			this.meta = response.meta;
 			return response.objects;
+		},
+
+		getNextPageOptions: function() {
+			if (this.meta && this.meta.next === null) {
+				return null;
+			}
+			return {
+				offset: this.meta.offset + this.meta.limit,
+				limit: this.meta.limit,
+				query: this.query,
+				categoryId: this.categoryId
+			};
+		},
+
+		getPrevPageOptions: function() {
+			if (this.meta && this.meta.previous === null) {
+				return null;
+			}
+			return {
+				offset: this.meta.offset - this.meta.limit,
+				limit: this.meta.limit,
+				query: this.query,
+				categoryId: this.categoryId
+			};
 		}
 	});
 
