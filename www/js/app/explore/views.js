@@ -7,10 +7,11 @@ define(["text!templates/explore-menu.html",
 		"text!templates/listitem-events.html",
 		"text!templates/listitem-specials.html",
 		"text!templates/listitem-news.html",
-		"text!templates/mapfeed.html"],
+		"text!templates/mapfeed.html",
+		"text!templates/home.html"],
 	function(menuTpl, filterTpl, loadingTpl, errorTpl, pagingTpl,
-				placeListItemTpl, eventListItemTpl,
-				specialListItemTpl, newsListItemTpl, mapTpl) {
+				placeListItemTpl, eventListItemTpl, specialListItemTpl,
+				newsListItemTpl, mapTpl, homeTpl) {
 
 	var exports = {};
 
@@ -111,6 +112,14 @@ define(["text!templates/explore-menu.html",
 
 		searchClicked: function() {
 			this.trigger('click:searchOn');
+		}
+	});
+
+	exports.NowView = Backbone.View.extend({
+		template: Handlebars.compile(homeTpl),
+		render: function() {
+			this.$el.html(this.template());
+			return this;
 		}
 	});
 

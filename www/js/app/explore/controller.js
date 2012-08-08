@@ -181,12 +181,49 @@ define(["explore/models", "explore/views"], function(models, views) {
 		return controller;
 	};
 	
+	// special case for now controller -- super simple
+	var createNowController = function(AlertCollection, NowView) {
+		var collection = null,
+			nowView = null,
+			contentEl = null;
+
+		var controller = {
+			activate: function(el) {
+				console.log('nowController.activate' + arguments);
+				contentEl = el;
+
+				collection = new AlertCollection();
+				nowView = new NowView({collection: collection});
+			},
+
+			deactivate: function() {
+				console.log('nowController.deactivate');
+				// ensures it won't draw to display after deactivation
+				contentEl = null;
+				collection.off();
+			},
+
+			showDefaultFeed: function() {
+				// TODO: not doing anything with alert collection yet. just rendering
+				if (contentEl) {
+					contentEl.html(nowView.render().el);
+				}
+				// collection.reset();	// triggers render so that at least outer skeleton gets rendered
+				// collection.fetch();
+				// collection.on('reset', // render to contentEl);
+
+				console.log('nowController.showDefaultFeed');
+			}
+		};
+		return controller;
+	};
+
 	var typeControllerMap = {
 		places: createFeedController(models.Places, views.PlacesList, null),
 		events: createFeedController(models.Events, views.EventsList, null),
 		specials: createFeedController(models.Specials, views.SpecialsList, null),
 		news: createFeedController(models.NewsArticles, views.NewsArticleList, null),
-		now: null
+		now: createNowController(Backbone.Collection, views.NowView)
 	};
 
 	var typeFilterViewMap = {
