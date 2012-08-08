@@ -132,7 +132,7 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 	}))();
 
 	$.ajaxSetup({
-		timeout: 3000
+		timeout: 5000
 	});
 
 	// after DOM load, initialze and run the app
