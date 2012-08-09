@@ -106,6 +106,11 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		return moment(isoDate).format('LLL');
 	});
 
+	Handlebars.registerHelper('getStaticMap', function(lat, lng) {
+		return "http://maps.googleapis.com/maps/api/staticmap?markers=" +
+				lat + "," + lng + "&zoom=15&size=400x100&sensor=false";
+	});
+
 	window.app = new (Backbone.Router.extend({
 		states: {
 			explore: exploreCtrl,

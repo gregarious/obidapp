@@ -69,9 +69,9 @@ $(document).ready(function(){
                 </ul>
             </div>
 
-            <div id="singleMapCanvas">
-                <img src="http://2d-code.co.uk/images/qr-map.jpg" />
-            </div>
+            {{#location.geocoding}}
+            <img src="{{getStaticMap latitude longitude}}"/>
+            {{/location.geocoding}}
 
             <p class="description">{{description}}</p>
 
