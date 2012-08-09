@@ -32,14 +32,14 @@ $(document).ready(function(){
 
     </header> <!-- .single-header -->
 
-    <nav class="single-place-nav">
+   <!--  <nav class="single-place-nav">
         <ul>
             <li class="active" id="place-nav-info">Info</li>
             <li id="place-nav-events">Events</li>
             <li id="place-nav-specials">Specials</li>
         </ul>
     </nav>
-
+ -->
     <section class="single-content">
 
         <article class="place-info">
@@ -49,7 +49,7 @@ $(document).ready(function(){
                     <a href="tel:{{phone}}"><li class="action-call"><div>Call</div></li></a>
                     {{/if}}
                     {{#if fb_id}}
-                    <a href=""><li class="action-facebook"><div>Facebook</div></li></a>
+                    <a href="http://facebook.com/{{fb_id}}"><li class="action-facebook"><div>Facebook</div></li></a>
                     {{/if}}
                     {{#if twitter_username}}
                     <a href=""><li class="action-twitter"><div>Twitter</div></li></a>
@@ -77,19 +77,15 @@ $(document).ready(function(){
 
         </article> <!-- .place-info -->
 
-        <article class="place-events">
+       <!--  <article class="place-events">
             <ul class="feed">
-                <!-- Event feed items here -->
-                kjlkjlkj
             </ul>
         </article>
 
         <article class="place-specials">
             <ul class="feed">
-                <!-- Special feed items here -->    
-                asdas
             </ul>
-        </article>
+        </article> -->
     </section>
 
 </div>

@@ -154,10 +154,6 @@ define(["text!templates/explore-menu.html",
 				previous: this.collection.meta && this.collection.meta.previous,
 				next: this.collection.meta && this.collection.meta.next
 			};
-			var pagingHtml = '<div>' +
-							this.pagingTemplate(pagingOpts) +
-							'</div>';
-			this.$el.append(pagingHtml);
 
 			// TODO: need to do better than this with composite views
 			var listHtml = '<ul class="feed">';
@@ -167,6 +163,13 @@ define(["text!templates/explore-menu.html",
 			listHtml += '</ul>';
 
 			this.$el.append(listHtml);
+
+			var pagingHtml = '<div class="paging">' +
+			this.pagingTemplate(pagingOpts) +
+			'</div>';
+			
+			this.$el.append(pagingHtml);
+
 
 			return this;
 		}

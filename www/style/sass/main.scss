@@ -16,7 +16,6 @@ a {
 }
 
 #panel-explore, #panel-detail {
-	background: url('../../img/assets/light-green-tex.png');
 	height: 100%;
 	@include clearfix();
 }
@@ -109,10 +108,8 @@ a {
 }
 
 #content-view {
-	
 	&>div:first-child {
 		margin-top: 85px;
-		height: 100%;
 	}
 
 	position: relative;
@@ -238,7 +235,6 @@ a {
 
 .grab-it, .action-btn {
 	float: left;
-	//height: 40px;
 	@include clearfix();
 	color: #fff;
 	text-align: center;
@@ -246,7 +242,6 @@ a {
 	@include background-image(linear-gradient(#999, #666));
 	padding: 0.7em;
 	@include box-sizing(border-box);
-//	@include box-shadow(1px 1px 2px #555);
 	border-right: 2px solid #fff !important;	
 	@include box-shadow(none);
 	
@@ -263,6 +258,74 @@ a {
 		margin-right: 0;
 	}
 
+}
+
+.loading {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	///sbackground: url('') center 100px no-repeat;
+	overflow: hidden;
+	z-index: 990000;
+
+
+	img {
+		display: block;
+		margin: 20% auto;
+	}
+}
+
+.paging {
+	margin-bottom: 80px;
+	padding: 0 1em;
+	@include box-sizing(border-box);
+
+	div {
+		cursor: pointer;
+		height: 24px;
+		width: 55px;
+	}
+
+	.page-previous {
+		float: left;
+		background: url('../../img/assets/back-btn.png');
+
+
+		&:active {
+			background: url('../../img/assets/back-btn-active.png');
+		}
+	}
+
+
+	.page-next {
+		float: right;
+		background: url('../../img/assets/next-btn.png');	
+
+		&:active {
+			background: url('../../img/assets/next-btn-active.png');
+		}
+	}
+
+		// @include background-image(linear-gradient($green, $green));
+		// color: #fff;
+		// padding: 0.5em;
+		// border: 1px solid $dark-green;
+		// @include box-shadow(1px 1px 1px #444);
+		// font-weight: bold;
+		// @include border-radius(10px);
+		// cursor: pointer;
+
+		// &:active {
+		// 	@include box-shadow(none);
+		// }
+}
+
+.error {
+	font-size: 1em;
+	font-weight: bold;
+	background: #fff;
+	text-align: center;
+	padding: 1em;
 }
 
 /* FEED ITEMS --------- */
@@ -673,6 +736,8 @@ a {
 }
 
 .push {
+	clear: both;
+	width: 100%;
 	height: 40px;
 }
 
