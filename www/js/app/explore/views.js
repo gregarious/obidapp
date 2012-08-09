@@ -7,11 +7,12 @@ define(["text!templates/explore-menu.html",
 		"text!templates/listitem-events.html",
 		"text!templates/listitem-specials.html",
 		"text!templates/listitem-news.html",
+		"text!templates/listitem-noresults.html",
 		"text!templates/mapfeed.html",
 		"text!templates/home.html"],
 	function(menuTpl, filterTpl, loadingTpl, errorTpl, pagingTpl,
 				placeListItemTpl, eventListItemTpl, specialListItemTpl,
-				newsListItemTpl, mapTpl, homeTpl) {
+				newsListItemTpl, noResultsTpl, mapTpl, homeTpl) {
 
 	var exports = {};
 
@@ -144,6 +145,7 @@ define(["text!templates/explore-menu.html",
 
 	var ListFeedView = BaseFeedView.extend({
 		itemTemplate: null,
+		noResultsTemplate: Handlebars.compile(noResultsTpl),
 		pagingTemplate: Handlebars.compile(pagingTpl),
 		render: function() {
 			this.$el.empty();
@@ -157,9 +159,14 @@ define(["text!templates/explore-menu.html",
 
 			// TODO: need to do better than this with composite views
 			var listHtml = '<ul class="feed">';
-			this.collection.each(function(model){
-				listHtml += this.itemTemplate(model.attributes);
-			}, this);
+			if (this.collection.length < 1) {
+				listHtml += this.noResultsTemplate();
+			}
+			else {
+				this.collection.each(function(model){
+					listHtml += this.itemTemplate(model.attributes);
+				}, this);
+			}
 			listHtml += '</ul>';
 
 			this.$el.append(listHtml);
