@@ -70,7 +70,7 @@ $(document).ready(function(){
             </div>
 
             {{#location.geocoding}}
-            <img src="{{getStaticMap latitude longitude}}"/>
+            <img class="map-canvas" src="{{getStaticMap latitude longitude}}"/>
             {{/location.geocoding}}
 
             <p class="description">{{description}}</p>

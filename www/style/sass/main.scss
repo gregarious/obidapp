@@ -275,6 +275,17 @@ a {
 	}
 }
 
+.button-back {
+	float: left;
+	min-height: 24px;
+	background: url('../../img/assets/back-btn.png') top left no-repeat;
+
+
+	&:active {
+		background: url('../../img/assets/back-btn-active.png') top left no-repeat;
+	}
+}
+
 .paging {
 	margin-bottom: 80px;
 	padding: 0 1em;
@@ -285,17 +296,6 @@ a {
 		height: 24px;
 		width: 55px;
 	}
-
-	.page-previous {
-		float: left;
-		background: url('../../img/assets/back-btn.png');
-
-
-		&:active {
-			background: url('../../img/assets/back-btn-active.png');
-		}
-	}
-
 
 	.page-next {
 		float: right;
@@ -399,6 +399,7 @@ a {
 	position: fixed;
 	z-index: 999;
 	border: 2px solid $dark-grey;
+	
 	a, h1, span {
 		@include column(3);
 	}
@@ -454,13 +455,19 @@ a {
 		line-height: 1.1em;
 	}
 
-	#mapCanvas {
-		@include column(12);
-		@include box-shadow(#666 0 0 2px);
-		margin-top: 0;
-		margin-bottom: 10px;
-		height: 100px;
-		overflow: hidden;
+}
+
+.map-canvas {
+	@include column(12);
+	@include box-shadow(#666 0 0 2px);
+	margin-top: 1em;
+	margin-bottom: 1em;
+	height: 100px;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: auto;
 	}
 }
 
