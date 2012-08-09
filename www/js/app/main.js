@@ -50,6 +50,29 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 	});
 
 	// various date-formatting helpers for Handlebars
+	Handlebars.registerHelper('formatArticleDate', function(isoDate) {
+		var date = moment(isoDate);
+		// if date is more than 2 moinths ago, add the year
+		if (date < moment().subtract('months', 2)) {
+			return date.format('MMM D, YYYY');
+		}
+		else {
+			return date.format('MMM D');
+		}
+		
+		var expires = moment(isoDate);
+		var human = expires.calendar().split(' at')[0];
+
+		// get the tense correct
+		if (expires < moment()) {
+			return 'Expired ' + human;
+		}
+		else {
+			return 'Expires ' + human;
+		}
+	});
+
+
 	Handlebars.registerHelper('formatExpires', function(isoDate) {
 		var expires = moment(isoDate);
 		var human = expires.calendar().split(' at')[0];
