@@ -15,7 +15,7 @@ define(["text!templates/single-place.html", "text!templates/single-event.html", 
 				// TODO: bad inline, bad
 				var topbar = '<div class="topbar">'+
 				'<nav id="top-bar-single">'+
-				'<a class="button-back" href="#"><img src="http://localhost/obidapp/www/img/assets/back-btn.png"></a>'+
+				'<a class="button-back" href="#"><img src="img/assets/back-btn.png"></a>'+
 				'<h1>'+this.model.headerText()+'</h1></nav></div>';
 				this.$el.html(topbar);
 				if (this.template) {
