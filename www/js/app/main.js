@@ -108,7 +108,7 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 
 	Handlebars.registerHelper('getStaticMap', function(lat, lng) {
 		return "http://maps.googleapis.com/maps/api/staticmap?markers=" +
-				lat + "," + lng + "&zoom=15&size=400x100&sensor=false";
+				lat + "," + lng + "&zoom=15&size=300x100&sensor=false";
 	});
 
 	window.app = new (Backbone.Router.extend({

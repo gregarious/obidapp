@@ -27,7 +27,9 @@
 
     <article class="single-content" id="event-single-content">
         {{#place.location.geocoding}}
-        <img src="{{getStaticMap latitude longitude}}"/>
+        <div class="map-canvas">
+            <img src="{{getStaticMap latitude longitude}}"/>
+        </div>
         {{/place.location.geocoding}}
 
         <nav class="action-list">
@@ -44,7 +46,7 @@
             </ul>
         </nav>
 
-        <p class="description">Minim kale chips terry richardson, delectus photo booth scenester yr chambray quinoa Austin nulla. Synth occaecat put a bird on it mumblecore veniam. Nisi non mlkshk etsy. Whatever deserunt lomo, lo-fi gastropub craft beer direct trade. Assumenda ennui accusamus carles. Enim you probably havent heard of them odio, cray brooklyn fugiat street art next level single-origin coffee put a bird on it iphone stumptown brunch banksy. Irure viral sustainable, messenger bag post-ironic street art ullamco cupidatat consectetur.
+        <p class="description">{{description}}
         </p>
 
     </article> <!-- .single-content -->
