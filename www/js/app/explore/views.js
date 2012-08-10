@@ -171,6 +171,20 @@ define(["text!templates/explore-menu.html",
 
 			this.$el.append(listHtml);
 
+			// replace default feed item anchor click events with
+			// touch-friendly "tap" event handlers
+			// TODO: find better place for this than in render()
+			var anchors = this.$('a.single-link');
+			anchors.on('click', function(e) {
+				console.log('click blocked!');
+				e.preventDefault();
+			});
+			anchors.on('tap', function(e) {
+				console.log('tap event!');
+				var url = $(e.target).attr('href');
+				window.location = url;
+			});
+
 			var pagingHtml = '<div class="paging">' +
 			this.pagingTemplate(pagingOpts) +
 			'</div>';
