@@ -76,6 +76,8 @@ define(function(){
 				this.categoryId = options.categoryId || null;
 				this.limit = options.limit || null;
 				this.offset = options.offset || null;
+
+				this.locationTimeout = options.locationTimeout || 5000;
 			}
 		},
 
@@ -93,10 +95,26 @@ define(function(){
 			if (this.limit !== null) {
 				options.data['limit'] = this.limit;
 			}
-			console.log('fetching with options.data to follow');
-			console.log(options.data);
 
-			return Backbone.Collection.prototype.fetch.call(this, options);
+			var self = this;
+			navigator.geolocation.getCurrentPosition(
+				function(position) {
+					options.data['lat'] = position.coords.latitude;
+					options.data['lng'] = position.coords.longitude;
+					Backbone.Collection.prototype.fetch.call(self, options);
+				},
+				function(error) {
+					console.error(error);
+					self.trigger('geolocationError');
+					Backbone.Collection.prototype.fetch.call(self, options);
+				},
+				{
+					timeout: this.locationTimeout,
+					maximumAge: 15000,
+					enableHighAccuracy: true
+				}
+			);
+			// TODO: return some kind of deferred linked to the eventual base fetch call?
 		},
 
 		parse: function(response) {
@@ -175,7 +193,20 @@ define(function(){
 
 	exports.NewsArticles = BaseCollection.extend({
 		// model unnecessary: no single page for news
-		url: toTastyPieRootUrl('news')
+		url: toTastyPieRootUrl('news'),
+
+		// over-over-write fetch to not use filters or location
+		// TODO: obviously change this -- use proper inheritance hierarchy
+		fetch: function(options) {
+			options.data = options.data || {};
+			if (this.offset !== null) {
+				options.data['offset'] = this.offset;
+			}
+			if (this.limit !== null) {
+				options.data['limit'] = this.limit;
+			}
+			return Backbone.Collection.prototype.fetch.call(this, options);
+		}
 	});
 
 	exports.PlaceCategories = Backbone.Collection.extend({
