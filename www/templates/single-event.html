@@ -12,7 +12,9 @@
             <ul class="item-details">
                 <li>Starts: <strong>{{formatLongDate dtstart}}</strong><br/>
                 Ends: <strong>{{formatLongDate dtend}}</strong></li>
-                <li>at <a href="">{{place.name}}</a></li> 
+                {{#place}}
+                    <li>at <a href="">{{name}}</a></li> 
+                {{/place}}
                 <li>
                     {{#if categories}}
                     <li>

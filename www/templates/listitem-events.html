@@ -12,7 +12,9 @@
       <h1 class="item-title">{{name}}</h1>
       <ul class="item-details">
         <li>{{formatDateRange dtstart dtend}}</li>
-        <li>at {{place.name}}</li>
+        {{#place}}
+          <li>at {{name}}</li>
+        {{/place}}
 
         <li>
         {{#if categories}}
