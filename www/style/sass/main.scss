@@ -206,18 +206,33 @@ a {
 			
 			&.action-facebook {
 				@include icon('actions/facebook_black');
-				background-color: $yellow;
+				background-color: $light-blue;
 			}
+
+			&.action-twitter {
+				@include icon('actions/twitter_black');
+				background-color: $med-blue;
+			}		
 
 			&.action-website {
 				@include icon('actions/website');
 				background-color: $yellow;
 			}		
+
+			&.action-email {
+				@include icon('actions/email');
+			}
 		} // li
 	} // a
 } // .action-list
 
 /* COMPONENTS --------- */
+
+.no-results {
+	text-align: center;
+	@include box-sizing(border-box);
+	padding: 1em;
+}
 
 .category {
 	margin: 0.5em 0;
@@ -522,30 +537,56 @@ a {
 
 
 /* NOW ----------- */
-.page-home {
+.about {
 	line-height: 1.3em;
 	padding: 2%;
 	margin: 1%;
 	border-bottom: 1px solid #aaa;
-	@include background-image(linear-gradient($med-grey, $light-grey));
+	font-size: 0.9em;
+	line-height: 1.3em;
+	@include clearfix;
+	padding: 2%;
+	margin: 1%;
+	@include single-box-shadow;
+	background: #fff;
+	//text-align: center;
+
+	.shirt-actions {
+		margin-top: 1em;
+	}
+
 
 	img {
 		display: block;
-		margin: 0 auto;
-		with: 100%;
+		margin-left: 1em;
+		width: 80%;
 	}
 
-	.welcome-msg {
-		font-size: 1.2em;
-		font-weight: bold;
-		margin: 0.5em 0 1em;
-	}
-
-	h2 {
+	.item-title {
 		margin: 1em 0;
-		font-size: 1em;
+		text-align: center;
+		font-size: 1.4em;
 		font-weight: bold;
-		font-style: italic;
+	}
+
+	.action-list { 
+		@include column(3);
+		float: right;
+		position: relative;
+		z-index: 0;
+		ul a li {
+			clear:both;
+			width: 100%;
+			margin-bottom: 0.5em;
+
+		}
+	}
+
+	.shirt-container {
+		@include column(9);
+		img {
+			float: left;
+		}
 	}
 
 	.feed {
