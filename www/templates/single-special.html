@@ -26,11 +26,12 @@
     </header>
 
     <article class="single-content" id="special-single-content">
-                    {{#place.location.geocoding}}
+        {{#place.location.geocoding}}
             <div class="map-canvas">
                 <img src="{{getStaticMap latitude longitude}}"/>
             </div>
-            {{/place.location.geocoding}}
+        {{/place.location.geocoding}}
+        
         {{#if dexpires}}
             <h1 class="item-title">{{formatExpires dexpires}}</h1>
         {{/if}}
