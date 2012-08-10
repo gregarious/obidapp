@@ -1056,14 +1056,20 @@ a {
   color: #b83939;
 }
 
+/* line 659, ../sass/main.scss */
+.read-more {
+  font-style: italic;
+  text-align: right;
+}
+
 /* PLACES ---------- */
-/* line 661, ../sass/main.scss */
+/* line 665, ../sass/main.scss */
 .single-place-nav {
   color: #fff;
   font-weight: bold;
   text-shadow: 1px 1px 1px #333333;
 }
-/* line 666, ../sass/main.scss */
+/* line 670, ../sass/main.scss */
 .single-place-nav li {
   background: #444444;
   border-bottom: 2px solid #aaaaaa;
@@ -1089,15 +1095,15 @@ a {
   margin: 0 0.5%;
   cursor: pointer;
 }
-/* line 679, ../sass/main.scss */
+/* line 683, ../sass/main.scss */
 .single-place-nav li:hover {
   background: #777;
 }
-/* line 683, ../sass/main.scss */
+/* line 687, ../sass/main.scss */
 .single-place-nav li:active {
   background: #222;
 }
-/* line 687, ../sass/main.scss */
+/* line 691, ../sass/main.scss */
 .single-place-nav li.active {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1112,7 +1118,7 @@ a {
   color: #222;
 }
 
-/* line 699, ../sass/main.scss */
+/* line 703, ../sass/main.scss */
 .action-list {
   display: inline;
   float: left;
@@ -1134,55 +1140,55 @@ a {
 .action-list ul:after {
   clear: both;
 }
-/* line 706, ../sass/main.scss */
+/* line 710, ../sass/main.scss */
 .action-list ul a {
   text-decoration: none !important;
 }
-/* line 709, ../sass/main.scss */
+/* line 713, ../sass/main.scss */
 .action-list ul a li {
   width: 24%;
   float: left;
   height: 55px;
 }
-/* line 713, ../sass/main.scss */
+/* line 717, ../sass/main.scss */
 .action-list ul a li#action-call {
   background: #f1f1f1 url("../../img/icons/actions/phone.png") center 10px no-repeat;
 }
-/* line 717, ../sass/main.scss */
+/* line 721, ../sass/main.scss */
 .action-list ul a li div {
   margin-top: 32px;
 }
 
-/* line 728, ../sass/main.scss */
+/* line 732, ../sass/main.scss */
 .place-info p {
   display: inline;
 }
-/* line 732, ../sass/main.scss */
+/* line 736, ../sass/main.scss */
 .place-info .detail-title {
   font-weight: bold;
   font-size: 0.9em;
 }
-/* line 738, ../sass/main.scss */
+/* line 742, ../sass/main.scss */
 .place-info .hours {
   font-size: 0.9em;
   margin-bottom: 0.5em;
 }
-/* line 743, ../sass/main.scss */
+/* line 747, ../sass/main.scss */
 .place-info .hours li {
   border-right: 1px solid #b83939;
   padding: 0.2em 0.4em;
   font-size: 0.9em;
 }
-/* line 748, ../sass/main.scss */
+/* line 752, ../sass/main.scss */
 .place-info .hours li:first-child {
   padding-left: 0;
 }
-/* line 752, ../sass/main.scss */
+/* line 756, ../sass/main.scss */
 .place-info .hours li:last-child {
   border-right: none;
 }
 
-/* line 759, ../sass/main.scss */
+/* line 763, ../sass/main.scss */
 #singleMapCanvas {
   height: 90px;
   display: inline;
@@ -1201,13 +1207,13 @@ a {
 }
 
 /* SPECIALS ---------- */
-/* line 771, ../sass/main.scss */
+/* line 775, ../sass/main.scss */
 #special-single-content, #event-single-content {
   margin-bottom: 40px;
   border-top: 1px solid #aad49a;
 }
 
-/* line 776, ../sass/main.scss */
+/* line 780, ../sass/main.scss */
 .coupon-info {
   display: inline;
   float: left;
@@ -1220,14 +1226,14 @@ a {
   background: #f1f1f1;
   padding: 0.5em;
 }
-/* line 781, ../sass/main.scss */
+/* line 785, ../sass/main.scss */
 .coupon-info h1 {
   font-size: 1.3em;
   font-weight: bold;
   padding-bottom: 0.4em;
 }
 
-/* line 793, ../sass/main.scss */
+/* line 797, ../sass/main.scss */
 .push {
   clear: both;
   width: 100%;
@@ -1235,14 +1241,14 @@ a {
 }
 
 /* MAP ---------- */
-/* line 801, ../sass/main.scss */
+/* line 805, ../sass/main.scss */
 #map_mode {
   height: 100%;
   position: relative;
   overflow: hidden;
 }
 
-/* line 807, ../sass/main.scss */
+/* line 811, ../sass/main.scss */
 #map_canvas {
   width: 100%;
   background-color: green;
@@ -1261,7 +1267,7 @@ a {
   clear: both;
 }
 
-/* line 815, ../sass/main.scss */
+/* line 819, ../sass/main.scss */
 .load-more {
   width: 30%;
   position: absolute;
@@ -1271,7 +1277,7 @@ a {
   padding: 0.5em;
 }
 
-/* line 824, ../sass/main.scss */
+/* line 828, ../sass/main.scss */
 .custom-infowindow {
   padding: 5px;
   -webkit-box-sizing: border-box;
@@ -1296,7 +1302,7 @@ a {
 .custom-infowindow:after {
   clear: both;
 }
-/* line 836, ../sass/main.scss */
+/* line 840, ../sass/main.scss */
 .custom-infowindow .infowindow-info {
   float: left;
   width: 86%;
@@ -1307,19 +1313,19 @@ a {
   font-size: 0.9em;
   text-shadow: 1px 1px 1px black;
 }
-/* line 844, ../sass/main.scss */
+/* line 848, ../sass/main.scss */
 .custom-infowindow .infowindow-info .category li {
   text-shadow: none;
   color: #000;
 }
-/* line 850, ../sass/main.scss */
+/* line 854, ../sass/main.scss */
 .custom-infowindow img {
   width: 40px;
   height: 40px;
   display: block;
   margin: 0 auto;
 }
-/* line 857, ../sass/main.scss */
+/* line 861, ../sass/main.scss */
 .custom-infowindow .next, .custom-infowindow .prev {
   width: 7%;
   padding: 0.4em 0;
@@ -1327,16 +1333,16 @@ a {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 861, ../sass/main.scss */
+/* line 865, ../sass/main.scss */
 .custom-infowindow .next img, .custom-infowindow .prev img {
   width: 100%;
   height: auto;
 }
-/* line 869, ../sass/main.scss */
+/* line 873, ../sass/main.scss */
 .custom-infowindow .next {
   float: right;
 }
-/* line 874, ../sass/main.scss */
+/* line 878, ../sass/main.scss */
 .custom-infowindow .prev {
   float: left;
 }
