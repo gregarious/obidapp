@@ -15,10 +15,15 @@
           <li>{{formatExpires dexpires}}</li>
         {{/if}}
         <li>
-          <ul class="category">
-            <li>Food</li>
-            <li>Services</li>
-          </ul>
+          {{#if place.categories}}
+          <li>
+              <ul class="category">
+                  {{#each place.categories}}
+                  <li>{{label}}</li>
+                  {{/each}}
+              </ul>
+          </li>
+          {{/if}}
       </ul> <!-- .item-details -->
     </section> <!-- .item-content -->
   </a>

@@ -10,16 +10,19 @@
         <div class="item-content">
             <h1 class="item-title">{{name}}</h1>
             <ul class="item-details">
-                <li>Starts: <strong>{{formatLongDate dtstart}}</strong>
-                    <br/>
-                    Ends: <strong>{{formatLongDate dtend}}</strong></li>
+                <li>Starts: <strong>{{formatLongDate dtstart}}</strong><br/>
+                Ends: <strong>{{formatLongDate dtend}}</strong></li>
                 <li>at <a href="">{{place.name}}</a></li> 
                 <li>
-                    <ul class="category">
-                        <li>Food</li>
-                        <li>Festival</li>
-                        <li>General Fun</li>
-                    </ul>
+                    {{#if categories}}
+                    <li>
+                        <ul class="category">
+                            {{#each categories}}
+                            <li>{{label}}</li>
+                            {{/each}}
+                        </ul>
+                    </li>
+                    {{/if}}
                 </li>
             </ul>
         </div>

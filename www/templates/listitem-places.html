@@ -14,11 +14,15 @@
       <ul class="item-details">
         <li>{{location.address}}</li>
         <li>
-          <!-- Obviously this is static content and wont be -->
-          <ul class="category">
-            <li>Food</li>
-            <li>Retail</li>
-          </ul> <!-- .category -->
+        {{#if categories}}
+        <li>
+            <ul class="category">
+                {{#each categories}}
+                <li>{{label}}</li>
+                {{/each}}
+            </ul>
+        </li>
+        {{/if}}
         </li>
       </ul> <!-- .item-details -->
     </section> <!-- .item-content -->

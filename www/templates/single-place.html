@@ -21,13 +21,17 @@ $(document).ready(function(){
             <h1 class="item-title">{{name}}</h1>
             <ul class="item-details">
                 <li>{{location.address}}</li>
+                {{#if categories}}
                 <li>
                     <ul class="category">
-                        <li>Food</li>
-                        <li>Retail</li>
+                        {{#each categories}}
+                        <li>{{label}}</li>
+                        {{/each}}
                     </ul>
                 </li>
+                {{/if}}
             </ul>
+
         </article> <!-- .item-content -->
 
     </header> <!-- .single-header -->

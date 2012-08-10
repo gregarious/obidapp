@@ -15,11 +15,15 @@
         <li>at {{place.name}}</li>
 
         <li>
-          <ul class="category">
-            <li>Festival</li>
-            <li>Lectures</li>
-            <li>General Fun</li>
-          </ul>
+        {{#if categories}}
+        <li>
+            <ul class="category">
+                {{#each categories}}
+                <li>{{label}}</li>
+                {{/each}}
+            </ul>
+        </li>
+        {{/if}}
         </li>
       </ul> <!-- .item-details -->
     </section> <!-- .item-content -->
