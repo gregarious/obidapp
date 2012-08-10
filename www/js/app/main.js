@@ -107,7 +107,7 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 	});
 
 	Handlebars.registerHelper('formatSimple', function(isoDate) {
-		return moment(isoDate).format('MM/DD/YY');
+		return moment(isoDate).format('M/D/YY');
 	});
 
 	Handlebars.registerHelper('getStaticMap', function(lat, lng) {
