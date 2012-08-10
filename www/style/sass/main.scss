@@ -573,6 +573,14 @@ a {
 
 /* NEWS ----------- */
 
+.article a {
+	margin: 0 200px;
+
+	.item-title {
+		font-size: 1.4em;		
+	}
+}
+
 #feed-news {
 	li {
 		padding: 0.8em;
@@ -581,7 +589,7 @@ a {
 
 .snippet, .source {
 	@include column(12);
-	font-size: 0.9em;
+	//font-size: 0.9em;
 }
 
 .source, .date {

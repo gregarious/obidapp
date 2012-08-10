@@ -937,12 +937,21 @@ a {
 }
 
 /* NEWS ----------- */
-/* line 577, ../sass/main.scss */
+/* line 576, ../sass/main.scss */
+.article a {
+  margin: 0 200px;
+}
+/* line 579, ../sass/main.scss */
+.article a .item-title {
+  font-size: 1.4em;
+}
+
+/* line 585, ../sass/main.scss */
 #feed-news li {
   padding: 0.8em;
 }
 
-/* line 582, ../sass/main.scss */
+/* line 590, ../sass/main.scss */
 .snippet, .source {
   display: inline;
   float: left;
@@ -951,27 +960,26 @@ a {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  font-size: 0.9em;
 }
 
-/* line 587, ../sass/main.scss */
+/* line 595, ../sass/main.scss */
 .source, .date {
   font-weight: bold;
 }
 
-/* line 591, ../sass/main.scss */
+/* line 599, ../sass/main.scss */
 .source {
   color: #b83939;
 }
 
 /* PLACES ---------- */
-/* line 597, ../sass/main.scss */
+/* line 605, ../sass/main.scss */
 .single-place-nav {
   color: #fff;
   font-weight: bold;
   text-shadow: 1px 1px 1px #333333;
 }
-/* line 602, ../sass/main.scss */
+/* line 610, ../sass/main.scss */
 .single-place-nav li {
   background: #444444;
   border-bottom: 2px solid #aaaaaa;
@@ -997,15 +1005,15 @@ a {
   margin: 0 0.5%;
   cursor: pointer;
 }
-/* line 615, ../sass/main.scss */
+/* line 623, ../sass/main.scss */
 .single-place-nav li:hover {
   background: #777;
 }
-/* line 619, ../sass/main.scss */
+/* line 627, ../sass/main.scss */
 .single-place-nav li:active {
   background: #222;
 }
-/* line 623, ../sass/main.scss */
+/* line 631, ../sass/main.scss */
 .single-place-nav li.active {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1020,7 +1028,7 @@ a {
   color: #222;
 }
 
-/* line 635, ../sass/main.scss */
+/* line 643, ../sass/main.scss */
 .action-list {
   display: inline;
   float: left;
@@ -1042,54 +1050,54 @@ a {
 .action-list ul:after {
   clear: both;
 }
-/* line 642, ../sass/main.scss */
+/* line 650, ../sass/main.scss */
 .action-list ul a {
   text-decoration: none !important;
 }
-/* line 645, ../sass/main.scss */
+/* line 653, ../sass/main.scss */
 .action-list ul a li {
   width: 24%;
   float: left;
   height: 55px;
 }
-/* line 649, ../sass/main.scss */
+/* line 657, ../sass/main.scss */
 .action-list ul a li#action-call {
   background: #f1f1f1 url("../../img/icons/actions/phone.png") center 10px no-repeat;
 }
-/* line 653, ../sass/main.scss */
+/* line 661, ../sass/main.scss */
 .action-list ul a li div {
   margin-top: 32px;
 }
 
-/* line 664, ../sass/main.scss */
+/* line 672, ../sass/main.scss */
 .place-info p {
   display: inline;
 }
-/* line 668, ../sass/main.scss */
+/* line 676, ../sass/main.scss */
 .place-info .detail-title {
   font-weight: bold;
   font-size: 0.9em;
 }
-/* line 674, ../sass/main.scss */
+/* line 682, ../sass/main.scss */
 .place-info .hours {
   font-size: 0.9em;
 }
-/* line 679, ../sass/main.scss */
+/* line 687, ../sass/main.scss */
 .place-info .hours li {
   border-right: 1px solid #b83939;
   padding: 0.2em 0.4em;
   font-size: 0.9em;
 }
-/* line 684, ../sass/main.scss */
+/* line 692, ../sass/main.scss */
 .place-info .hours li:first-child {
   padding-left: 0;
 }
-/* line 688, ../sass/main.scss */
+/* line 696, ../sass/main.scss */
 .place-info .hours li:last-child {
   border-right: none;
 }
 
-/* line 695, ../sass/main.scss */
+/* line 703, ../sass/main.scss */
 #singleMapCanvas {
   height: 90px;
   display: inline;
@@ -1108,7 +1116,7 @@ a {
 }
 
 /* SPECIALS ---------- */
-/* line 708, ../sass/main.scss */
+/* line 716, ../sass/main.scss */
 .specials .item-thumb {
   background: green;
   -webkit-border-radius: 10px;
@@ -1121,7 +1129,7 @@ a {
   box-shadow: red;
 }
 
-/* line 715, ../sass/main.scss */
+/* line 723, ../sass/main.scss */
 .special-status {
   background: #444444;
   width: 100%;
@@ -1133,7 +1141,7 @@ a {
   bottom: 0;
   height: 50px;
 }
-/* line 724, ../sass/main.scss */
+/* line 732, ../sass/main.scss */
 .special-status .grab-it {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #58b7dd), color-stop(100%, #3d809a));
   background-image: -webkit-linear-gradient(#58b7dd, #3d809a);
@@ -1160,7 +1168,7 @@ a {
   -o-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 734, ../sass/main.scss */
+/* line 742, ../sass/main.scss */
 .special-status .grab-it:active {
   background: #049444;
   -webkit-box-shadow: none;
@@ -1168,13 +1176,13 @@ a {
   box-shadow: none;
 }
 
-/* line 741, ../sass/main.scss */
+/* line 749, ../sass/main.scss */
 #special-single-content, #event-single-content {
   margin-bottom: 40px;
   border-top: 1px solid #aad49a;
 }
 
-/* line 746, ../sass/main.scss */
+/* line 754, ../sass/main.scss */
 .push {
   clear: both;
   width: 100%;
@@ -1182,14 +1190,14 @@ a {
 }
 
 /* MAP ---------- */
-/* line 754, ../sass/main.scss */
+/* line 762, ../sass/main.scss */
 #map_mode {
   height: 100%;
   position: relative;
   overflow: hidden;
 }
 
-/* line 760, ../sass/main.scss */
+/* line 768, ../sass/main.scss */
 #map_canvas {
   width: 100%;
   background-color: green;
@@ -1208,7 +1216,7 @@ a {
   clear: both;
 }
 
-/* line 768, ../sass/main.scss */
+/* line 776, ../sass/main.scss */
 .load-more {
   width: 30%;
   position: absolute;
@@ -1218,7 +1226,7 @@ a {
   padding: 0.5em;
 }
 
-/* line 777, ../sass/main.scss */
+/* line 785, ../sass/main.scss */
 .custom-infowindow {
   padding: 5px;
   -webkit-box-sizing: border-box;
@@ -1243,7 +1251,7 @@ a {
 .custom-infowindow:after {
   clear: both;
 }
-/* line 789, ../sass/main.scss */
+/* line 797, ../sass/main.scss */
 .custom-infowindow .infowindow-info {
   float: left;
   width: 86%;
@@ -1254,19 +1262,19 @@ a {
   font-size: 0.9em;
   text-shadow: 1px 1px 1px black;
 }
-/* line 797, ../sass/main.scss */
+/* line 805, ../sass/main.scss */
 .custom-infowindow .infowindow-info .category li {
   text-shadow: none;
   color: #000;
 }
-/* line 803, ../sass/main.scss */
+/* line 811, ../sass/main.scss */
 .custom-infowindow img {
   width: 40px;
   height: 40px;
   display: block;
   margin: 0 auto;
 }
-/* line 810, ../sass/main.scss */
+/* line 818, ../sass/main.scss */
 .custom-infowindow .next, .custom-infowindow .prev {
   width: 7%;
   padding: 0.4em 0;
@@ -1274,16 +1282,16 @@ a {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 814, ../sass/main.scss */
+/* line 822, ../sass/main.scss */
 .custom-infowindow .next img, .custom-infowindow .prev img {
   width: 100%;
   height: auto;
 }
-/* line 822, ../sass/main.scss */
+/* line 830, ../sass/main.scss */
 .custom-infowindow .next {
   float: right;
 }
-/* line 827, ../sass/main.scss */
+/* line 835, ../sass/main.scss */
 .custom-infowindow .prev {
   float: left;
 }
