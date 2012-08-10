@@ -279,14 +279,22 @@ a {
 	position: fixed;
 	width: 100%;
 	height: 100%;
-	///sbackground: url('') center 100px no-repeat;
 	overflow: hidden;
 	z-index: 990000;
 
+	.loader-container {
+		width: 70px;
+		height: 70px;
+		background: $light-grey;
+		@include border-radius(10px);
+		margin: 20% auto;
+	}
 
 	img {
 		display: block;
-		margin: 20% auto;
+		position: relative;
+		top: 15px;
+		margin: auto;
 	}
 }
 
