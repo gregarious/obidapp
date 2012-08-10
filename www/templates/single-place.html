@@ -47,6 +47,17 @@ $(document).ready(function(){
     <section class="single-content">
 
         <article class="place-info">
+
+
+            <div class="hours">
+                <div class="detail-title">Hours:</div>
+                <ul class="hours">
+                    <li>Mon-Fri: 3pm-10pm</li>
+                    <li>Sat: 5pm-7pm</li>
+                    <li>Sun: Closed</li>
+                </ul>
+            </div>
+
             <nav class="action-list">
                 <ul>
                     {{#if phone}}
@@ -64,17 +75,10 @@ $(document).ready(function(){
                 </ul>
             </nav>
 
-            <div class="hours">
-                <div class="detail-title">Hours:</div>
-                <ul class="hours">
-                    <li>Mon-Fri: 3pm-10pm</li>
-                    <li>Sat: 5pm-7pm</li>
-                    <li>Sun: Closed</li>
-                </ul>
-            </div>
-
             {{#location.geocoding}}
-            <img class="map-canvas" src="{{getStaticMap latitude longitude}}"/>
+            <div class="map-canvas">
+                <img src="{{getStaticMap latitude longitude}}"/>
+            </div>
             {{/location.geocoding}}
 
             <p class="description">{{description}}</p>

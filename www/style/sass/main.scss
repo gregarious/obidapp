@@ -216,7 +216,7 @@ a {
 
 			&.action-website {
 				@include icon('actions/website');
-				background-color: $yellow;
+				background-color: $light-grey;
 			}		
 
 			&.action-email {
@@ -477,13 +477,15 @@ a {
 	
 	margin-top: 0;
 	margin-bottom: 1em;
-	height: 100px;
+	//height: 100px;
 	overflow: hidden;
 
 	img {
 		@include box-shadow(#666 0 0 2px);
 		width: 100%;
 		height: auto;
+		display: block;
+		margin: 0 auto;
 	}
 }
 
@@ -551,10 +553,23 @@ a {
 	background: #fff;
 	//text-align: center;
 
+	p {
+		font-size: 0.9em;
+	}
+
+	.description {
+		margin-top: 2em;
+		@include column(12);
+		text-align: center;
+
+		a {
+			color: $red;
+		}
+	}
+
 	.shirt-actions {
 		margin-top: 1em;
 	}
-
 
 	img {
 		display: block;
@@ -723,7 +738,7 @@ a {
 	.hours {
 		@extend .horiz-ul;
 		font-size: 0.9em;
-		//margin-bottom: 0.5em;		
+		margin-bottom: 0.5em;		
 		
 		li {
 			border-right: 1px solid $red;
@@ -753,43 +768,26 @@ a {
 
 /* SPECIALS ---------- */
 
-.specials {
-	.item-thumb {
-		background: green;
-		@include border-radius(10px);
-		@include box-shadow(red);
-	}
-}
-
-.special-status {
-	background: $dark-grey;
-	width: 100%;
-	position: fixed;
-	@include box-sizing(border-box);
-	padding: 5px;
-	bottom: 0;
-	height: 50px;
-
-	.grab-it {
-		@include background-image(linear-gradient($med-blue, $dark-blue));
-		font-size: 1.1em;
-		@include text-shadow(1px 1px 1px #000);
-		@include box-shadow(1px 1px 1px #000);
-		@include column(12);
-		height: auto;
-		display: block;
-		@include border-radius(5px);
-		
-		&:active {
-			background: $dark-green;
-			@include box-shadow(none);
-		}
-	}
-}
-
 #special-single-content, #event-single-content {
 	margin-bottom: 40px;
 	border-top: 1px solid $light-green;
+}
+
+.coupon-info {
+	@include column(12);
+	margin: 2em 0;
+	background: $light-grey;
+	padding: 0.5em;
+	h1 {
+		font-size: 1.3em;	
+		font-weight: bold;
+		padding-bottom: 0.4em;
+	}
+	
+}
+
+#special-single-head {
+
 }
 
 .push {

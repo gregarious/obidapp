@@ -1,5 +1,5 @@
 <div class="single-wrap">
-    <header class="single-header">
+    <header class="single-header" id="special-single-head">
         <div class="item-thumb">
             {{#if place.image}}
                 <img src="{{domainUri place.image}}" />
@@ -12,25 +12,33 @@
             <ul class="item-details">
                 <li>at <a href="#app/places/{{place.id}}">{{place.name}}</a></li>
                 <li>{{place.location.address}}</li>
-                {{#if dexpires}}
-                    <li>{{formatExpires dexpires}}</li>
-                {{/if}}
+                {{#if place.categories}}
                 <li>
                     <ul class="category">
-                        <li>Food</li>
-                        <li>Retail</li>
+                        {{#each categories}}
+                        <li>{{label}}</li>
+                        {{/each}}
                     </ul>
                 </li>
+                {{/if}}
             </ul> <!-- .item-details -->
         </div>
     </header>
 
     <article class="single-content" id="special-single-content">
+                    {{#place.location.geocoding}}
+            <div class="map-canvas">
+                <img src="{{getStaticMap latitude longitude}}"/>
+            </div>
+            {{/place.location.geocoding}}
+        {{#if dexpires}}
+            <h1 class="item-title">{{formatExpires dexpires}}</h1>
+        {{/if}}
         <p>{{description}}</p>
+        <div class="coupon-info">
+            <h1>To redeem this coupon:</h1>
+            <p class="description">Show this screen at {{place.name}} to redeem this coupon.</p>
+        </div>
         <div class="push"></div>
     </article>
 </div> <!-- .single-wrap -->
-
-<footer class="special-status">
-    <div class="grab-it action-btn">Grab it!</div>
-</footer>
