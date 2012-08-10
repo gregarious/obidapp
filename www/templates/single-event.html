@@ -13,7 +13,7 @@
                 <li>Starts: <strong>{{formatLongDate dtstart}}</strong><br/>
                 Ends: <strong>{{formatLongDate dtend}}</strong></li>
                 {{#place}}
-                    <li>at <a href="">{{name}}</a></li> 
+                    <li>at <a href="#app/places/{{id}}">{{name}}</a></li> 
                 {{/place}}
                 <li>
                     {{#if categories}}
@@ -40,13 +40,13 @@
         <nav class="action-list">
             <ul>
                 {{#if fb_id}}
-                <a href="http://facebook.com"><li class="action-facebook"><div>Facebook</div></li></a>
+                <a href="http://facebook.com" target="_blank"><li class="action-facebook"><div>Facebook</div></li></a>
                 {{/if}}
                 {{#if twitter_username}}
-                <a href=""><li class="action-twitter"><div>Twitter</div></li></a>
+                <a href="" target="_blank"><li class="action-twitter"><div>Twitter</div></li></a>
                 {{/if}}
                 {{#if url}}
-                <a href="{{url}}"><li class="action-website"><div>Website</div></li></a>
+                <a href="{{url}}" target="_blank"><li class="action-website"><div>Website</div></li></a>
                 {{/if}}
             </ul>
         </nav>
