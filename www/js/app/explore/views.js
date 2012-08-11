@@ -177,11 +177,9 @@ define(["text!templates/explore-menu.html",
 			console.log("Tapped & triggering: " + $(e.currentTarget).find('h1').html());
 			// trigger the tap AFTER a delay. without the delay, a click will register
 			// well after any tap callbacks, who the hell knows why.
-			var delay = 300;
 			setTimeout(function(){
 				$(e.currentTarget).trigger('tap');
-			}, delay);
-			console.log('using delay time of ' + delay + 's');
+			}, 300);
 		}
 		else {
 			console.log("Not tapped: " + $(e.currentTarget).find('h1').html());
@@ -190,12 +188,9 @@ define(["text!templates/explore-menu.html",
 		// isTouching = true;
 	};
 
-	$.fn.enableTap = function() {
+	$.fn.tappable = function() {
 		this.each(function(){
 			var el = $(this);	// refers to individul element
-			el.on('click', function(e) {
-				e.preventDefault();
-			});
 			el.on('touchstart', onFeedItemTouchStart);
 			el.on('touchmove', onFeedItemTouchMove);
 			el.on('touchend', onFeedItemTouchEnd);
@@ -208,11 +203,22 @@ define(["text!templates/explore-menu.html",
 		noResultsTemplate: Handlebars.compile(noResultsTpl),
 		pagingTemplate: Handlebars.compile(pagingTpl),
 
-		events: {
-			// enableTap call in render replaces anchor clicks with taps
-			// on tap, need to follow the href
-			'tap a.single-link': function(e) {
-				window.location = e.target.href;
+		events: function(){
+			if (Modernizr.touch) {
+				return {
+					// if browser support touch events, we want to use
+					// tap events to click on tappable links
+					'tap a.tappable': function(e) {
+						window.location = e.target.href;
+					},
+					'click a.tappable': function(e) {
+						e.preventDefault();
+					}
+				};
+			}
+			else {
+				// otherwise, good ol' link click behavior will have to do
+				return {};
 			}
 		},
 
@@ -240,8 +246,11 @@ define(["text!templates/explore-menu.html",
 
 			this.$el.append(listHtml);
 
-			// disable click events and enable tap ones
-			this.$('a.single-link').enableTap();
+			if (Modernizr.touch) {
+				console.log('enabling tappable');
+				// give these links the ability to trigger tap events
+				this.$('a.tappable').tappable();
+			}
 
 			var pagingHtml = '<div class="paging">' +
 			this.pagingTemplate(pagingOpts) +
