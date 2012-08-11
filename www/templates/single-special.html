@@ -35,13 +35,21 @@
         {{/place.location.geocoding}}
         
         {{#if dexpires}}
-            <h1 class="item-title">{{formatSimple dexpires}}</h1>
+            {{#if hasExpired}}
+                <h1 class="item-title">Expired {{formatSimple dexpires}}</h1>
+            {{else}}
+                <h1 class="item-title">Expires {{formatSimple dexpires}}</h1>
+            {{/if}}
         {{/if}}
         <p>{{description}}</p>
+
+        {{#unless hasExpired}}
         <div class="coupon-info">
             <h1>To redeem this coupon:</h1>
             <p class="description">Show this screen at {{place.name}} to redeem this coupon.</p>
         </div>
+        {{/unless}}
+        
         <div class="push"></div>
     </article>
 </div> <!-- .single-wrap -->

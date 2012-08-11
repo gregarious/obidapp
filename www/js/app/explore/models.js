@@ -53,6 +53,7 @@ define(function(){
 		parse: function(response) {
 			var attrs = Backbone.Model.prototype.parse.call(this, response);
 			setGeocoding(attrs.place && attrs.place.location);
+			attrs.hasExpired = attrs.dexpires && (moment(attrs.dexpires) < moment());
 			return attrs;
 		},
 		headerText: function() {
