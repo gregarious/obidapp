@@ -157,12 +157,6 @@ define(function(){
 			options.data = options.data || {};
 			options.data.listed = true;
 			return BaseCollection.prototype.fetch.call(this, options);
-		},
-
-		categories: {
-			'Food & Drink': 301,
-			'Retail': 302,
-			'Services': 303
 		}
 	});
 
