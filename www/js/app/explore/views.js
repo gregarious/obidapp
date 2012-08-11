@@ -143,10 +143,79 @@ define(["text!templates/explore-menu.html",
 		}
 	});
 
+	/*
+	* Following set of functions are for emulating "tap" behavior
+	* on feed items and disabled the overeager click events. See
+	* http://floatlearning.com/2011/03/developing-better-phonegap-apps/
+	* for the inspiration.
+	*
+	* TODO: reformulate into an actual jQuery event using
+	* on-touchstart demand binding (see "$.event.special.tap" in jqm source)
+	* and special event conventions
+	* (http://benalman.com/news/2010/03/jquery-special-events/). Then
+	* create a special delegateEvents function to be used on all views
+	* anchor clicks and replaces them with taps (this should allow us to
+	* avoid the ridiculous delay to avoid next page link clicks)
+	*/
+	var onFeedItemTouchStart = function(e) {
+		// if(isTouching) return;
+		e.currentTarget.beingTapped = true;
+		console.log("Start Tap: " + $(e.currentTarget).find('h1').html());
+		// isTouching = true;
+	};
+
+	var onFeedItemTouchMove = function(e) {
+		// if(isTouching) return;
+		e.currentTarget.beingTapped = false;
+		console.log("Tap Cancelled: " + $(e.currentTarget).find('h1').html());
+		// isTouching = true;
+	};
+
+	var onFeedItemTouchEnd = function(e) {
+		// if(isTouching) return;
+		if (e.currentTarget.beingTapped === true) {
+			console.log("Tapped & triggering: " + $(e.currentTarget).find('h1').html());
+			// trigger the tap AFTER a delay. without the delay, a click will register
+			// well after any tap callbacks, who the hell knows why.
+			var delay = 300;
+			setTimeout(function(){
+				$(e.currentTarget).trigger('tap');
+			}, delay);
+			console.log('using delay time of ' + delay + 's');
+		}
+		else {
+			console.log("Not tapped: " + $(e.currentTarget).find('h1').html());
+		}
+		e.currentTarget.beingTapped = false;
+		// isTouching = true;
+	};
+
+	$.fn.enableTap = function() {
+		this.each(function(){
+			var el = $(this);	// refers to individul element
+			el.on('click', function(e) {
+				e.preventDefault();
+			});
+			el.on('touchstart', onFeedItemTouchStart);
+			el.on('touchmove', onFeedItemTouchMove);
+			el.on('touchend', onFeedItemTouchEnd);
+		});
+		return this;
+	};
+
 	var ListFeedView = BaseFeedView.extend({
 		itemTemplate: null,
 		noResultsTemplate: Handlebars.compile(noResultsTpl),
 		pagingTemplate: Handlebars.compile(pagingTpl),
+
+		events: {
+			// enableTap call in render replaces anchor clicks with taps
+			// on tap, need to follow the href
+			'tap a.single-link': function(e) {
+				window.location = e.target.href;
+			}
+		},
+
 		render: function() {
 			this.$el.empty();
 
@@ -171,19 +240,8 @@ define(["text!templates/explore-menu.html",
 
 			this.$el.append(listHtml);
 
-			// replace default feed item anchor click events with
-			// touch-friendly "tap" event handlers
-			// TODO: find better place for this than in render()
-			var anchors = this.$('a.single-link');
-			anchors.on('click', function(e) {
-				console.log('click blocked!');
-				e.preventDefault();
-			});
-			anchors.on('tap', function(e) {
-				console.log('tap event!');
-				var url = $(e.target).attr('href');
-				window.location = url;
-			});
+			// disable click events and enable tap ones
+			this.$('a.single-link').enableTap();
 
 			var pagingHtml = '<div class="paging">' +
 			this.pagingTemplate(pagingOpts) +
