@@ -305,6 +305,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 					'" for ExploreController to act on.');
 				return;
 			}
+			contentController.activate();
 
 			var feedEl = containerView.findRegion('feed');
 			contentController.activate(feedEl, activeDisplayMode);
@@ -352,9 +353,9 @@ define(["explore/models", "explore/views"], function(models, views) {
 	var setDisplayMode = function(mode) {
 		//console.log('- ExploreController.setDisplayMode: ' + mode);
 		activeDisplayMode = mode;
+		menuView.setActiveDisplayMode(mode);
 		if (contentController) {
 			contentController.setActiveDisplayMode(mode);
-			menuView.setActiveDisplayMode(mode);
 		}
 	};
 
@@ -420,10 +421,10 @@ define(["explore/models", "explore/views"], function(models, views) {
 	var toggleDisplayMode = function() {
 		//console.log('- ExploreController.toggleDisplayMode');
 		if (activeDisplayMode === 'map') {
-			this.setDisplayMode('list');
+			this.setState({displayMode: 'list'});
 		}
 		else if (activeDisplayMode === 'list') {
-			this.setDisplayMode('map');
+			this.setState({displayMode: 'map'});
 		}
 		else {
 			console.warn('Invalid activeDisplayMode: ' + activeDisplayMode);
@@ -464,7 +465,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 			rootElement.show();
 
 			// draw menu
-			menuView.render();
+			containerView.findRegion('menu').html(menuView.render().el);
 
 			// attach event handlers
 			menuView.on('click:displayMode', toggleDisplayMode, this);
@@ -473,7 +474,8 @@ define(["explore/models", "explore/views"], function(models, views) {
 
 		deactivate: function() {
 			//console.log('ExploreController.deactivate.');
-			menuView.off();
+			menuView.off('click:displayMode');
+			menuView.off('click:displayMode');
 			rootElement.hide();
 		},
 
@@ -493,7 +495,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 				setDisplayMode(settings.displayMode);
 			}
 			if (render) {
-				this.refreshStaticRegions();
+				menuView.render();
 			}
 		},
 
