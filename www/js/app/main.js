@@ -32,7 +32,7 @@ requirejs.config({
 	}
 });
 
-requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, detailCtrl) {
+requirejs(['explore/controller', 'detail/controller', 'explore/mapcontroller'], function(exploreCtrl, detailCtrl, mapCtrl) {
 	
 	// global overrides for Backbone sync functions
 	var jsonpSync = function(method, model, options) {
@@ -118,14 +118,16 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 	window.app = new (Backbone.Router.extend({
 		states: {
 			explore: exploreCtrl,
-			detail: detailCtrl
+			detail: detailCtrl,
+			map: mapCtrl
 		},
 		currentState: null,
 
 		routes: {
 			"": 'index',
 			"app/:resource/:id": 'detailPage',
-			"app/:resource": 'exploreFeed'
+			"app/:resource": 'exploreFeed',
+			"test/map/:resource": 'mapFeed'
 		},
 
 		index: function() {
@@ -153,6 +155,14 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 			});
 		},
 
+		mapFeed: function(resourceType) {
+			console.log('+ appController.mapFeed: ' + resourceType);
+			this.pageTransition(this.states.map);
+			this.states.map.setState({
+				resourceType: resourceType
+			});
+		},
+
 		detailPage: function(resourceType, objectId) {
 			console.log('+ appController.detailPage: ' + resourceType + ',' + objectId);
 			this.pageTransition(this.states.detail);
@@ -172,6 +182,7 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		// hide all DOM to begin with
 		$('#panel-explore').hide();
 		$('#panel-detail').hide();
+		$('#panel-map').hide();
 
 		window.app.states.explore.setState({
 			displayMode: 'list'
