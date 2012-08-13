@@ -148,7 +148,6 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		},
 
 		exploreFeed: function(resourceType) {
-			console.log('+ appController.exploreFeed: ' + resourceType);
 			this.pageTransition(this.states.explore);
 			this.states.explore.setState({
 				resourceType: resourceType

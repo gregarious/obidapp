@@ -66,7 +66,6 @@ define(["text!templates/explore-menu.html",
 		},
 
 		setActiveDisplayMode: function(mode, renderChange) {
-			console.log('MenuView.setActiveDisplayMode: ' + mode);
 			renderChange = _.isUndefined(renderChange) ? true : renderChange;
 
 			this.activeDisplayMode = mode;
@@ -158,29 +157,23 @@ define(["text!templates/explore-menu.html",
 	var onFeedItemTouchStart = function(e) {
 		// if(isTouching) return;
 		e.currentTarget.beingTapped = true;
-		console.log("Start Tap: " + $(e.currentTarget).find('h1').html());
 		// isTouching = true;
 	};
 
 	var onFeedItemTouchMove = function(e) {
 		// if(isTouching) return;
 		e.currentTarget.beingTapped = false;
-		console.log("Tap Cancelled: " + $(e.currentTarget).find('h1').html());
 		// isTouching = true;
 	};
 
 	var onFeedItemTouchEnd = function(e) {
 		// if(isTouching) return;
 		if (e.currentTarget.beingTapped === true) {
-			console.log("Tapped & triggering: " + $(e.currentTarget).find('h1').html());
 			// trigger the tap AFTER a delay. without the delay, a click will register
 			// well after any tap callbacks, who the hell knows why.
 			setTimeout(function(){
 				$(e.currentTarget).trigger('tap');
 			}, 300);
-		}
-		else {
-			console.log("Not tapped: " + $(e.currentTarget).find('h1').html());
 		}
 		e.currentTarget.beingTapped = false;
 		// isTouching = true;
@@ -245,7 +238,6 @@ define(["text!templates/explore-menu.html",
 			this.$el.append(listHtml);
 
 			if (Modernizr.touch) {
-				console.log('enabling tappable');
 				// give these links the ability to trigger tap events
 				this.$('a.tappable').tappable();
 			}

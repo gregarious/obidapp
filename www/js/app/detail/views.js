@@ -25,7 +25,6 @@ define(["text!templates/single-place.html", "text!templates/single-event.html", 
 			},
 
 			backClicked: function(e) {
-				console.log('backClicked');
 				e.preventDefault();
 				this.trigger('back');
 			}

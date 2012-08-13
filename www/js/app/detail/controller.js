@@ -26,15 +26,11 @@ define(['explore/models',
 			activate: function() {
 				rootElement = $('#panel-detail');
 				rootElement.show();
-				console.log('+ DetailController.activate');
 			},
 			deactivate: function() {
 				rootElement.hide();
-				console.log('+ DetailController.deactivate');
 			},
 			setState: function(settings) {
-				console.log('+ DetailController.setState');
-				
 				var setup = typeSettings[settings.resourceType];
 				if (!setup) {
 					contentEl.html('invalid resource type');
