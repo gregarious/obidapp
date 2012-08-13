@@ -47,8 +47,13 @@ define(["text!templates/explore-menu.html",
 		activeSection: null,
 		activeDisplayMode: null,
 		
+		events: {
+			'click .icon-display': 'displayModeClicked'
+			//'click .icon-search': 'searchClicked',
+		},
+
 		initialize: function(options) {
-			_.bindAll(this, 'render', 'navClicked', 'searchClicked', 'displayModeClicked');
+			_.bindAll(this, 'render', 'searchClicked', 'displayModeClicked');
 		},
 
 		setActiveNav: function(navLabel, renderChange) {
@@ -98,13 +103,6 @@ define(["text!templates/explore-menu.html",
 			});
 
 			return this;
-		},
-
-		navClicked: function(e) {
-			// get the label of the nav element by stripping off the "nav-" part of the id
-			var substrs = e.target.id.split('-');
-			var label = substrs[substrs.length-1];
-			this.trigger('click:navItem', label);
 		},
 
 		displayModeClicked: function() {
