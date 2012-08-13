@@ -112,7 +112,8 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 
 	Handlebars.registerHelper('getStaticMap', function(lat, lng) {
 		return "http://maps.googleapis.com/maps/api/staticmap?markers=" +
-				lat + "," + lng + "&zoom=15&size=300x100&sensor=false";
+				lat + "," + lng + "&zoom=15&size=300x100&sensor=true&" +
+				"key=AIzaSyBs7pwJR2UazpCXdmAdcCnl0jjn1ML9Du0";
 	});
 
 	window.app = new (Backbone.Router.extend({
