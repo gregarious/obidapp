@@ -161,7 +161,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 				if (oldMap) {
 					oldMap.off();
 				}
-				var mapView = MapViewClass ? new MapViewClass({collection: collection}) : null;
+				var mapView = MapViewClass ? new MapViewClass({collection: collection, className: 'feed-map'}) : null;
 				viewManager.store('map', mapView);
 
 				// clear any old geolocation error notifications, and set it up to pass new ones in
@@ -236,10 +236,10 @@ define(["explore/models", "explore/views"], function(models, views) {
 	};
 
 	var typeControllerMap = {
-		places: createFeedController(models.Places, views.PlacesList, null),
-		events: createFeedController(models.Events, views.EventsList, null),
-		specials: createFeedController(models.Specials, views.SpecialsList, null),
-		news: createFeedController(models.NewsArticles, views.NewsArticleList, null),
+		places: createFeedController(models.Places, views.PlacesList, views.MapFeedView),
+		events: createFeedController(models.Events, views.EventsList, views.MapFeedView),
+		specials: createFeedController(models.Specials, views.SpecialsList, views.MapFeedView),
+		news: createFeedController(models.NewsArticles, views.NewsArticleList, views.MapFeedView),
 		now: createNowController(Backbone.Collection, views.NowView)
 	};
 
@@ -270,7 +270,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 		view.$el.html(
 			'<div data-region="menu" id="header-view"></div>' +
 			'<div id="content-view">' +
-			'	<div data-region="feed"></div>' +
+			'	<div data-region="feed" class="region-feed"></div>' +
 			'	<div class="push"></div>' +
 			'</div>' +
 			'<div data-region="filter" class="sorting"></div>');

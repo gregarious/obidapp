@@ -302,40 +302,31 @@ define(["text!templates/explore-menu.html",
 		}
 	});
 
-	var MapFeedView = Backbone.View.extend({
-		template: Handlebars.compile(mapTpl),
-		itemTemplate: null,
-		noResultsTemplate: Handlebars.compile(noResultsTpl),
-		pagingTemplate: Handlebars.compile(pagingTpl),
-		
-		// Maps should be ok as long as all parent containers use height=100%
-		// Don't try to be cute with a global map element yet. Just create a
-		// new one on each new MapFeedView instance.
-		render: function() {
-			var mapOptions = {
-				center: new google.maps.LatLng(-34.397, 150.644),
-				zoom: 8,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			};
+	exports.MapFeedView = Backbone.View.extend({
+		skeletonTemplate: Handlebars.compile(mapTpl),
+		map: null,
+		mapOptions: {
+			center: new google.maps.LatLng(40.444, -79.953),
+			zoom: 15,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		},
 
-			this.$el.html(this.template());
-			var map = new google.maps.Map(this.$("#map-canvas")[0],
-				mapOptions);
+		initialize: function(options) {
+			_.bindAll(this, 'render');
+		},
+
+		render: function() {
+			if (!this.map) {
+				// if map doesn't exist, this is the first rendering
+				this.$el.html(this.skeletonTemplate());
+				this.map = new google.maps.Map(this.$(".map-canvas")[0], this.mapOptions);
+			}
+			else {
+				// handle updating of other inner elements
+			}
+
 			return this;
 		}
-	});
-
-	exports.PlacesMap = MapFeedView.extend({
-		itemTemplate: Handlebars.compile(placeListItemTpl)
-	});
-	exports.EventsMap = MapFeedView.extend({
-		itemTemplate: Handlebars.compile(eventListItemTpl)
-	});
-	exports.SpecialsMap = MapFeedView.extend({
-		itemTemplate: Handlebars.compile(specialListItemTpl)
-	});
-	exports.NewsArticleMap = MapFeedView.extend({
-		itemTemplate: Handlebars.compile(newsListItemTpl)
 	});
 
 	return exports;
