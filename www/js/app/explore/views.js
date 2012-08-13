@@ -132,7 +132,7 @@ define(["text!templates/explore-menu.html",
 		},
 
 		initialize: function(options) {
-			_.bindAll(this, 'render', 'pagePrevious', 'pageNext');
+			_.bindAll(this, 'pagePrevious', 'pageNext');
 		},
 
 		pagePrevious: function() {
@@ -259,7 +259,6 @@ define(["text!templates/explore-menu.html",
 			
 			this.$el.append(pagingHtml);
 
-
 			return this;
 		}
 	});
@@ -322,10 +321,21 @@ define(["text!templates/explore-menu.html",
 				position: google.maps.ControlPosition.BOTTOM_LEFT
 			}
 		},
+		markers: [],
 
 		initialize: function() {
 			this.el = $('<div class="map-canvas"></div>')[0];
 			this.map = new google.maps.Map(this.el, this.initialOptions);
+			
+			var self = this;
+			google.maps.event.addListener(this.map, 'tilesloaded', function() {
+				console.log('gmaps:tilesloaded');
+				self.trigger('tilesloaded');
+			});
+			google.maps.event.addListener(this.map, 'bounds_changed', function() {
+				console.log('gmaps:bounds_changed');
+				self.trigger('bounds_changed');
+			});
 		},
 
 		getMap: function() {
@@ -340,25 +350,71 @@ define(["text!templates/explore-menu.html",
 				this.initialize();
 			}
 			return this.el;
+		},
+
+		addMarker: function(lat, lng) {
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(lat, lng),
+				map: this.getMap()
+			});
+			this.markers.push(marker);
+			return marker;
+		},
+
+		clearMarkers: function() {
+			_.each(this.markers, function(marker) {
+				marker.setMap(null);
+			});
+			this.markers = [];
 		}
 	};
 
-	exports.MapFeedView = Backbone.View.extend({
+	// allows for binding to tilesloaded event directly
+	_.extend(mapManager, Backbone.Events);
+
+	var MapFeedView = BaseFeedView.extend({
 		template: Handlebars.compile(mapTpl),
+		itemTemplate: null,
+
+		currentFocus: null,		// this will be a Model
+		markers: {},			// share ids with collection items
 
 		initialize: function(options) {
 			_.bindAll(this, 'render');
 		},
 
 		render: function() {
+			this.currentFocus = this.collection.models[0];
+			mapManager.clearMarkers();
+
+			this.collection.each(function(model) {
+				var coords = model.getCoords();
+				if (coords) {
+					mapManager.addMarker(coords.latitude, coords.longitude);
+				}
+			}, this);
+
 			this.$el.html(this.template());
 			this.$('.map-container').html(mapManager.getEl());
 
-			// handle updating of other inner elements
+
+			this.$('.infowindow-info').html(
+				this.itemTemplate(this.currentFocus.attributes));
 
 			return this;
 		}
 	});
+
+	exports.PlacesMap = MapFeedView.extend({
+		itemTemplate: Handlebars.compile(placeListItemTpl)
+	});
+	exports.EventsMap = MapFeedView.extend({
+		itemTemplate: Handlebars.compile(eventListItemTpl)
+	});
+	exports.SpecialsMap = MapFeedView.extend({
+		itemTemplate: Handlebars.compile(specialListItemTpl)
+	});
+
 
 	return exports;
 });

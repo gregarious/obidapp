@@ -33,6 +33,10 @@ define(function(){
 		},
 		headerText: function() {
 			return this.get('name');
+		},
+		getCoords: function() {
+			var location = this.get('location');
+			return location.geocoding;
 		}
 	});
 
@@ -45,6 +49,10 @@ define(function(){
 		},
 		headerText: function() {
 			return this.get('name');
+		},
+		getCoords: function() {
+			var place = this.get('place');
+			return place && place.location && place.location.geocoding;
 		}
 	});
 
@@ -58,6 +66,10 @@ define(function(){
 		},
 		headerText: function() {
 			return this.get('title');
+		},
+		getCoords: function() {
+			var place = this.get('place');
+			return place && place.location && place.location.geocoding;
 		}
 	});
 

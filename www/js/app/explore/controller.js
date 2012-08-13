@@ -250,9 +250,9 @@ define(["explore/models", "explore/views"], function(models, views) {
 	};
 
 	var typeControllerMap = {
-		places: createFeedController(models.Places, views.PlacesList, views.MapFeedView),
-		events: createFeedController(models.Events, views.EventsList, views.MapFeedView),
-		specials: createFeedController(models.Specials, views.SpecialsList, views.MapFeedView),
+		places: createFeedController(models.Places, views.PlacesList, views.PlacesMap),
+		events: createFeedController(models.Events, views.EventsList, views.EventsMap),
+		specials: createFeedController(models.Specials, views.SpecialsList, views.SpecialsMap),
 		news: createFeedController(models.NewsArticles, views.NewsArticleList, null),
 		now: createNowController(Backbone.Collection, views.NowView)
 	};
