@@ -302,28 +302,56 @@ define(["text!templates/explore-menu.html",
 		}
 	});
 
-	exports.MapFeedView = Backbone.View.extend({
-		skeletonTemplate: Handlebars.compile(mapTpl),
+	// manages the singleton map instance
+	var mapManager = {
 		map: null,
-		mapOptions: {
+		el: null,
+		initialOptions: {
 			center: new google.maps.LatLng(40.444, -79.953),
 			zoom: 15,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			panControl:false,
+			mapTypeControl:false,
+			streetViewControl:false,
+			zoomControl:true,
+			zoomControlOptions:{
+				style: google.maps.ZoomControlStyle.SMALL,
+				position: google.maps.ControlPosition.BOTTOM_LEFT
+			}
 		},
+
+		initialize: function() {
+			this.el = $('<div class="map-canvas"></div>')[0];
+			this.map = new google.maps.Map(this.el, this.initialOptions);
+		},
+
+		getMap: function() {
+			if (this.map === null) {
+				this.initialize();
+			}
+			return this.map;
+		},
+
+		getEl: function() {
+			if (this.el === null) {
+				this.initialize();
+			}
+			return this.el;
+		}
+	};
+
+	exports.MapFeedView = Backbone.View.extend({
+		template: Handlebars.compile(mapTpl),
 
 		initialize: function(options) {
 			_.bindAll(this, 'render');
 		},
 
 		render: function() {
-			if (!this.map) {
-				// if map doesn't exist, this is the first rendering
-				this.$el.html(this.skeletonTemplate());
-				this.map = new google.maps.Map(this.$(".map-canvas")[0], this.mapOptions);
-			}
-			else {
-				// handle updating of other inner elements
-			}
+			this.$el.html(this.template());
+			this.$('.map-container').html(mapManager.getEl());
+
+			// handle updating of other inner elements
 
 			return this;
 		}

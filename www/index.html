@@ -26,17 +26,25 @@
       <div id="content-view">
         <div data-region="feed" class="region-feed">
           <div class='feed-map'>
-            <div class='map-canvas'>
+              <div class='map-container'>
+                <div class='map-canvas'>
 
    We need each of these divs to have 100% height. Current stylesheets only
    have 100% down to "#content-view". Delete these inline styles once it's
    fixed.
+
+   Yep, it's a ton of ridiculously unnecessary div wrappers. Unforatunately,
+   we're going to have to live with it for the first release. I have plans
+   to make it better, but no time right now.
    -->
   <style type="text/css">
     .feed-map {
       height: 100%;
     }
     .region-feed {
+      height: 100%;
+    }
+    .map-container {
       height: 100%;
     }
     .map-canvas {
