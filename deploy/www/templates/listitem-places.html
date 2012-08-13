@@ -1,0 +1,31 @@
+<li>
+  <a class="tappable" href="#app/places/{{id}}">
+    
+    <div class="item-thumb">
+      {{#if image}}
+        <img src="{{domainUri image}}" />
+      {{else}}
+        <img src="img/defaults/default-place.png" />
+      {{/if}}
+    </div>
+
+    <section class="item-content">
+      <h1 class="item-title">{{name}}</h1>
+      <ul class="item-details">
+        <li>{{location.address}}</li>
+        <li>
+        {{#if categories}}
+        <li>
+            <ul class="category">
+                {{#each categories}}
+                <li>{{label}}</li>
+                {{/each}}
+            </ul>
+        </li>
+        {{/if}}
+        </li>
+      </ul> <!-- .item-details -->
+    </section> <!-- .item-content -->
+
+  </a>
+</li> <!-- feed list item -->

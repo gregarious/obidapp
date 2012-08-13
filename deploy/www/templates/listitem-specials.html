@@ -1,0 +1,30 @@
+<li>
+  <a class="tappable" href="#app/specials/{{id}}">
+    <div class="item-thumb">
+      {{#if place.image}}
+        <img src="{{domainUri place.image}}" />
+      {{else}}
+        <img src="img/defaults/default-special.png" />
+      {{/if}}
+    </div>
+    <section class="item-content">
+      <h1 class="item-title">{{title}}</h1>
+      <ul class="item-details">
+        <li>at {{place.name}}</li>
+        {{#if dexpires}}
+          <li>{{formatExpires dexpires}}</li>
+        {{/if}}
+        <li>
+          {{#if place.categories}}
+          <li>
+              <ul class="category">
+                  {{#each place.categories}}
+                  <li>{{label}}</li>
+                  {{/each}}
+              </ul>
+          </li>
+          {{/if}}
+      </ul> <!-- .item-details -->
+    </section> <!-- .item-content -->
+  </a>
+</li>
