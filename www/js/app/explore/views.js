@@ -76,7 +76,10 @@ define(["text!templates/explore-menu.html",
 		},
 
 		render: function() {
-			this.$el.html(this.template());
+			// static DOM structure -- only draw on the first call
+			if (!this.el.innerHTML) {
+				this.$el.html(this.template());
+			}
 
 			var listIcon = this.$(".icon-display-list"),
 				mapIcon = this.$(".icon-display-map");

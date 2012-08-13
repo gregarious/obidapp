@@ -128,6 +128,16 @@ define(["explore/models", "explore/views"], function(models, views) {
 				//console.log(opts);
 			},
 
+			// TODO: this is a terrible hack. get rid of it.
+			isMapSupported: function() {
+				return MapViewClass !== null;
+			},
+
+			// TODO: this is a terrible hack. get rid of it.
+			isListSupported: function() {
+				return true;
+			},
+
 			mapNextItem: function() {
 				//console.log('- feedController.mapNextItem');
 			},
@@ -230,7 +240,11 @@ define(["explore/models", "explore/views"], function(models, views) {
 				// collection.on('reset', // render to contentEl);
 
 				//console.log('nowController.showDefaultFeed');
-			}
+			},
+
+			// TODO: hack. remove.
+			isMapSupported: function() { return false; },
+			isListSupported: function() { return false; }
 		};
 		return controller;
 	};
@@ -239,7 +253,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 		places: createFeedController(models.Places, views.PlacesList, views.MapFeedView),
 		events: createFeedController(models.Events, views.EventsList, views.MapFeedView),
 		specials: createFeedController(models.Specials, views.SpecialsList, views.MapFeedView),
-		news: createFeedController(models.NewsArticles, views.NewsArticleList, views.MapFeedView),
+		news: createFeedController(models.NewsArticles, views.NewsArticleList, null),
 		now: createNowController(Backbone.Collection, views.NowView)
 	};
 
@@ -305,7 +319,19 @@ define(["explore/models", "explore/views"], function(models, views) {
 					'" for ExploreController to act on.');
 				return;
 			}
-			contentController.activate();
+
+			// ensure map mode isn't entered if there is no map mode view, also 
+			// disable icons if mode switching is unavailible
+			if (!contentController.isMapSupported()) {
+				menuView.$('.icon-display').addClass('disabled');
+				if (contentController.isListSupported()) {
+					setDisplayMode('list');
+				}
+				// TODO: set some kind of disabled class on the icon-display class?
+			}
+			else {
+				menuView.$('.icon-display').removeClass('disabled');
+			}
 
 			var feedEl = containerView.findRegion('feed');
 			contentController.activate(feedEl, activeDisplayMode);
@@ -419,15 +445,17 @@ define(["explore/models", "explore/views"], function(models, views) {
 	};
 
 	var toggleDisplayMode = function() {
-		//console.log('- ExploreController.toggleDisplayMode');
-		if (activeDisplayMode === 'map') {
-			this.setState({displayMode: 'list'});
-		}
-		else if (activeDisplayMode === 'list') {
-			this.setState({displayMode: 'map'});
-		}
-		else {
-			console.warn('Invalid activeDisplayMode: ' + activeDisplayMode);
+		if (contentController.isMapSupported()) {
+			//console.log('- ExploreController.toggleDisplayMode');
+			if (activeDisplayMode === 'map') {
+				this.setState({displayMode: 'list'});
+			}
+			else if (activeDisplayMode === 'list') {
+				this.setState({displayMode: 'map'});
+			}
+			else {
+				console.warn('Invalid activeDisplayMode: ' + activeDisplayMode);
+			}
 		}
 	};
 
