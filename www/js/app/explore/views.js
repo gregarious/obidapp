@@ -195,8 +195,9 @@ define(["text!templates/explore-menu.html",
 		pagingTemplate: Handlebars.compile(pagingTpl),
 
 		events: function(){
+			var origEvents = BaseFeedView.prototype.events;
 			if (Modernizr.touch) {
-				return {
+				return _.extend(origEvents, {
 					// if browser support touch events, we want to use
 					// tap events to click on tappable links
 					'tap a.tappable': function(e) {
@@ -205,11 +206,11 @@ define(["text!templates/explore-menu.html",
 					'click a.tappable': function(e) {
 						e.preventDefault();
 					}
-				};
+				});
 			}
 			else {
 				// otherwise, good ol' link click behavior will have to do
-				return {};
+				return origEvents;
 			}
 		},
 
