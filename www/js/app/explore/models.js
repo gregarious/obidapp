@@ -105,7 +105,7 @@ define(function(){
 					Backbone.Collection.prototype.fetch.call(self, options);
 				},
 				function(error) {
-					console.error(error);
+					// console.error(error);
 					self.trigger('geolocationError');
 					Backbone.Collection.prototype.fetch.call(self, options);
 				},

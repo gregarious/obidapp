@@ -90,7 +90,7 @@ define(["text!templates/explore-menu.html",
 				listIcon.show();
 			}
 			else {
-				console.warn('display mode error.');
+				//console.warn('display mode error.');
 			}
 
 			// cycle throug nav li's and ensure correct one has 'active' class
@@ -128,7 +128,7 @@ define(["text!templates/explore-menu.html",
 		},
 
 		initialize: function(options) {
-			_.bindAll(this, 'render', 'pagePrevious', 'pageNext');
+			_.bindAll(this, 'pagePrevious', 'pageNext');
 		},
 
 		pagePrevious: function() {
