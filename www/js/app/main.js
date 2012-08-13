@@ -125,6 +125,7 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 
 		routes: {
 			"": 'index',
+			"app/redirect": 'redirect',
 			"app/:resource/:id": 'detailPage',
 			"app/:resource": 'exploreFeed'
 		},
@@ -155,17 +156,20 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		},
 
 		detailPage: function(resourceType, objectId) {
-			console.log('+ appController.detailPage: ' + resourceType + ',' + objectId);
 			this.pageTransition(this.states.detail);
 			this.states.detail.setState({
 				resourceType: resourceType,
 				objectId: objectId
 			});
+		},
+
+		redirect: function(params) {
+			window.location = params.url;
 		}
 	}))();
 
 	$.ajaxSetup({
-		timeout: 5000
+		timeout: 8000
 	});
 
 	// after DOM load, initialze and run the app

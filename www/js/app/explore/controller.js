@@ -178,6 +178,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 					error: function() {
 						//console.log('error!');
 						var msg = 'Problem contacting server. Try again.';
+						activeContentType = null;
 						viewManager.setActive(new views.ErrorView({message: msg}));
 					},
 
