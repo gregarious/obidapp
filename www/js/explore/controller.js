@@ -147,13 +147,11 @@ define(["explore/models", "explore/views"], function(models, views) {
 					viewManager.setFlag('geolocationError', true);
 				});
 
-				var networkState = navigator.network.connection.type;
-				if (networkState === Connection.NONE || networkState === Connection.UNKNOWN) {
-					console.error('internet problem');
-					navigator.notification.alert('No internet connection found.', null, 'Connection Problem');
-				}
-				else {
-					console.log('no internet problem');
+				if (navigator.network) {	// will be false if not on phone
+					var networkState = navigator.network.connection.type;
+					if (networkState === Connection.NONE || networkState === Connection.UNKNOWN) {
+						navigator.notification.alert('No internet connection found.', null, 'Connection Problem');
+					}
 				}
 
 				// fetch from the server
