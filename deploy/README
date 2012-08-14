@@ -2,4 +2,4 @@ To deploy:
 1. require oprimization/uglification:
 	(www/js)$ ../../deploy/node_modules/requirejs/bin/r.js -o app.build.js    
 2. sync other static files:
-	(deploy)$ rsync -avz ../www/ www --exclude=js
+	(deploy)$ rsync -avz ../www/ www --exclude=js --exclude=.sass-cache
