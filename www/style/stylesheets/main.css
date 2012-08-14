@@ -244,7 +244,7 @@ a {
 /* line 40, ../sass/main.scss */
 #top-bar {
   background: #444444;
-  height: 38px;
+  height: 48px;
   width: 100%;
 }
 /* line 45, ../sass/main.scss */
@@ -299,8 +299,8 @@ a {
   width: auto;
   position: relative;
   z-index: 99999;
-  height: 38px;
-  margin: 2px;
+  height: 35px;
+  margin: 1px;
 }
 /* line 88, ../sass/main.scss */
 #top-bar #view-options {
