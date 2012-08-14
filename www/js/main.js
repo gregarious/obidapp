@@ -177,10 +177,13 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		$('#panel-explore').hide();
 		$('#panel-detail').hide();
 
-		window.app.states.explore.setState({
-			displayMode: 'list'
-		}, false);
+		// set state and start app only when PhoneGap is ready
+		document.addEventListener("deviceready", function() {
+			window.app.states.explore.setState({
+				displayMode: 'list'
+			}, false);
 
-		Backbone.history.start();
+			Backbone.history.start();
+		}, false);
 	});
 });
