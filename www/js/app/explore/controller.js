@@ -147,18 +147,20 @@ define(["explore/models", "explore/views"], function(models, views) {
 					viewManager.setFlag('geolocationError', true);
 				});
 
+				var networkState = navigator.network.connection.type;
+				if (networkState === Connection.NONE || networkState === Connection.UNKNOWN) {
+					console.error('internet problem');
+					navigator.notification.alert('No internet connection found.', null, 'Connection Problem');
+				}
+				else {
+					console.log('no internet problem');
+				}
+
 				// fetch from the server
 				collection.fetch({
 					// on failure, we manually set the current view to be an error
 					error: function(collection, response) {
-						var networkState = navigator.network.connection.type;
-						var msg;
-						if (networkState === Connection.NONE || networkState === Connection.UNKNOWN) {
-							msg = 'No internet connection found.';
-						}
-						else {
-							msg = 'Problem contacting server. Try again.';
-						}
+						var msg = 'Problem contacting server. Try again.';
 						activeContentType = null;
 						viewManager.setActive(new views.ErrorView({message: msg}));
 					},
