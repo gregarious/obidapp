@@ -221,6 +221,7 @@ a {
 
 			&.action-email {
 				@include icon('actions/email');
+				background-color: $yellow;
 			}
 		} // li
 	} // a
@@ -522,19 +523,20 @@ a {
 	position: fixed;
 	bottom: 0;
 	background: $dark-grey;
-	padding: 0.5em 0;
+	
 
 	h1 {
 		color: #fff;
 		@include text-shadow(1px 1px 1px #000);
 		text-align: center;
-		padding-right: 0.3em;
+		padding: 0.5em 0.3em 0.5em 0;
 		@include column(3.5);
 		@include box-sizing(border-box);
 	}
 
 	.select-container {
 		@include column(8.5);
+		padding: 0.5em 0;
 	}
 
 	select {
@@ -566,7 +568,6 @@ a {
 	}
 
 	.description {
-		margin-top: 2em;
 		@include column(12);
 		text-align: center;
 
@@ -576,13 +577,14 @@ a {
 	}
 
 	.shirt-actions {
-		margin-top: 1em;
+		margin: 1em 0;
+		@include clearfix;
 	}
 
 	img {
 		display: block;
 		margin-left: 1em;
-		width: 80%;
+		width: 90%;
 	}
 
 	.item-title {
@@ -594,7 +596,7 @@ a {
 
 	.action-list { 
 		@include column(3);
-		float: right;
+		//float: right;
 		position: relative;
 		z-index: 0;
 		ul a li {
