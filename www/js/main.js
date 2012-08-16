@@ -177,13 +177,22 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		$('#panel-explore').hide();
 		$('#panel-detail').hide();
 
-		// set state and start app only when PhoneGap is ready
-		document.addEventListener("deviceready", function() {
+		// actual app-kickoff code: separated for the sake of Phonegap's ondeviceready event
+		var onReady = function() {
 			window.app.states.explore.setState({
 				displayMode: 'list'
 			}, false);
 
 			Backbone.history.start();
-		}, false);
+		};
+
+		// if on a mobile device, call onReady via Phonegap's ondevice ready event
+		// otherwise, just call it now
+		if(navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+			document.addEventListener("deviceready", onReady, false);
+		}
+		else {
+			onReady();
+		}
 	});
 });
