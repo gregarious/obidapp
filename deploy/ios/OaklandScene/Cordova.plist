@@ -24,7 +24,6 @@
 	<true/>
 	<key>ExternalHosts</key>
 	<array>
-		<string>maps.googleapis.com</string>
 		<string>*.scenable.com</string>
 		<string>*</string>
 	</array>

@@ -16,10 +16,9 @@
  specific language governing permissions and limitations
  under the License.
  */
-
 //
-//  AppDelegate.h
-//  ObidApp
+//  main.m
+//  OaklandScene
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
@@ -27,19 +26,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import <Cordova/CDVViewController.h>
-
-@interface AppDelegate : NSObject < UIApplicationDelegate > {
-
+int main(int argc, char *argv[]) {
+    
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int retVal = UIApplicationMain(argc, argv, nil, @"AppDelegate");
+    [pool release];
+    return retVal;
 }
-
-// invoke string is passed to your app on launch, this is only valid if you 
-// edit ObidApp-Info.plist to add a protocol
-// a simple tutorial can be found here : 
-// http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-
-@property (nonatomic, retain) IBOutlet UIWindow* window;
-@property (nonatomic, retain) IBOutlet CDVViewController* viewController;
-
-@end
-

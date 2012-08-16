@@ -19,7 +19,7 @@
 
 //
 //  AppDelegate.m
-//  ObidApp
+//  OaklandScene
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
@@ -61,7 +61,7 @@
     
     if (url && [url isKindOfClass:[NSURL class]]) {
         invokeString = [url absoluteString];
-		NSLog(@"ObidApp launchOptions = %@", url);
+		NSLog(@"OaklandScene launchOptions = %@", url);
     }    
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
@@ -110,7 +110,7 @@
 }
 
 // this happens while we are running ( in the background, or from within our own app )
-// only valid if ObidApp-Info.plist specifies a protocol to handle
+// only valid if OaklandScene-Info.plist specifies a protocol to handle
 - (BOOL) application:(UIApplication*)application handleOpenURL:(NSURL*)url 
 {
     if (!url) { 
