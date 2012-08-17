@@ -171,6 +171,11 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		timeout: 8000
 	});
 
+	var waitingForDevice = $.Deferred();
+	document.addEventListener("deviceready", function() {
+		waitingForDevice.resolve();
+	}, false);
+
 	// after DOM load, initialze and run the app
 	$(function(){
 		// hide all DOM to begin with
@@ -189,7 +194,7 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		// if on a mobile device, call onReady via Phonegap's ondevice ready event
 		// otherwise, just call it now
 		if(navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-			document.addEventListener("deviceready", onReady, false);
+			waitingForDevice.done(onReady);
 		}
 		else {
 			onReady();
