@@ -176,6 +176,8 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		waitingForDevice.resolve();
 	}, false);
 
+	var onMobileDevice = !!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
+
 	// after DOM load, initialze and run the app
 	$(function(){
 		// hide all DOM to begin with
@@ -193,7 +195,7 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 
 		// if on a mobile device, call onReady via Phonegap's ondevice ready event
 		// otherwise, just call it now
-		if(navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+		if(onMobileDevice) {
 			waitingForDevice.done(onReady);
 		}
 		else {
