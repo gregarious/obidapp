@@ -1,0 +1,9 @@
+To deploy:
+1. require optimization/uglification:
+	(www/js)$ ../../deploy/node_modules/requirejs/bin/r.js -o app.build.js    
+2. sync other static files:
+	(deploy)$ rsync -avz ../www/ www-build --exclude=js --exclude=.sass-cache
+
+TODO:
+- Automate these build steps
+- Create post checkout hook for all deployment branches that clears www-build
