@@ -71,15 +71,18 @@ define(function(){
 		//  - query: search query to add to request
 		//  - categoryId: category id to filter results by
 		initialize: function(options) {
-			if (options) {
-				this.query = options.query || null;
-				// TODO: allow categoryId = 0
-				this.categoryId = options.categoryId || null;
-				this.limit = options.limit || null;
-				this.offset = options.offset || null;
-
-				this.locationTimeout = options.locationTimeout || 5000;
-			}
+			options = options || {};
+			_.extend(this,
+				_.defaults(options,
+				{
+					// default member values
+					query: null,
+					categoryId: null,
+					limit: null,
+					offset: null,
+					locationTimeout: 5000
+				})
+			);
 		},
 
 		fetch: function(options) {
