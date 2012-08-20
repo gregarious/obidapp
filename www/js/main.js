@@ -120,8 +120,6 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 	function addToHomeScreenNotification() {
 		var msg = '';
 		if (navigator.userAgent.match(/(iPhone|iPad)/)) {
-			//msg =   'Click the share button and then "Add to Home Screen" to get the ' +
-			//		'Oakland Scene on your home screen with your other apps!';
 
 			$('.add-to-homescreen').delay(100).fadeIn(400);
 			$('.close').click(function(){

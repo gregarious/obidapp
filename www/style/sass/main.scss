@@ -57,7 +57,7 @@ a {
 	}
 
 	#view-options {
-		//padding: 0.5em;
+		
 		select {
 			width: 100%;
 			position: relative;
@@ -299,7 +299,8 @@ a {
 
 .add-to-homescreen {
 	display: none;
-	font-weight: 300;
+	font-weight: 400;
+	color: #111;
 	@include box-shadow(0 0 10px #000);
 	@include background-image(linear-gradient(#fff, $light-blue));
 	@include box-sizing(border-box);
@@ -313,6 +314,10 @@ a {
 	text-align: center;
 	line-height: 1.3em;
 
+	span {
+		font-weight: 600;
+	}
+
 	.arrow-down {
 		display: block;
 		margin: auto;
@@ -322,7 +327,7 @@ a {
 
 	.close {
 		text-align: center;
-		@include button-gradient($light-grey, $med-grey, #fff);
+		@include button-gradient($light-blue, $med-blue, #fff);
 		position: relative;
 		top: 1em;
 
