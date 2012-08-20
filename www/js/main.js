@@ -28,7 +28,7 @@ moment.longDateFormat.LLL = "MMMM D YYYY, LT";
 // create a paths alias for the templates dir
 requirejs.config({
 	paths: {
-		'templates': '../../templates'
+		'templates': '../templates'
 	}
 });
 
@@ -196,7 +196,6 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 	var waitingForDevice = $.Deferred();
 	document.addEventListener("deviceready", function() {
 		waitingForDevice.resolve();
-		alert('all ready');
 	}, false);
 
 	// TODO: this is broken. will return true for mobile safari, but mobile safari won't trigger a deviceready event.
