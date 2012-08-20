@@ -120,22 +120,19 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 	function addToHomeScreenNotification() {
 		var msg = '';
 		if (navigator.userAgent.match(/(iPhone|iPad)/)) {
-			msg =   'Click the share button and then "Add to Home Screen" to get the ' +
-					'Oakland Scene on your home screen with your other apps!';
+			//msg =   'Click the share button and then "Add to Home Screen" to get the ' +
+			//		'Oakland Scene on your home screen with your other apps!';
+
+			$('.add-to-homescreen').delay(100).fadeIn(400);
+			$('.close').click(function(){
+				$('.add-to-homescreen').fadeOut(400);
+			});
+
 		}
 		else if (navigator.userAgent.match(/(Android)/)) {
 			// more complicated instructions. hopefully won't need them.
 		}
 
-		// display message if one was set
-		if (msg !== '') {
-			if (navigator.notification && navigator.notification.alert) {
-				navigator.notification.alert(msg, null, 'Add to Home Screen');
-			}
-			else {
-				alert(msg);
-			}
-		}
 	}
 
 	window.app = new (Backbone.Router.extend({
@@ -220,12 +217,12 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 
 		// if on a mobile device, call onReady via Phonegap's ondevice ready event
 		// otherwise, just call it now
-		if(onMobileDevice) {
-			waitingForDevice.done(onReady);
-		}
-		else {
+		// if(onMobileDevice) {
+		// 	waitingForDevice.done(onReady);
+		// }
+		// else {
 			onReady();
 			setTimeout(addToHomeScreenNotification, 750);
-		}
+		//}
 	});
 });

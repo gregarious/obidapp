@@ -41,36 +41,8 @@ a {
 	height: 48px;
 	width: 100%;
 
-	#top-logo, #current-user, #view-options {
-		@include column(4);
-	}
-
-	&.site-search {
-		#app-search {
-			@include column(10);
-			position: relative;
-			top: 5px;
-			height: 25px;
-			left: 10px;
-			background: #666;
-			color: #fff;
-			border: 1px solid #eee;
-			//border-top:0;
-			@include border-radius(0);
-
-		}
-
-		#view-options {
-			@include column(2);
-
-			a {
-				img {
-					float: right;
-					padding-right: 10px;
-				}
-			}
-		}
-
+	#top-logo, #view-options {
+		@include column(6);
 	}
 
 	#top-logo { 
@@ -78,31 +50,20 @@ a {
 		img {
 			width: auto;
 			position: relative;
-			z-index: 99999;
+			z-index: 999;
 			height: 35px;
 			margin: 1px;
 		}
 	}
 
 	#view-options {
-		padding: 0.5em;
-
-		img {
-			height: 15px;
-			float: right;
-			cursor: pointer;
-
-			&.icon-display {
-				margin-left: 10px;
-			}
+		//padding: 0.5em;
+		select {
+			width: 100%;
+			position: relative;
+			z-index: 10000000;
 		}
-	}
 
-	#current-user {
-		text-align: center;
-		display: inline;
-		color: #fff;
-		margin-top: 10px;
 	}
 }
 
@@ -125,7 +86,7 @@ a {
 
 /* NAVIGATION ---------- */
 
-.explore-nav, #top-bar-single, .single-place-nav, .category, .sorting, .action-list {
+.explore-nav, #top-bar-single, .single-place-nav, .category,	 .action-list {
 	@extend .horiz-ul;
 }
 
@@ -326,27 +287,46 @@ a {
 			background: url('../../img/assets/next-btn-active.png');
 		}
 	}
-
-		// @include background-image(linear-gradient($green, $green));
-		// color: #fff;
-		// padding: 0.5em;
-		// border: 1px solid $dark-green;
-		// @include box-shadow(1px 1px 1px #444);
-		// font-weight: bold;
-		// @include border-radius(10px);
-		// cursor: pointer;
-
-		// &:active {
-		// 	@include box-shadow(none);
-		// }
 }
 
 .error {
 	font-size: 1em;
-	font-weight: bold;
+	font-weight: 700;
 	background: #fff;
 	text-align: center;
 	padding: 1em;
+}
+
+.add-to-homescreen {
+	display: none;
+	font-weight: 300;
+	@include box-shadow(0 0 10px #000);
+	@include background-image(linear-gradient(#fff, $light-blue));
+	@include box-sizing(border-box);
+	padding: 10px;
+	z-index: 1000;
+	position: fixed;
+	bottom: 20px;
+	@include border-radius(10px);
+	width: 80%;
+	margin: 0 10%;
+	text-align: center;
+	line-height: 1.3em;
+
+	.arrow-down {
+		display: block;
+		margin: auto;
+		position: relative;
+		top: 30px;
+	}
+
+	.close {
+		text-align: center;
+		@include button-gradient($light-grey, $med-grey, #fff);
+		position: relative;
+		top: 1em;
+
+	}
 }
 
 /* FEED ITEMS --------- */
@@ -455,7 +435,7 @@ a {
 
 		a {
 			color: $red;
-			font-weight: bold;
+			font-weight: 700;
 		}
 	}
 
@@ -556,7 +536,7 @@ a {
 		margin: 1em 0;
 		text-align: center;
 		font-size: 1.4em;
-		font-weight: bold;
+		font-weight: 700;
 	}
 
 	.action-list { 
@@ -624,7 +604,7 @@ a {
 }
 
 .source, .date {
-	font-weight: bold;
+	font-weight: 700;
 }
 
 .source {
@@ -639,7 +619,7 @@ a {
 
 .single-place-nav {
 	color: #fff;
-	font-weight: bold;
+	font-weight: 700;
 	@include text-shadow(1px 1px 1px #333);
 
 	li {
@@ -709,7 +689,7 @@ a {
 	}
 
 	.detail-title {
-		font-weight: bold;
+		font-weight: 700;
 		//margin-bottom: 0.2em;
 		font-size: 0.9em;
 	}
@@ -759,7 +739,7 @@ a {
 	padding: 0.5em;
 	h1 {
 		font-size: 1.3em;	
-		font-weight: bold;
+		font-weight: 700;
 		padding-bottom: 0.4em;
 	}
 	
