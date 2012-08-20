@@ -219,9 +219,18 @@ define(["explore/models", "explore/views"], function(models, views) {
 	};
 
 	var typeFilterViewMap = {
-		places: new views.CategoryFilterView({collection: new models.PlaceCategories()}),
-		events: new views.CategoryFilterView({collection: new models.EventCategories()}),
-		specials: new views.CategoryFilterView({collection: new models.PlaceCategories()}),
+		places: new views.CategoryFilterView({
+			defaultLabel: 'All Places',
+			collection: new models.PlaceCategories()
+		}),
+		events: new views.CategoryFilterView({
+			defaultLabel: 'All Events',
+			collection: new models.EventCategories()
+		}),
+		specials: new views.CategoryFilterView({
+			defaultLabel: 'All Specials',
+			collection: new models.PlaceCategories()
+		}),
 		news: null,
 		now: null
 	};
@@ -247,8 +256,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 			'<div id="content-view">' +
 			'	<div data-region="feed"></div>' +
 			'	<div class="push"></div>' +
-			'</div>' +
-			'<div data-region="filter" class="sorting"></div>');
+			'</div>');
 		return view;
 	};
 
@@ -305,6 +313,8 @@ define(["explore/models", "explore/views"], function(models, views) {
 			
 		// when collection changes, render it
 		newView.collection.on('reset', function() {
+			// TODO: this filterEl's entire DOM gets trashed due to some unnecessary menu overwriting. that shouldn't happen.
+			var filterEl = containerView.findRegion('filter');
 			filterEl.html(newView.render().el);
 			// TODO: no idea why event binding in view (or delegation in general) doesn't work. hacking it here now.
 			filterEl.find('select').on('change', function(e){

@@ -277,13 +277,19 @@ define(["text!templates/explore-menu.html",
 
 		initialize: function(options) {
 			_.bindAll(this, 'render', 'categorySelected');
+			if (options && options.defaultLabel) {
+				this.defaultLabel = options.defaultLabel;
+			}
 		},
 
 		render: function() {
 			var list = this.collection.map(function(model) {
 				return model.attributes;
 			});
-			var content = this.template({categories: list});
+			var content = this.template({
+				categories: list,
+				defaultLabel: this.defaultLabel || 'All Results'
+			});
 			this.$el.html(content);
 			return this;
 		},
