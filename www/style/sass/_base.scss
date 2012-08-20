@@ -46,12 +46,14 @@ $default-text-shadow-h-offset: 0.05em;
 $default-text-shadow-v-offset: 0.05em;
 $default-text-shadow-blur: 0.08em;
 
-@mixin button-gradient {
-	@include background(linear-gradient($green, $light-green));
-	border: 1px solid $light-green;
-	color: #fff;
+@mixin button-gradient($color1, $color2, $text-color) {
+	@include background(linear-gradient($color1, $color2));
+	border: 1px solid $color2;
 	font-weight: 600;
+	@include border-radius(10px);
+	color: $text-color;
 	font-size: 0.9em;
+	padding: 0.5em;
 	text-align: center;
 	@include single-text-shadow(#333, 1px, 1px, 2px);
 
