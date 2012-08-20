@@ -1,11 +1,8 @@
-<div class="sorting">
-	<h1>Showing </h1>
-	<div class="select-container">
-		<select>
-			<option value="0">All Results</option>
-			{{#categories}}
-			<option value="{{id}}">{{label}}</option>
-			{{/categories}}
-		</select>
-	</div>
+<div id="view-options" class="sorting">
+	<select>
+		<option value="0">All Results</option>
+		{{#categories}}
+		<option value="{{id}}">{{label}}</option>
+		{{/categories}}
+	</select>
 </div>
