@@ -28,7 +28,7 @@ moment.longDateFormat.LLL = "MMMM D YYYY, LT";
 // create a paths alias for the templates dir
 requirejs.config({
 	paths: {
-		'templates': '../../templates'
+		'templates': '../templates'
 	}
 });
 
@@ -116,6 +116,28 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 				"key=AIzaSyBCJCI3JVemxWbwwWbPCQk8YX3LwqfVtfM";
 	});
 
+	// display a notification to non-Phonegap, mobile browser users to add the app to their home screens
+	function addToHomeScreenNotification() {
+		var msg = '';
+		if (navigator.userAgent.match(/(iPhone|iPad)/)) {
+			msg =   'Click the share button and then "Add to Home Screen" to get the ' +
+					'Oakland Scene on your home screen with your other apps!';
+		}
+		else if (navigator.userAgent.match(/(Android)/)) {
+			// more complicated instructions. hopefully won't need them.
+		}
+
+		// display message if one was set
+		if (msg !== '') {
+			if (navigator.notification && navigator.notification.alert) {
+				navigator.notification.alert(msg, null, 'Add to Home Screen');
+			}
+			else {
+				alert(msg);
+			}
+		}
+	}
+
 	window.app = new (Backbone.Router.extend({
 		states: {
 			explore: exploreCtrl,
@@ -176,6 +198,11 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		waitingForDevice.resolve();
 	}, false);
 
+	// TODO: this is broken. will return true for mobile safari, but mobile safari won't trigger a deviceready event.
+	// See http://stackoverflow.com/questions/10347539/detect-between-a-mobile-browser-or-a-phonegap-application
+	// use this to create an isAppNative variable to replace onMobileDevice
+	var onMobileDevice = !!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
+
 	// after DOM load, initialze and run the app
 	$(function(){
 		// hide all DOM to begin with
@@ -193,11 +220,12 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 
 		// if on a mobile device, call onReady via Phonegap's ondevice ready event
 		// otherwise, just call it now
-		if(navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+		if(onMobileDevice) {
 			waitingForDevice.done(onReady);
 		}
 		else {
 			onReady();
+			setTimeout(addToHomeScreenNotification, 750);
 		}
 	});
 });

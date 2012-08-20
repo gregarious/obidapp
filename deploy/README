@@ -6,5 +6,5 @@ To deploy:
 
 TODO:
 - Automate these build steps
-- Create post checkout hook for all deployment branches that clears www-build
-- Look into problem with iOS templates text files not being read in correctly in dev www/
+- Get js/libs to copy over with rsync
+- Have build script build directly to ios/android/webapp www/ folders. Copying over platform-specific libraries.
