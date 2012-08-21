@@ -193,11 +193,6 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		waitingForDevice.resolve();
 	}, false);
 
-	// TODO: this is broken. will return true for mobile safari, but mobile safari won't trigger a deviceready event.
-	// See http://stackoverflow.com/questions/10347539/detect-between-a-mobile-browser-or-a-phonegap-application
-	// use this to create an isAppNative variable to replace onMobileDevice
-	var onMobileDevice = !!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
-
 	// after DOM load, initialze and run the app
 	$(function(){
 		// hide all DOM to begin with
@@ -213,14 +208,13 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 			Backbone.history.start();
 		};
 
-		// if on a mobile device, call onReady via Phonegap's ondevice ready event
-		// otherwise, just call it now
-		// if(onMobileDevice) {
-		// 	waitingForDevice.done(onReady);
-		// }
-		// else {
+		// if cordova is undefined, we assume it's on a webapp-only deployment, manually call onReady()
+		if(window.cordova) {
+			waitingForDevice.done(onReady);
+		}
+		else {
 			onReady();
-			setTimeout(addToHomeScreenNotification, 750);
-		//}
+			setTimeout(addToHomeScreenNotification, 300);
+		}
 	});
 });
