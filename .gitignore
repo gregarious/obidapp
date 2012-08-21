@@ -1,3 +1,5 @@
 *.DS_Store
 *~
+*.pyc
 www/style/.sass-cache
+fabfile.py
