@@ -1,6 +1,3 @@
-# npm files
-node_modules/
-
 # built www/ development files
 www-build/
 
@@ -77,3 +74,9 @@ local.properties
 
 # PDT-specific
 .buildpath
+
+#### general deploy/ directory rules ####
+
+# npm files (now allowing since deployment machinery is part of repo)
+#node_modules/
+!node_modules/*/bin/
