@@ -121,7 +121,7 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 		var msg = '';
 		if (navigator.userAgent.match(/(iPhone|iPad)/)) {
 
-			$('.add-to-homescreen').delay(100).fadeIn(400);
+			$('.add-to-homescreen').delay(100).fadeIn(200);
 			$('.close').click(function(){
 				$('.add-to-homescreen').fadeOut(400);
 			});
