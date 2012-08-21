@@ -280,8 +280,8 @@ define(["explore/models", "explore/views"], function(models, views) {
 			// switch to new controller
 			contentController = typeControllerMap[resourceType];
 			if (!contentController) {
-				console.error('Warning: Unknown type arg "' + resourceType +
-					'" for ExploreController to act on.');
+				// console.error('Warning: Unknown type arg "' + resourceType +
+				// 	'" for ExploreController to act on.');
 				return;
 			}
 			contentController.activate();
@@ -402,7 +402,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 			this.setState({displayMode: 'map'});
 		}
 		else {
-			console.warn('Invalid activeDisplayMode: ' + activeDisplayMode);
+			// console.warn('Invalid activeDisplayMode: ' + activeDisplayMode);
 		}
 	};
 
