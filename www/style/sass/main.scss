@@ -305,7 +305,7 @@ a {
 	@include background-image(linear-gradient(#fff, $light-blue));
 	@include box-sizing(border-box);
 	padding: 10px;
-	z-index: 1000;
+	z-index: 100000000000;
 	position: fixed;
 	bottom: 20px;
 	@include border-radius(10px);
