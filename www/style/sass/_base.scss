@@ -53,7 +53,7 @@ $default-text-shadow-blur: 0.08em;
 	@include border-radius(10px);
 	color: $text-color;
 	font-size: 0.9em;
-	padding: 0.5em;
+	padding: 0.3em;
 	text-align: center;
 	@include single-text-shadow(#333, 1px, 1px, 2px);
 

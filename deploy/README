@@ -1,6 +1,6 @@
 To deploy:
 1. require optimization/uglification:
-	(deploy)$ ../optimize.sh
+	(deploy)$ ./optimize.sh
 2. sync other static files:
 	(deploy)$ rsync -avz ../www/ www-build --exclude=js --exclude=.sass-cache
 
