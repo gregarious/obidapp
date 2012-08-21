@@ -150,7 +150,10 @@ define(["explore/models", "explore/views"], function(models, views) {
 				if (navigator.network) {	// will be false if not on phone
 					var networkState = navigator.network.connection.type;
 					if (networkState === Connection.NONE || networkState === Connection.UNKNOWN) {
-						navigator.notification.alert('No internet connection found.', null, 'Connection Problem');
+						// TODO: temporary hack. Lara's phone was firing a lot of false positives here. Alert was only to make iTunes App Store happy
+						if (device.platform !== 'Android') {
+							navigator.notification.alert('No internet connection found.', null, 'Connection Problem');
+						}
 					}
 				}
 
