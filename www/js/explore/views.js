@@ -276,7 +276,7 @@ define(["text!templates/explore-menu.html",
 		// TODO: doesn't delegate. no idea why
 		events: {
 			'change select': 'categorySelected',
-			'search input[type="search"]': 'searchSubmitted',
+			'change input[type="search"]': 'searchSubmitted',
 			'click .icon-filter-search': 'searchIconClicked',
 			'click .icon-filter-category': 'categoryIconClicked'
 		},
@@ -312,7 +312,6 @@ define(["text!templates/explore-menu.html",
 
 		setFilterMode: function(mode) {
 			this.filterMode = mode;
-			console.log('setFilterMode' + mode);
 			// clear the search box if leaving search mode
 			if (this.filterMode !== 'search') {
 				this.$('input[type="search"]').val('');
