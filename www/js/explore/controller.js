@@ -7,9 +7,6 @@ define(["explore/models", "explore/views"], function(models, views) {
 			
 			collection,
 			
-			categoryFilter = null,
-			query = null,
-
 			displayMode = null;
 
 		var viewManager = (function(){
@@ -219,15 +216,15 @@ define(["explore/models", "explore/views"], function(models, views) {
 	};
 
 	var typeFilterViewMap = {
-		places: new views.CategoryFilterView({
+		places: new views.FilterView({
 			defaultLabel: 'All Places',
 			collection: new models.PlaceCategories()
 		}),
-		events: new views.CategoryFilterView({
+		events: new views.FilterView({
 			defaultLabel: 'All Events',
 			collection: new models.EventCategories()
 		}),
-		specials: new views.CategoryFilterView({
+		specials: new views.FilterView({
 			defaultLabel: 'All Specials',
 			collection: new models.PlaceCategories()
 		}),
@@ -310,24 +307,44 @@ define(["explore/models", "explore/views"], function(models, views) {
 			filterEl.empty();
 			return false;
 		}
-			
+
+		// TODO: we always default to category filter. kinda sucks, but there's a lot
+		// of complications (namely, no centralized body to keep all the content/filter/view
+		// modes in sync with the current collection).
+		newView.setFilterMode('category');
+
+		filterEl.html(newView.render().el);
+
+		// since the views are singletons, each fullscale html-replace above
+		// undelegates all of the events
+		newView.delegateEvents();
+		
 		// when collection changes, render it
 		newView.collection.on('reset', function() {
-			// TODO: this filterEl's entire DOM gets trashed due to some unnecessary menu overwriting. that shouldn't happen.
-			var filterEl = containerView.findRegion('filter');
-			filterEl.html(newView.render().el);
-			// TODO: no idea why event binding in view (or delegation in general) doesn't work. hacking it here now.
-			filterEl.find('select').on('change', function(e){
-				newView.categorySelected(e);
-			});
+			newView.render();
 		});
 
-		newView.collection.reset();	// will trigger event to clear select box
-		newView.collection.fetch();	// will later trigger repopulation of select box
+		// TODO: so many unncessary API calls. need to pack category info into call that retrieves content
+		newView.collection.fetch();	// repopulation the select box with up to date categories
 		newView.on('selected', function(id) {
 			runFilter(id);
 		});
+
+		newView.on('search', function(query) {
+			runSearch(query);
+		});
+
+		newView.on('click:searchIcon', _.bind(function() {
+			this.setFilterMode('search');
+			this.render();
+		}, newView));
 		
+		newView.on('click:categoryIcon', _.bind(function() {
+			this.setFilterMode('category');
+			runFilter(0);
+			this.render();
+		}, newView));
+
 		filterView = newView;
 	};
 
