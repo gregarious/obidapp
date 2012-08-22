@@ -337,6 +337,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 		newView.on('click:searchIcon', _.bind(function() {
 			this.setFilterMode('search');
 			this.render();
+			this.$('input[type="search"]').focus();
 		}, newView));
 		
 		newView.on('click:categoryIcon', _.bind(function() {
