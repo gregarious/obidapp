@@ -1,8 +1,15 @@
-<div id="view-options" class="sorting">
-	<select>
-		<option value="0">{{defaultLabel}}</option>
-		{{#categories}}
-		<option value="{{id}}">{{label}}</option>
-		{{/categories}}
-	</select>
+<div id="view-options">
+	<!-- Hide/show these divs according to whats active -->
+
+	<div class="filter-category">
+		<img class="icon-filter-search" src="img/icons/search.png">
+		<select></select>
+	</div>
+
+	<div class="filter-search">
+
+		<img class="icon-filter-category" src="img/icons/x.png" />
+		<input type="search" placeholder="keyword" />
+	</div>
+	
 </div>

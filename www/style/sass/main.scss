@@ -41,12 +41,12 @@ a {
 	height: 48px;
 	width: 100%;
 
-	#top-logo, #view-options {
+	#top-logo {
 		@include column(6);
 	}
 
 	#top-logo { 
-		
+		@include column(3);
 		img {
 			width: auto;
 			position: relative;
@@ -57,13 +57,23 @@ a {
 	}
 
 	#view-options {
-		
-		select {
-			width: 100%;
+		@include column(9);
+		select, input[type="search"] {
+			float: right;
+			margin-top: 5px;
 			position: relative;
 			z-index: 10000000;
 		}
-
+		
+		img {
+			border-left: 1px solid #999;
+			float: right;
+			@include box-sizing(border-box);
+			height: 20px;
+			padding: 2px 0 2px 5px;
+			margin: 5px 10px 0 5px;
+			
+		}
 	}
 }
 
@@ -700,17 +710,17 @@ a {
 	}
 
 	.hours {
-		//@extend .horiz-ul;
+		@extend .horiz-ul;
 		font-size: 0.9em;
 		margin-bottom: 0.5em;		
 		
 		li {
-			//border-right: 1px solid $red;
+			border-right: 1px solid $red;
 			padding: 0.2em 0.4em;
 			font-size: 0.9em;
 
 			&:first-child {
-				//padding-left: 0;
+				padding-left: 0;
 			}
 
 			&:last-child {
