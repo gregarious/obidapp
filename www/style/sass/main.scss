@@ -464,7 +464,6 @@ a {
 	padding: 0.8em;
 	@include column(12);
 	position: relative;
-	//background: #fff;
 
 	p {
 		font-size: 0.9em;
@@ -475,10 +474,14 @@ a {
 
 .map-canvas {
 	@include column(12);
-	
+	p {
+		font-size: 0.8em;
+		color: #aaa;
+		margin-top: 0.5em;
+		font-style: italic;
+	}
 	margin-top: 0;
 	margin-bottom: 1em;
-	//height: 100px;
 	overflow: hidden;
 
 	img {
