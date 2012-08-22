@@ -66,12 +66,18 @@
                 </ul>
             </nav>
 
-            {{#location.geocoding}}
+            {{#if location.geocoding}}
             <div class="map-canvas">
-                <img src="{{getStaticMap latitude longitude}}"/>
+                {{#if location.directionsUrl}}
+                <a href="{{location.directionsUrl}}" target="_blank">
+                {{/if}}
+                <img src="{{getStaticMap location.geocoding.latitude location.geocoding.longitude}}"/>
+                {{#if location.directionsUrl}}
+                </a>
                 <p>Click map for directions</p>
+                {{/if}}
             </div>
-            {{/location.geocoding}}
+            {{/if}}
 
             <p class="description">{{description}}</p>
 

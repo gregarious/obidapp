@@ -31,12 +31,6 @@
     </header> <!-- .single-header -->
 
     <article class="single-content" id="event-single-content">
-        {{#place.location.geocoding}}
-        <div class="map-canvas">
-            <img src="{{getStaticMap latitude longitude}}"/>
-            <p>Click map for directions</p>
-        </div>
-        {{/place.location.geocoding}}
 
         <nav class="action-list">
             <ul>
@@ -51,6 +45,19 @@
                 {{/if}}
             </ul>
         </nav>
+        
+        {{#if place.location.geocoding}}
+        <div class="map-canvas">
+            {{#if place.location.directionsUrl}}
+                <a href="{{place.location.directionsUrl}}" target="_blank">
+            {{/if}}
+            <img src="{{getStaticMap place.location.geocoding.latitude place.location.geocoding.longitude}}"/>
+            {{#if place.location.directionsUrl}}
+                </a>
+                <p>Click map for directions</p>
+            {{/if}}
+        </div>
+        {{/if}}
 
         <p class="description">{{description}}
         </p>

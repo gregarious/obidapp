@@ -28,13 +28,18 @@
     </header>
 
     <article class="single-content" id="special-single-content">
-        {{#place.location.geocoding}}
+        {{#if place.location.geocoding}}
             <div class="map-canvas">
-                <img src="{{getStaticMap latitude longitude}}"/>
+                {{#if place.location.directionsUrl}}
+                <a href="{{place.location.directionsUrl}}" target="_blank">
+                {{/if}}
+                    <img src="{{getStaticMap place.location.geocoding.latitude place.location.geocoding.longitude}}"/>
+                {{#if place.location.directionsUrl}}
+                </a>
                 <p>Click map for directions</p>
+                {{/if}}
             </div>
-
-        {{/place.location.geocoding}}
+        {{/if}}
         
         {{#if dexpires}}
             {{#if hasExpired}}
