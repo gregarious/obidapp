@@ -90,11 +90,20 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 			end = moment(isoEnd),
 			now = moment();
 
+		var output = '';
 		if (start < now && now < end) {
-			return 'ends ' + end.calendar(false);
+			return 'Now till ' + end.calendar(false);
 		}
 		else if (end.diff(start,'days') < 1) {
-			return start.calendar(false) + ' - ' + end.format('LT');
+			var startOutput = start.calendar(false);
+			// if the start date is formatted like a date (happens when
+			// event is more than a week away), don't print the end time
+			if (startOutput.match(/\d+\/\d+\/\d+/)) {
+				return startOutput;
+			}
+			else {
+				return startOutput + ' - ' + end.format('LT');
+			}
 		}
 		else {
 			return start.calendar(false) + ' - ' + end.calendar(false);
