@@ -269,38 +269,74 @@ define(["text!templates/explore-menu.html",
 		itemTemplate: Handlebars.compile(newsListItemTpl)
 	});
 
-	exports.CategoryFilterView = Backbone.View.extend({
+	exports.FilterView = Backbone.View.extend({
 		template: Handlebars.compile(filterTpl),
+		filterMode: 'category',
 		
 		// TODO: doesn't delegate. no idea why
-		// events: {
-		// 	'change select': 'categorySelected'
-		// },
+		events: {
+			'change select': 'categorySelected',
+			'change input[type="search"]': 'searchSubmitted',
+			'click .icon-filter-search': 'searchIconClicked',
+			'click .icon-filter-category': 'categoryIconClicked'
+		},
 
 		initialize: function(options) {
-			_.bindAll(this, 'render', 'categorySelected');
+			_.bindAll(this, 'render', 'categorySelected', 'searchIconClicked', 'categoryIconClicked');
 			if (options && options.defaultLabel) {
 				this.defaultLabel = options.defaultLabel;
 			}
+			this.$el.html(this.template());
 		},
 
 		render: function() {
-			var list = this.collection.map(function(model) {
-				return model.attributes;
+			// TODO: yes, this creates a select with no currently selected option. this means
+			// any render call can put it out of sync with the content. this is bad.
+			var optionHTML = '<option value="0">' + this.defaultLabel || 'All Results' + '</option>';
+			this.collection.each(function(model) {
+				optionHTML += '<option value="' + model.get('id') + '">' + model.get('label') + '</option>';
 			});
-			var content = this.template({
-				categories: list,
-				defaultLabel: this.defaultLabel || 'All Results'
-			});
-			this.$el.html(content);
+			this.$('select').html(optionHTML);
+
+			if (this.filterMode === 'search') {
+				this.$('.filter-category').hide();
+				this.$('.filter-search').show();
+			}
+			else {
+				this.$('.filter-search').hide();
+				this.$('.filter-category').show();
+			}
+
 			return this;
+		},
+
+		setFilterMode: function(mode) {
+			this.filterMode = mode;
+			// clear the search box if leaving search mode
+			if (this.filterMode !== 'search') {
+				this.$('input[type="search"]').val('');
+			}
 		},
 
 		categorySelected: function(e) {
 			var selectedEl = $(e.target).find("option:selected");
 			var idSelected = selectedEl.val();
 			this.trigger('selected', idSelected);
+		},
+
+		searchIconClicked: function() {
+			this.trigger('click:searchIcon');
+		},
+
+		categoryIconClicked: function() {
+			this.trigger('click:categoryIcon');
+		},
+
+		searchSubmitted: function(e) {
+			var query = $(e.target).val();
+			this.trigger('search', query);
 		}
+
 	});
 
 	return exports;
