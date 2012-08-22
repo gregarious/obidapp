@@ -91,7 +91,7 @@ body:after {
 }
 
 /* line 89, ../sass/_base.scss */
-.horiz-ul, .explore-nav, #top-bar-single, .single-place-nav, .category, .action-list, .place-info .hours {
+.horiz-ul, .explore-nav, #top-bar-single, .single-place-nav, .category, .action-list {
   display: inline;
   float: left;
   width: 100%;
@@ -101,7 +101,7 @@ body:after {
   box-sizing: border-box;
 }
 /* line 92, ../sass/_base.scss */
-.horiz-ul li, .explore-nav li, #top-bar-single li, .single-place-nav li, .category li, .action-list li, .place-info .hours li {
+.horiz-ul li, .explore-nav li, #top-bar-single li, .single-place-nav li, .category li, .action-list li {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
@@ -109,7 +109,7 @@ body:after {
   text-align: center;
 }
 /* line 97, ../sass/_base.scss */
-.horiz-ul li:last-child, .explore-nav li:last-child, #top-bar-single li:last-child, .single-place-nav li:last-child, .category li:last-child, .action-list li:last-child, .place-info .hours li:last-child {
+.horiz-ul li:last-child, .explore-nav li:last-child, #top-bar-single li:last-child, .single-place-nav li:last-child, .category li:last-child, .action-list li:last-child {
   margin-right: 0;
 }
 
@@ -1176,13 +1176,8 @@ a {
 }
 /* line 707, ../sass/main.scss */
 .place-info .hours li {
-  border-right: 1px solid #b83939;
   padding: 0.2em 0.4em;
   font-size: 0.9em;
-}
-/* line 712, ../sass/main.scss */
-.place-info .hours li:first-child {
-  padding-left: 0;
 }
 /* line 716, ../sass/main.scss */
 .place-info .hours li:last-child {
