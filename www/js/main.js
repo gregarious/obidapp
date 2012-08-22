@@ -1,6 +1,5 @@
 Scenable = {
 	constants: {
-		MODE: 'DEBUG',
 		SITEURL: 'http://www.scenable.com'
 	}
 };
