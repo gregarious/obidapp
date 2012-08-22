@@ -700,17 +700,17 @@ a {
 	}
 
 	.hours {
-		@extend .horiz-ul;
+		//@extend .horiz-ul;
 		font-size: 0.9em;
 		margin-bottom: 0.5em;		
 		
 		li {
-			border-right: 1px solid $red;
+			//border-right: 1px solid $red;
 			padding: 0.2em 0.4em;
 			font-size: 0.9em;
 
 			&:first-child {
-				padding-left: 0;
+				//padding-left: 0;
 			}
 
 			&:last-child {

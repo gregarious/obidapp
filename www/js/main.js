@@ -115,6 +115,11 @@ requirejs(['explore/controller', 'detail/controller'], function(exploreCtrl, det
 				"key=AIzaSyBCJCI3JVemxWbwwWbPCQk8YX3LwqfVtfM";
 	});
 
+	Handlebars.registerHelper('formatHoursString', function(hoursStr) {
+		return hoursStr.replace(/0(\d\:\d\d)/g, "$1");
+	});
+
+
 	// display a notification to non-Phonegap, mobile browser users to add the app to their home screens
 	function addToHomeScreenNotification() {
 		var msg = '';
