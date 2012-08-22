@@ -39,17 +39,17 @@
     <section class="single-content">
 
         <article class="place-info">
-
-
+            {{#if hours}}
             <div class="hours">
                 <div class="detail-title">Hours:</div>
+                
                 <ul class="hours">
-                    <li>Mon-Fri: 3pm-10pm</li>
-                    <li>Sat: 5pm-7pm</li>
-                    <li>Sun: Closed</li>
-                </ul>
+                    {{#each hours}}
+                        <li>{{days}}: {{hours}}</li>
+                    {{/each}}
+                </ul>    
             </div>
-
+            {{/if}}
             <nav class="action-list">
                 <ul>
                     {{#if phone}}
