@@ -286,19 +286,22 @@ define(["text!templates/explore-menu.html",
 			if (options && options.defaultLabel) {
 				this.defaultLabel = options.defaultLabel;
 			}
-
-			// search input type can be 'search' for all platforms except Android < 4
-			inputType = 'search';
-			if (window.cordova && window.device && window.device.platform === 'Android') {
-				if (window.device.version && window.device.version[0] < 4)
-				{
-					inputType = 'text';
-				}
-			}
-			this.$el.html(this.template({inputType: inputType}));
 		},
 
 		render: function() {
+			// initial template render
+			if (!this.el.innerHTML) {
+				// search input type can be 'search' for all platforms except Android < 4
+				inputType = 'search';
+				if (window.cordova && window.device && window.device.platform === 'Android') {
+					if (window.device.version && window.device.version[0] < 4)
+					{
+						inputType = 'text';
+					}
+				}
+				this.$el.html(this.template({inputType: inputType}));
+			}
+
 			// TODO: yes, this creates a select with no currently selected option. this means
 			// any render call can put it out of sync with the content. this is bad.
 			var optionHTML = '<option value="0">' + this.defaultLabel || 'All Results' + '</option>';
