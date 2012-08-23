@@ -2,13 +2,21 @@
 	<!-- Hide/show these divs according to whats active -->
 
 	<div class="filter-category">
-		<img class="icon-filter-search" src="img/icons/search.png">
+		<div class="icon-container icon-filter-search">
+			<img src="img/icons/search.png">
+		</div>
 		<select></select>
 	</div>
 
 	<div class="filter-search">
-		<img class="icon-filter-category" src="img/icons/x.png" />
-		<input type="search" placeholder="keyword" />
+		<div class="icon-container icon-filter-category">
+			<img src="img/icons/x.png" />
+		</div>
+		{{#if inputType}}
+			<input type="{{inputType}}" class="feed-search" placeholder="keyword" />
+		{{else}}
+			<input type="search" class="feed-search" placeholder="keyword" />
+		{{/if}}
 	</div>
 	
 </div>
