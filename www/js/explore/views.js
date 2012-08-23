@@ -276,7 +276,7 @@ define(["text!templates/explore-menu.html",
 		// TODO: doesn't delegate. no idea why
 		events: {
 			'change select': 'categorySelected',
-			'change input[type="search"]': 'searchSubmitted',
+			'change input.feed-search': 'searchSubmitted',
 			'click .icon-filter-search': 'searchIconClicked',
 			'click .icon-filter-category': 'categoryIconClicked'
 		},
@@ -286,7 +286,16 @@ define(["text!templates/explore-menu.html",
 			if (options && options.defaultLabel) {
 				this.defaultLabel = options.defaultLabel;
 			}
-			this.$el.html(this.template());
+
+			// search input type can be 'search' for all platforms except Android < 4
+			inputType = 'search';
+			if (window.cordova && window.device && window.device.platform === 'Android') {
+				if (window.device.version && window.device.version[0] < 4)
+				{
+					inputType = 'text';
+				}
+			}
+			this.$el.html(this.template({inputType: inputType}));
 		},
 
 		render: function() {
@@ -314,7 +323,7 @@ define(["text!templates/explore-menu.html",
 			this.filterMode = mode;
 			// clear the search box if leaving search mode
 			if (this.filterMode !== 'search') {
-				this.$('input[type="search"]').val('');
+				this.$('input.feed-search').val('');
 			}
 		},
 
