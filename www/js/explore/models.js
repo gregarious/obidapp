@@ -5,15 +5,38 @@ define(function(){
 
 	var exports = {};
 
-	// given a location hash, tuck latitude and longitude elements inside a 'geocoding' hash
-	// operates in place on location hash
-	var setGeocoding = function(location) {
+	var getDirectionsUrl = function(location) {
+		// debugger;
+		var daddr = '';
+		if (location) {
+			daddr += location.address;
+			if (location.address && location.postcode) {
+				daddr += ', ' + location.postcode;
+			}
+			if (location.geocoding) {
+				daddr += ', (' + location.geocoding.latitude + ',' +
+								location.geocoding.longitude + ')';
+			}
+		}
+
+		if (daddr) {
+			return 'http://maps.google.com/maps?daddr=' + encodeURIComponent(daddr);
+		}
+		else {
+			return null;
+		}
+	};
+
+	// given a location hash, add geocoding.latitude, geocoding.longitude,
+	// and directionsUrl data elements to it
+	var enhanceLocationData = function(location) {
 		if (_.isObject(location)) {
 			if (_.isNumber(location.latitude) && _.isNumber(location.longitude)) {
 				location.geocoding = {
 					latitude: location.latitude,
 					longitude: location.longitude
 				};
+				location.directionsUrl = getDirectionsUrl(location);
 			}
 			else {
 				location.geocoding = null;
@@ -28,19 +51,19 @@ define(function(){
 		urlRoot: toTastyPieRootUrl('place'),
 		parse: function(response) {
 			var attrs = Backbone.Model.prototype.parse.call(this, response);
-			setGeocoding(attrs.location);
+			enhanceLocationData(attrs.location);
 			return attrs;
 		},
 		headerText: function() {
 			return this.get('name');
 		}
-	});
+    });
 
 	exports.Event = Backbone.Model.extend({
 		urlRoot: toTastyPieRootUrl('event'),
 		parse: function(response) {
 			var attrs = Backbone.Model.prototype.parse.call(this, response);
-			setGeocoding(attrs.place && attrs.place.location);
+			enhanceLocationData(attrs.place && attrs.place.location);
 			return attrs;
 		},
 		headerText: function() {
@@ -52,7 +75,7 @@ define(function(){
 		urlRoot: toTastyPieRootUrl('special'),
 		parse: function(response) {
 			var attrs = Backbone.Model.prototype.parse.call(this, response);
-			setGeocoding(attrs.place && attrs.place.location);
+			enhanceLocationData(attrs.place && attrs.place.location);
 			attrs.hasExpired = attrs.dexpires && (moment(attrs.dexpires) < moment());
 			return attrs;
 		},
