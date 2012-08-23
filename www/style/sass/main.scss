@@ -25,6 +25,8 @@ a {
 	position: fixed;
 	width: 100%;
 	z-index: 999;
+	top: 0 !important;
+	left: 0 !important;
 }
 
 #login-view { 
@@ -38,12 +40,8 @@ a {
 
 #top-bar {
 	background: $dark-grey;
-	height: 48px;
+	height: 60px;
 	width: 100%;
-
-	#top-logo {
-		@include column(6);
-	}
 
 	#top-logo { 
 		@include column(3);
@@ -51,35 +49,54 @@ a {
 			width: auto;
 			position: relative;
 			z-index: 999;
-			height: 35px;
+			height: 45px;
 			margin: 1px;
 		}
 	}
 
-	#view-options {
+	.filter {
 		@include column(9);
-		select, input[type="search"] {
-			float: right;
-			margin-top: 5px;
-			position: relative;
-			z-index: 10000000;
-		}
+		position: relative;
 		
-		img {
-			border-left: 1px solid #999;
+		div, #view-options {
+			@include column(12);
+		}
+
+		select, input {
+			@include column(8);
 			float: right;
-			@include box-sizing(border-box);
-			height: 20px;
-			padding: 2px 0 2px 5px;
-			margin: 5px 10px 0 5px;
+			height: 30px;
+			margin-top: 10px;
+		}
+
+		.icon-container {
+			width: 50px;
+			height: 40px;
+			padding: 10px 0;
+			float: right;
+			//background: green;
+			//position: relative;
+			//z-index: 9999999999999999999999999;
+			//height: 100%;
 			
+			// &:active {
+			// 	background-color: $yellow;
+			// }
+
+			img {
+				position: relative;
+				margin-right: 10px;
+				float: right;
+				height: 30px;
+				width: auto;
+			}
 		}
 	}
 }
 
 #content-view {
 	&>div:first-child {
-		margin-top: 85px;
+		margin-top: 100px;
 	}
 
 	position: relative;
