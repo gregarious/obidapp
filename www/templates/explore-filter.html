@@ -9,7 +9,11 @@
 	<div class="filter-search">
 
 		<img class="icon-filter-category" src="img/icons/x.png" />
-		<input type="search" placeholder="keyword" />
+		{{#if inputType}}
+			<input type="{{inputType}}" class="feed-search" placeholder="keyword" />
+		{{else}}
+			<input type="search" class="feed-search" placeholder="keyword" />
+		{{/if}}
 	</div>
 	
 </div>

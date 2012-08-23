@@ -306,8 +306,8 @@ define(["explore/models", "explore/views"], function(models, views) {
 		}
 
 		var filterEl = containerView.findRegion('filter');
+		filterEl.empty();
 		if (!newView) {
-			filterEl.empty();
 			return false;
 		}
 
@@ -340,7 +340,7 @@ define(["explore/models", "explore/views"], function(models, views) {
 		newView.on('click:searchIcon', _.bind(function() {
 			this.setFilterMode('search');
 			this.render();
-			this.$('input[type="search"]').focus();
+			this.$('input.feed-search').focus();
 		}, newView));
 		
 		newView.on('click:categoryIcon', _.bind(function() {
