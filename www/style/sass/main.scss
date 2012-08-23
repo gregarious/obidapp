@@ -67,6 +67,8 @@ a {
 			float: right;
 			height: 30px;
 			margin-top: 10px;
+			position: relative;
+			z-index: 9999999999999999999999999;
 		}
 
 		.icon-container {
@@ -75,8 +77,7 @@ a {
 			padding: 10px 0;
 			float: right;
 			//background: green;
-			//position: relative;
-			//z-index: 9999999999999999999999999;
+			
 			//height: 100%;
 			
 			// &:active {
